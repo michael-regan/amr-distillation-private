@@ -26,12 +26,12 @@ torchrun --nproc_per_node 1 do-inference-llama.py \
 def main(
     ckpt_dir: str,
     tokenizer_path: str,
+    data_path: str,
     temperature: float = 0.6,
     top_p: float = 0.9,
     max_seq_len: int = 1024,
     max_batch_size: int = 4,
-    max_gen_len: Optional[int] = None,
-    data_path: str
+    max_gen_len: Optional[int] = None
 ):
     generator = Llama.build(
         ckpt_dir=ckpt_dir,
