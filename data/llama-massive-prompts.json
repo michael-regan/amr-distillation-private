@@ -1,0 +1,1902 @@
+[
+    [
+        {
+            "role": "system",
+            "content": "Decompose the utterance into a list of semantic frames like in the examples."
+        },
+        {
+            "role": "user",
+            "content": "what are some updates about the stock market"
+        },
+        {
+            "role": "assistant",
+            "content": "[('update-02',), ('amr-unknown',), ('market-01',), ('some',), ('stock',), ('update-02', ':ARG2', 'amr-unknown'), ('update-02', ':topic', 'market-01'), ('update-02', ':mod', 'some'), ('market-01', ':ARG1', 'stock'), ('update-02', ':topic', 'market-01', ':ARG1', 'stock')]"
+        },
+        {
+            "role": "user",
+            "content": "what is a fjord"
+        },
+        {
+            "role": "assistant",
+            "content": "[('fjord',), ('amr-unknown',), ('fjord', ':mod', 'amr-unknown')]"
+        },
+        {
+            "role": "user",
+            "content": "what is five over three"
+        },
+        {
+            "role": "assistant",
+            "content": "[('equal-01',), ('quotient-of',), ('amr-unknown',), ('3',), ('5',), ('equal-01', ':ARG1', 'quotient-of'), ('equal-01', ':ARG2', 'amr-unknown'), ('quotient-of', ':op2', '3'), ('quotient-of', ':op1', '5'), ('equal-01', ':ARG1', 'quotient-of', ':op2', '3'), ('equal-01', ':ARG1', 'quotient-of', ':op1', '5')]"
+        },
+        {
+            "role": "user",
+            "content": "who is the governor of new york"
+        },
+        {
+            "role": "assistant",
+            "content": "[('have-org-role-91',), ('amr-unknown',), ('state',), ('governor',), ('name',), ('new',), ('york',), ('have-org-role-91', ':ARG0', 'amr-unknown'), ('have-org-role-91', ':ARG1', 'state'), ('have-org-role-91', ':ARG2', 'governor'), ('state', ':name', 'name'), ('name', ':op1', 'new'), ('name', ':op2', 'york'), ('have-org-role-91', ':ARG1', 'state', ':name', 'name'), ('state', ':name', 'name', ':op1', 'new'), ('state', ':name', 'name', ':op2', 'york')]"
+        },
+        {
+            "role": "user",
+            "content": "can you tell me about the middle east"
+        },
+        {
+            "role": "assistant",
+            "content": "[('tell-01',), ('imperative',), ('+',), ('you',), ('thing',), ('i',), ('world-region',), ('name',), ('middle',), ('east',), ('tell-01', ':mode', 'imperative'), ('tell-01', ':polite', '+'), ('tell-01', ':ARG0', 'you'), ('tell-01', ':ARG1', 'thing'), ('tell-01', ':ARG2', 'i'), ('thing', ':topic', 'world-region'), ('world-region', ':name', 'name'), ('name', ':op1', 'middle'), ('name', ':op2', 'east'), ('tell-01', ':ARG1', 'thing', ':topic', 'world-region'), ('thing', ':topic', 'world-region', ':name', 'name'), ('world-region', ':name', 'name', ':op1', 'middle'), ('world-region', ':name', 'name', ':op2', 'east')]"
+        },
+        {
+            "role": "user",
+            "content": "please look up exchange between us and mexico"
+        }
+    ],
+    [
+        {
+            "role": "system",
+            "content": "Decompose the utterance into a list of semantic frames like in the examples."
+        },
+        {
+            "role": "user",
+            "content": "what are some updates about the stock market"
+        },
+        {
+            "role": "assistant",
+            "content": "[('update-02',), ('amr-unknown',), ('market-01',), ('some',), ('stock',), ('update-02', ':ARG2', 'amr-unknown'), ('update-02', ':topic', 'market-01'), ('update-02', ':mod', 'some'), ('market-01', ':ARG1', 'stock'), ('update-02', ':topic', 'market-01', ':ARG1', 'stock')]"
+        },
+        {
+            "role": "user",
+            "content": "what is a fjord"
+        },
+        {
+            "role": "assistant",
+            "content": "[('fjord',), ('amr-unknown',), ('fjord', ':mod', 'amr-unknown')]"
+        },
+        {
+            "role": "user",
+            "content": "what is five over three"
+        },
+        {
+            "role": "assistant",
+            "content": "[('equal-01',), ('quotient-of',), ('amr-unknown',), ('3',), ('5',), ('equal-01', ':ARG1', 'quotient-of'), ('equal-01', ':ARG2', 'amr-unknown'), ('quotient-of', ':op2', '3'), ('quotient-of', ':op1', '5'), ('equal-01', ':ARG1', 'quotient-of', ':op2', '3'), ('equal-01', ':ARG1', 'quotient-of', ':op1', '5')]"
+        },
+        {
+            "role": "user",
+            "content": "who is the governor of new york"
+        },
+        {
+            "role": "assistant",
+            "content": "[('have-org-role-91',), ('amr-unknown',), ('state',), ('governor',), ('name',), ('new',), ('york',), ('have-org-role-91', ':ARG0', 'amr-unknown'), ('have-org-role-91', ':ARG1', 'state'), ('have-org-role-91', ':ARG2', 'governor'), ('state', ':name', 'name'), ('name', ':op1', 'new'), ('name', ':op2', 'york'), ('have-org-role-91', ':ARG1', 'state', ':name', 'name'), ('state', ':name', 'name', ':op1', 'new'), ('state', ':name', 'name', ':op2', 'york')]"
+        },
+        {
+            "role": "user",
+            "content": "can you tell me about the middle east"
+        },
+        {
+            "role": "assistant",
+            "content": "[('tell-01',), ('imperative',), ('+',), ('you',), ('thing',), ('i',), ('world-region',), ('name',), ('middle',), ('east',), ('tell-01', ':mode', 'imperative'), ('tell-01', ':polite', '+'), ('tell-01', ':ARG0', 'you'), ('tell-01', ':ARG1', 'thing'), ('tell-01', ':ARG2', 'i'), ('thing', ':topic', 'world-region'), ('world-region', ':name', 'name'), ('name', ':op1', 'middle'), ('name', ':op2', 'east'), ('tell-01', ':ARG1', 'thing', ':topic', 'world-region'), ('thing', ':topic', 'world-region', ':name', 'name'), ('world-region', ':name', 'name', ':op1', 'middle'), ('world-region', ':name', 'name', ':op2', 'east')]"
+        },
+        {
+            "role": "user",
+            "content": "what is the dollar against the pound"
+        }
+    ],
+    [
+        {
+            "role": "system",
+            "content": "Decompose the utterance into a list of semantic frames like in the examples."
+        },
+        {
+            "role": "user",
+            "content": "what are some updates about the stock market"
+        },
+        {
+            "role": "assistant",
+            "content": "[('update-02',), ('amr-unknown',), ('market-01',), ('some',), ('stock',), ('update-02', ':ARG2', 'amr-unknown'), ('update-02', ':topic', 'market-01'), ('update-02', ':mod', 'some'), ('market-01', ':ARG1', 'stock'), ('update-02', ':topic', 'market-01', ':ARG1', 'stock')]"
+        },
+        {
+            "role": "user",
+            "content": "what is a fjord"
+        },
+        {
+            "role": "assistant",
+            "content": "[('fjord',), ('amr-unknown',), ('fjord', ':mod', 'amr-unknown')]"
+        },
+        {
+            "role": "user",
+            "content": "what is five over three"
+        },
+        {
+            "role": "assistant",
+            "content": "[('equal-01',), ('quotient-of',), ('amr-unknown',), ('3',), ('5',), ('equal-01', ':ARG1', 'quotient-of'), ('equal-01', ':ARG2', 'amr-unknown'), ('quotient-of', ':op2', '3'), ('quotient-of', ':op1', '5'), ('equal-01', ':ARG1', 'quotient-of', ':op2', '3'), ('equal-01', ':ARG1', 'quotient-of', ':op1', '5')]"
+        },
+        {
+            "role": "user",
+            "content": "who is the governor of new york"
+        },
+        {
+            "role": "assistant",
+            "content": "[('have-org-role-91',), ('amr-unknown',), ('state',), ('governor',), ('name',), ('new',), ('york',), ('have-org-role-91', ':ARG0', 'amr-unknown'), ('have-org-role-91', ':ARG1', 'state'), ('have-org-role-91', ':ARG2', 'governor'), ('state', ':name', 'name'), ('name', ':op1', 'new'), ('name', ':op2', 'york'), ('have-org-role-91', ':ARG1', 'state', ':name', 'name'), ('state', ':name', 'name', ':op1', 'new'), ('state', ':name', 'name', ':op2', 'york')]"
+        },
+        {
+            "role": "user",
+            "content": "can you tell me about the middle east"
+        },
+        {
+            "role": "assistant",
+            "content": "[('tell-01',), ('imperative',), ('+',), ('you',), ('thing',), ('i',), ('world-region',), ('name',), ('middle',), ('east',), ('tell-01', ':mode', 'imperative'), ('tell-01', ':polite', '+'), ('tell-01', ':ARG0', 'you'), ('tell-01', ':ARG1', 'thing'), ('tell-01', ':ARG2', 'i'), ('thing', ':topic', 'world-region'), ('world-region', ':name', 'name'), ('name', ':op1', 'middle'), ('name', ':op2', 'east'), ('tell-01', ':ARG1', 'thing', ':topic', 'world-region'), ('thing', ':topic', 'world-region', ':name', 'name'), ('world-region', ':name', 'name', ':op1', 'middle'), ('world-region', ':name', 'name', ':op2', 'east')]"
+        },
+        {
+            "role": "user",
+            "content": "how much is the british pound"
+        }
+    ],
+    [
+        {
+            "role": "system",
+            "content": "Decompose the utterance into a list of semantic frames like in the examples."
+        },
+        {
+            "role": "user",
+            "content": "what are some updates about the stock market"
+        },
+        {
+            "role": "assistant",
+            "content": "[('update-02',), ('amr-unknown',), ('market-01',), ('some',), ('stock',), ('update-02', ':ARG2', 'amr-unknown'), ('update-02', ':topic', 'market-01'), ('update-02', ':mod', 'some'), ('market-01', ':ARG1', 'stock'), ('update-02', ':topic', 'market-01', ':ARG1', 'stock')]"
+        },
+        {
+            "role": "user",
+            "content": "what is a fjord"
+        },
+        {
+            "role": "assistant",
+            "content": "[('fjord',), ('amr-unknown',), ('fjord', ':mod', 'amr-unknown')]"
+        },
+        {
+            "role": "user",
+            "content": "what is five over three"
+        },
+        {
+            "role": "assistant",
+            "content": "[('equal-01',), ('quotient-of',), ('amr-unknown',), ('3',), ('5',), ('equal-01', ':ARG1', 'quotient-of'), ('equal-01', ':ARG2', 'amr-unknown'), ('quotient-of', ':op2', '3'), ('quotient-of', ':op1', '5'), ('equal-01', ':ARG1', 'quotient-of', ':op2', '3'), ('equal-01', ':ARG1', 'quotient-of', ':op1', '5')]"
+        },
+        {
+            "role": "user",
+            "content": "who is the governor of new york"
+        },
+        {
+            "role": "assistant",
+            "content": "[('have-org-role-91',), ('amr-unknown',), ('state',), ('governor',), ('name',), ('new',), ('york',), ('have-org-role-91', ':ARG0', 'amr-unknown'), ('have-org-role-91', ':ARG1', 'state'), ('have-org-role-91', ':ARG2', 'governor'), ('state', ':name', 'name'), ('name', ':op1', 'new'), ('name', ':op2', 'york'), ('have-org-role-91', ':ARG1', 'state', ':name', 'name'), ('state', ':name', 'name', ':op1', 'new'), ('state', ':name', 'name', ':op2', 'york')]"
+        },
+        {
+            "role": "user",
+            "content": "can you tell me about the middle east"
+        },
+        {
+            "role": "assistant",
+            "content": "[('tell-01',), ('imperative',), ('+',), ('you',), ('thing',), ('i',), ('world-region',), ('name',), ('middle',), ('east',), ('tell-01', ':mode', 'imperative'), ('tell-01', ':polite', '+'), ('tell-01', ':ARG0', 'you'), ('tell-01', ':ARG1', 'thing'), ('tell-01', ':ARG2', 'i'), ('thing', ':topic', 'world-region'), ('world-region', ':name', 'name'), ('name', ':op1', 'middle'), ('name', ':op2', 'east'), ('tell-01', ':ARG1', 'thing', ':topic', 'world-region'), ('thing', ':topic', 'world-region', ':name', 'name'), ('world-region', ':name', 'name', ':op1', 'middle'), ('world-region', ':name', 'name', ':op2', 'east')]"
+        },
+        {
+            "role": "user",
+            "content": "what is the exchange rate of u. s. d. to cdn"
+        }
+    ],
+    [
+        {
+            "role": "system",
+            "content": "Decompose the utterance into a list of semantic frames like in the examples."
+        },
+        {
+            "role": "user",
+            "content": "what are some updates about the stock market"
+        },
+        {
+            "role": "assistant",
+            "content": "[('update-02',), ('amr-unknown',), ('market-01',), ('some',), ('stock',), ('update-02', ':ARG2', 'amr-unknown'), ('update-02', ':topic', 'market-01'), ('update-02', ':mod', 'some'), ('market-01', ':ARG1', 'stock'), ('update-02', ':topic', 'market-01', ':ARG1', 'stock')]"
+        },
+        {
+            "role": "user",
+            "content": "what is a fjord"
+        },
+        {
+            "role": "assistant",
+            "content": "[('fjord',), ('amr-unknown',), ('fjord', ':mod', 'amr-unknown')]"
+        },
+        {
+            "role": "user",
+            "content": "what is five over three"
+        },
+        {
+            "role": "assistant",
+            "content": "[('equal-01',), ('quotient-of',), ('amr-unknown',), ('3',), ('5',), ('equal-01', ':ARG1', 'quotient-of'), ('equal-01', ':ARG2', 'amr-unknown'), ('quotient-of', ':op2', '3'), ('quotient-of', ':op1', '5'), ('equal-01', ':ARG1', 'quotient-of', ':op2', '3'), ('equal-01', ':ARG1', 'quotient-of', ':op1', '5')]"
+        },
+        {
+            "role": "user",
+            "content": "who is the governor of new york"
+        },
+        {
+            "role": "assistant",
+            "content": "[('have-org-role-91',), ('amr-unknown',), ('state',), ('governor',), ('name',), ('new',), ('york',), ('have-org-role-91', ':ARG0', 'amr-unknown'), ('have-org-role-91', ':ARG1', 'state'), ('have-org-role-91', ':ARG2', 'governor'), ('state', ':name', 'name'), ('name', ':op1', 'new'), ('name', ':op2', 'york'), ('have-org-role-91', ':ARG1', 'state', ':name', 'name'), ('state', ':name', 'name', ':op1', 'new'), ('state', ':name', 'name', ':op2', 'york')]"
+        },
+        {
+            "role": "user",
+            "content": "can you tell me about the middle east"
+        },
+        {
+            "role": "assistant",
+            "content": "[('tell-01',), ('imperative',), ('+',), ('you',), ('thing',), ('i',), ('world-region',), ('name',), ('middle',), ('east',), ('tell-01', ':mode', 'imperative'), ('tell-01', ':polite', '+'), ('tell-01', ':ARG0', 'you'), ('tell-01', ':ARG1', 'thing'), ('tell-01', ':ARG2', 'i'), ('thing', ':topic', 'world-region'), ('world-region', ':name', 'name'), ('name', ':op1', 'middle'), ('name', ':op2', 'east'), ('tell-01', ':ARG1', 'thing', ':topic', 'world-region'), ('thing', ':topic', 'world-region', ':name', 'name'), ('world-region', ':name', 'name', ':op1', 'middle'), ('world-region', ':name', 'name', ':op2', 'east')]"
+        },
+        {
+            "role": "user",
+            "content": "how many people live in san francisco"
+        }
+    ],
+    [
+        {
+            "role": "system",
+            "content": "Decompose the utterance into a list of semantic frames like in the examples."
+        },
+        {
+            "role": "user",
+            "content": "what are some updates about the stock market"
+        },
+        {
+            "role": "assistant",
+            "content": "[('update-02',), ('amr-unknown',), ('market-01',), ('some',), ('stock',), ('update-02', ':ARG2', 'amr-unknown'), ('update-02', ':topic', 'market-01'), ('update-02', ':mod', 'some'), ('market-01', ':ARG1', 'stock'), ('update-02', ':topic', 'market-01', ':ARG1', 'stock')]"
+        },
+        {
+            "role": "user",
+            "content": "what is a fjord"
+        },
+        {
+            "role": "assistant",
+            "content": "[('fjord',), ('amr-unknown',), ('fjord', ':mod', 'amr-unknown')]"
+        },
+        {
+            "role": "user",
+            "content": "what is five over three"
+        },
+        {
+            "role": "assistant",
+            "content": "[('equal-01',), ('quotient-of',), ('amr-unknown',), ('3',), ('5',), ('equal-01', ':ARG1', 'quotient-of'), ('equal-01', ':ARG2', 'amr-unknown'), ('quotient-of', ':op2', '3'), ('quotient-of', ':op1', '5'), ('equal-01', ':ARG1', 'quotient-of', ':op2', '3'), ('equal-01', ':ARG1', 'quotient-of', ':op1', '5')]"
+        },
+        {
+            "role": "user",
+            "content": "who is the governor of new york"
+        },
+        {
+            "role": "assistant",
+            "content": "[('have-org-role-91',), ('amr-unknown',), ('state',), ('governor',), ('name',), ('new',), ('york',), ('have-org-role-91', ':ARG0', 'amr-unknown'), ('have-org-role-91', ':ARG1', 'state'), ('have-org-role-91', ':ARG2', 'governor'), ('state', ':name', 'name'), ('name', ':op1', 'new'), ('name', ':op2', 'york'), ('have-org-role-91', ':ARG1', 'state', ':name', 'name'), ('state', ':name', 'name', ':op1', 'new'), ('state', ':name', 'name', ':op2', 'york')]"
+        },
+        {
+            "role": "user",
+            "content": "can you tell me about the middle east"
+        },
+        {
+            "role": "assistant",
+            "content": "[('tell-01',), ('imperative',), ('+',), ('you',), ('thing',), ('i',), ('world-region',), ('name',), ('middle',), ('east',), ('tell-01', ':mode', 'imperative'), ('tell-01', ':polite', '+'), ('tell-01', ':ARG0', 'you'), ('tell-01', ':ARG1', 'thing'), ('tell-01', ':ARG2', 'i'), ('thing', ':topic', 'world-region'), ('world-region', ':name', 'name'), ('name', ':op1', 'middle'), ('name', ':op2', 'east'), ('tell-01', ':ARG1', 'thing', ':topic', 'world-region'), ('thing', ':topic', 'world-region', ':name', 'name'), ('world-region', ':name', 'name', ':op1', 'middle'), ('world-region', ':name', 'name', ':op2', 'east')]"
+        },
+        {
+            "role": "user",
+            "content": "please search for this word"
+        }
+    ],
+    [
+        {
+            "role": "system",
+            "content": "Decompose the utterance into a list of semantic frames like in the examples."
+        },
+        {
+            "role": "user",
+            "content": "what are some updates about the stock market"
+        },
+        {
+            "role": "assistant",
+            "content": "[('update-02',), ('amr-unknown',), ('market-01',), ('some',), ('stock',), ('update-02', ':ARG2', 'amr-unknown'), ('update-02', ':topic', 'market-01'), ('update-02', ':mod', 'some'), ('market-01', ':ARG1', 'stock'), ('update-02', ':topic', 'market-01', ':ARG1', 'stock')]"
+        },
+        {
+            "role": "user",
+            "content": "what is a fjord"
+        },
+        {
+            "role": "assistant",
+            "content": "[('fjord',), ('amr-unknown',), ('fjord', ':mod', 'amr-unknown')]"
+        },
+        {
+            "role": "user",
+            "content": "what is five over three"
+        },
+        {
+            "role": "assistant",
+            "content": "[('equal-01',), ('quotient-of',), ('amr-unknown',), ('3',), ('5',), ('equal-01', ':ARG1', 'quotient-of'), ('equal-01', ':ARG2', 'amr-unknown'), ('quotient-of', ':op2', '3'), ('quotient-of', ':op1', '5'), ('equal-01', ':ARG1', 'quotient-of', ':op2', '3'), ('equal-01', ':ARG1', 'quotient-of', ':op1', '5')]"
+        },
+        {
+            "role": "user",
+            "content": "who is the governor of new york"
+        },
+        {
+            "role": "assistant",
+            "content": "[('have-org-role-91',), ('amr-unknown',), ('state',), ('governor',), ('name',), ('new',), ('york',), ('have-org-role-91', ':ARG0', 'amr-unknown'), ('have-org-role-91', ':ARG1', 'state'), ('have-org-role-91', ':ARG2', 'governor'), ('state', ':name', 'name'), ('name', ':op1', 'new'), ('name', ':op2', 'york'), ('have-org-role-91', ':ARG1', 'state', ':name', 'name'), ('state', ':name', 'name', ':op1', 'new'), ('state', ':name', 'name', ':op2', 'york')]"
+        },
+        {
+            "role": "user",
+            "content": "can you tell me about the middle east"
+        },
+        {
+            "role": "assistant",
+            "content": "[('tell-01',), ('imperative',), ('+',), ('you',), ('thing',), ('i',), ('world-region',), ('name',), ('middle',), ('east',), ('tell-01', ':mode', 'imperative'), ('tell-01', ':polite', '+'), ('tell-01', ':ARG0', 'you'), ('tell-01', ':ARG1', 'thing'), ('tell-01', ':ARG2', 'i'), ('thing', ':topic', 'world-region'), ('world-region', ':name', 'name'), ('name', ':op1', 'middle'), ('name', ':op2', 'east'), ('tell-01', ':ARG1', 'thing', ':topic', 'world-region'), ('thing', ':topic', 'world-region', ':name', 'name'), ('world-region', ':name', 'name', ':op1', 'middle'), ('world-region', ':name', 'name', ':op2', 'east')]"
+        },
+        {
+            "role": "user",
+            "content": "which is the best smartphone in two thousand and seventeen"
+        }
+    ],
+    [
+        {
+            "role": "system",
+            "content": "Decompose the utterance into a list of semantic frames like in the examples."
+        },
+        {
+            "role": "user",
+            "content": "what are some updates about the stock market"
+        },
+        {
+            "role": "assistant",
+            "content": "[('update-02',), ('amr-unknown',), ('market-01',), ('some',), ('stock',), ('update-02', ':ARG2', 'amr-unknown'), ('update-02', ':topic', 'market-01'), ('update-02', ':mod', 'some'), ('market-01', ':ARG1', 'stock'), ('update-02', ':topic', 'market-01', ':ARG1', 'stock')]"
+        },
+        {
+            "role": "user",
+            "content": "what is a fjord"
+        },
+        {
+            "role": "assistant",
+            "content": "[('fjord',), ('amr-unknown',), ('fjord', ':mod', 'amr-unknown')]"
+        },
+        {
+            "role": "user",
+            "content": "what is five over three"
+        },
+        {
+            "role": "assistant",
+            "content": "[('equal-01',), ('quotient-of',), ('amr-unknown',), ('3',), ('5',), ('equal-01', ':ARG1', 'quotient-of'), ('equal-01', ':ARG2', 'amr-unknown'), ('quotient-of', ':op2', '3'), ('quotient-of', ':op1', '5'), ('equal-01', ':ARG1', 'quotient-of', ':op2', '3'), ('equal-01', ':ARG1', 'quotient-of', ':op1', '5')]"
+        },
+        {
+            "role": "user",
+            "content": "who is the governor of new york"
+        },
+        {
+            "role": "assistant",
+            "content": "[('have-org-role-91',), ('amr-unknown',), ('state',), ('governor',), ('name',), ('new',), ('york',), ('have-org-role-91', ':ARG0', 'amr-unknown'), ('have-org-role-91', ':ARG1', 'state'), ('have-org-role-91', ':ARG2', 'governor'), ('state', ':name', 'name'), ('name', ':op1', 'new'), ('name', ':op2', 'york'), ('have-org-role-91', ':ARG1', 'state', ':name', 'name'), ('state', ':name', 'name', ':op1', 'new'), ('state', ':name', 'name', ':op2', 'york')]"
+        },
+        {
+            "role": "user",
+            "content": "can you tell me about the middle east"
+        },
+        {
+            "role": "assistant",
+            "content": "[('tell-01',), ('imperative',), ('+',), ('you',), ('thing',), ('i',), ('world-region',), ('name',), ('middle',), ('east',), ('tell-01', ':mode', 'imperative'), ('tell-01', ':polite', '+'), ('tell-01', ':ARG0', 'you'), ('tell-01', ':ARG1', 'thing'), ('tell-01', ':ARG2', 'i'), ('thing', ':topic', 'world-region'), ('world-region', ':name', 'name'), ('name', ':op1', 'middle'), ('name', ':op2', 'east'), ('tell-01', ':ARG1', 'thing', ':topic', 'world-region'), ('thing', ':topic', 'world-region', ':name', 'name'), ('world-region', ':name', 'name', ':op1', 'middle'), ('world-region', ':name', 'name', ':op2', 'east')]"
+        },
+        {
+            "role": "user",
+            "content": "who are the greatest guitarists of all time"
+        }
+    ],
+    [
+        {
+            "role": "system",
+            "content": "Decompose the utterance into a list of semantic frames like in the examples."
+        },
+        {
+            "role": "user",
+            "content": "what are some updates about the stock market"
+        },
+        {
+            "role": "assistant",
+            "content": "[('update-02',), ('amr-unknown',), ('market-01',), ('some',), ('stock',), ('update-02', ':ARG2', 'amr-unknown'), ('update-02', ':topic', 'market-01'), ('update-02', ':mod', 'some'), ('market-01', ':ARG1', 'stock'), ('update-02', ':topic', 'market-01', ':ARG1', 'stock')]"
+        },
+        {
+            "role": "user",
+            "content": "what is a fjord"
+        },
+        {
+            "role": "assistant",
+            "content": "[('fjord',), ('amr-unknown',), ('fjord', ':mod', 'amr-unknown')]"
+        },
+        {
+            "role": "user",
+            "content": "what is five over three"
+        },
+        {
+            "role": "assistant",
+            "content": "[('equal-01',), ('quotient-of',), ('amr-unknown',), ('3',), ('5',), ('equal-01', ':ARG1', 'quotient-of'), ('equal-01', ':ARG2', 'amr-unknown'), ('quotient-of', ':op2', '3'), ('quotient-of', ':op1', '5'), ('equal-01', ':ARG1', 'quotient-of', ':op2', '3'), ('equal-01', ':ARG1', 'quotient-of', ':op1', '5')]"
+        },
+        {
+            "role": "user",
+            "content": "who is the governor of new york"
+        },
+        {
+            "role": "assistant",
+            "content": "[('have-org-role-91',), ('amr-unknown',), ('state',), ('governor',), ('name',), ('new',), ('york',), ('have-org-role-91', ':ARG0', 'amr-unknown'), ('have-org-role-91', ':ARG1', 'state'), ('have-org-role-91', ':ARG2', 'governor'), ('state', ':name', 'name'), ('name', ':op1', 'new'), ('name', ':op2', 'york'), ('have-org-role-91', ':ARG1', 'state', ':name', 'name'), ('state', ':name', 'name', ':op1', 'new'), ('state', ':name', 'name', ':op2', 'york')]"
+        },
+        {
+            "role": "user",
+            "content": "can you tell me about the middle east"
+        },
+        {
+            "role": "assistant",
+            "content": "[('tell-01',), ('imperative',), ('+',), ('you',), ('thing',), ('i',), ('world-region',), ('name',), ('middle',), ('east',), ('tell-01', ':mode', 'imperative'), ('tell-01', ':polite', '+'), ('tell-01', ':ARG0', 'you'), ('tell-01', ':ARG1', 'thing'), ('tell-01', ':ARG2', 'i'), ('thing', ':topic', 'world-region'), ('world-region', ':name', 'name'), ('name', ':op1', 'middle'), ('name', ':op2', 'east'), ('tell-01', ':ARG1', 'thing', ':topic', 'world-region'), ('thing', ':topic', 'world-region', ':name', 'name'), ('world-region', ':name', 'name', ':op1', 'middle'), ('world-region', ':name', 'name', ':op2', 'east')]"
+        },
+        {
+            "role": "user",
+            "content": "what's the exchange rate between the us dollar and the euro"
+        }
+    ],
+    [
+        {
+            "role": "system",
+            "content": "Decompose the utterance into a list of semantic frames like in the examples."
+        },
+        {
+            "role": "user",
+            "content": "what are some updates about the stock market"
+        },
+        {
+            "role": "assistant",
+            "content": "[('update-02',), ('amr-unknown',), ('market-01',), ('some',), ('stock',), ('update-02', ':ARG2', 'amr-unknown'), ('update-02', ':topic', 'market-01'), ('update-02', ':mod', 'some'), ('market-01', ':ARG1', 'stock'), ('update-02', ':topic', 'market-01', ':ARG1', 'stock')]"
+        },
+        {
+            "role": "user",
+            "content": "what is a fjord"
+        },
+        {
+            "role": "assistant",
+            "content": "[('fjord',), ('amr-unknown',), ('fjord', ':mod', 'amr-unknown')]"
+        },
+        {
+            "role": "user",
+            "content": "what is five over three"
+        },
+        {
+            "role": "assistant",
+            "content": "[('equal-01',), ('quotient-of',), ('amr-unknown',), ('3',), ('5',), ('equal-01', ':ARG1', 'quotient-of'), ('equal-01', ':ARG2', 'amr-unknown'), ('quotient-of', ':op2', '3'), ('quotient-of', ':op1', '5'), ('equal-01', ':ARG1', 'quotient-of', ':op2', '3'), ('equal-01', ':ARG1', 'quotient-of', ':op1', '5')]"
+        },
+        {
+            "role": "user",
+            "content": "who is the governor of new york"
+        },
+        {
+            "role": "assistant",
+            "content": "[('have-org-role-91',), ('amr-unknown',), ('state',), ('governor',), ('name',), ('new',), ('york',), ('have-org-role-91', ':ARG0', 'amr-unknown'), ('have-org-role-91', ':ARG1', 'state'), ('have-org-role-91', ':ARG2', 'governor'), ('state', ':name', 'name'), ('name', ':op1', 'new'), ('name', ':op2', 'york'), ('have-org-role-91', ':ARG1', 'state', ':name', 'name'), ('state', ':name', 'name', ':op1', 'new'), ('state', ':name', 'name', ':op2', 'york')]"
+        },
+        {
+            "role": "user",
+            "content": "can you tell me about the middle east"
+        },
+        {
+            "role": "assistant",
+            "content": "[('tell-01',), ('imperative',), ('+',), ('you',), ('thing',), ('i',), ('world-region',), ('name',), ('middle',), ('east',), ('tell-01', ':mode', 'imperative'), ('tell-01', ':polite', '+'), ('tell-01', ':ARG0', 'you'), ('tell-01', ':ARG1', 'thing'), ('tell-01', ':ARG2', 'i'), ('thing', ':topic', 'world-region'), ('world-region', ':name', 'name'), ('name', ':op1', 'middle'), ('name', ':op2', 'east'), ('tell-01', ':ARG1', 'thing', ':topic', 'world-region'), ('thing', ':topic', 'world-region', ':name', 'name'), ('world-region', ':name', 'name', ':op1', 'middle'), ('world-region', ':name', 'name', ':op2', 'east')]"
+        },
+        {
+            "role": "user",
+            "content": "does spain share its border with morrocco"
+        }
+    ],
+    [
+        {
+            "role": "system",
+            "content": "Decompose the utterance into a list of semantic frames like in the examples."
+        },
+        {
+            "role": "user",
+            "content": "what are some updates about the stock market"
+        },
+        {
+            "role": "assistant",
+            "content": "[('update-02',), ('amr-unknown',), ('market-01',), ('some',), ('stock',), ('update-02', ':ARG2', 'amr-unknown'), ('update-02', ':topic', 'market-01'), ('update-02', ':mod', 'some'), ('market-01', ':ARG1', 'stock'), ('update-02', ':topic', 'market-01', ':ARG1', 'stock')]"
+        },
+        {
+            "role": "user",
+            "content": "what is a fjord"
+        },
+        {
+            "role": "assistant",
+            "content": "[('fjord',), ('amr-unknown',), ('fjord', ':mod', 'amr-unknown')]"
+        },
+        {
+            "role": "user",
+            "content": "what is five over three"
+        },
+        {
+            "role": "assistant",
+            "content": "[('equal-01',), ('quotient-of',), ('amr-unknown',), ('3',), ('5',), ('equal-01', ':ARG1', 'quotient-of'), ('equal-01', ':ARG2', 'amr-unknown'), ('quotient-of', ':op2', '3'), ('quotient-of', ':op1', '5'), ('equal-01', ':ARG1', 'quotient-of', ':op2', '3'), ('equal-01', ':ARG1', 'quotient-of', ':op1', '5')]"
+        },
+        {
+            "role": "user",
+            "content": "who is the governor of new york"
+        },
+        {
+            "role": "assistant",
+            "content": "[('have-org-role-91',), ('amr-unknown',), ('state',), ('governor',), ('name',), ('new',), ('york',), ('have-org-role-91', ':ARG0', 'amr-unknown'), ('have-org-role-91', ':ARG1', 'state'), ('have-org-role-91', ':ARG2', 'governor'), ('state', ':name', 'name'), ('name', ':op1', 'new'), ('name', ':op2', 'york'), ('have-org-role-91', ':ARG1', 'state', ':name', 'name'), ('state', ':name', 'name', ':op1', 'new'), ('state', ':name', 'name', ':op2', 'york')]"
+        },
+        {
+            "role": "user",
+            "content": "can you tell me about the middle east"
+        },
+        {
+            "role": "assistant",
+            "content": "[('tell-01',), ('imperative',), ('+',), ('you',), ('thing',), ('i',), ('world-region',), ('name',), ('middle',), ('east',), ('tell-01', ':mode', 'imperative'), ('tell-01', ':polite', '+'), ('tell-01', ':ARG0', 'you'), ('tell-01', ':ARG1', 'thing'), ('tell-01', ':ARG2', 'i'), ('thing', ':topic', 'world-region'), ('world-region', ':name', 'name'), ('name', ':op1', 'middle'), ('name', ':op2', 'east'), ('tell-01', ':ARG1', 'thing', ':topic', 'world-region'), ('thing', ':topic', 'world-region', ':name', 'name'), ('world-region', ':name', 'name', ':op1', 'middle'), ('world-region', ':name', 'name', ':op2', 'east')]"
+        },
+        {
+            "role": "user",
+            "content": "what's the rate between the u. s. d. and ukraine's currency"
+        }
+    ],
+    [
+        {
+            "role": "system",
+            "content": "Decompose the utterance into a list of semantic frames like in the examples."
+        },
+        {
+            "role": "user",
+            "content": "what are some updates about the stock market"
+        },
+        {
+            "role": "assistant",
+            "content": "[('update-02',), ('amr-unknown',), ('market-01',), ('some',), ('stock',), ('update-02', ':ARG2', 'amr-unknown'), ('update-02', ':topic', 'market-01'), ('update-02', ':mod', 'some'), ('market-01', ':ARG1', 'stock'), ('update-02', ':topic', 'market-01', ':ARG1', 'stock')]"
+        },
+        {
+            "role": "user",
+            "content": "what is a fjord"
+        },
+        {
+            "role": "assistant",
+            "content": "[('fjord',), ('amr-unknown',), ('fjord', ':mod', 'amr-unknown')]"
+        },
+        {
+            "role": "user",
+            "content": "what is five over three"
+        },
+        {
+            "role": "assistant",
+            "content": "[('equal-01',), ('quotient-of',), ('amr-unknown',), ('3',), ('5',), ('equal-01', ':ARG1', 'quotient-of'), ('equal-01', ':ARG2', 'amr-unknown'), ('quotient-of', ':op2', '3'), ('quotient-of', ':op1', '5'), ('equal-01', ':ARG1', 'quotient-of', ':op2', '3'), ('equal-01', ':ARG1', 'quotient-of', ':op1', '5')]"
+        },
+        {
+            "role": "user",
+            "content": "who is the governor of new york"
+        },
+        {
+            "role": "assistant",
+            "content": "[('have-org-role-91',), ('amr-unknown',), ('state',), ('governor',), ('name',), ('new',), ('york',), ('have-org-role-91', ':ARG0', 'amr-unknown'), ('have-org-role-91', ':ARG1', 'state'), ('have-org-role-91', ':ARG2', 'governor'), ('state', ':name', 'name'), ('name', ':op1', 'new'), ('name', ':op2', 'york'), ('have-org-role-91', ':ARG1', 'state', ':name', 'name'), ('state', ':name', 'name', ':op1', 'new'), ('state', ':name', 'name', ':op2', 'york')]"
+        },
+        {
+            "role": "user",
+            "content": "can you tell me about the middle east"
+        },
+        {
+            "role": "assistant",
+            "content": "[('tell-01',), ('imperative',), ('+',), ('you',), ('thing',), ('i',), ('world-region',), ('name',), ('middle',), ('east',), ('tell-01', ':mode', 'imperative'), ('tell-01', ':polite', '+'), ('tell-01', ':ARG0', 'you'), ('tell-01', ':ARG1', 'thing'), ('tell-01', ':ARG2', 'i'), ('thing', ':topic', 'world-region'), ('world-region', ':name', 'name'), ('name', ':op1', 'middle'), ('name', ':op2', 'east'), ('tell-01', ':ARG1', 'thing', ':topic', 'world-region'), ('thing', ':topic', 'world-region', ':name', 'name'), ('world-region', ':name', 'name', ':op1', 'middle'), ('world-region', ':name', 'name', ':op2', 'east')]"
+        },
+        {
+            "role": "user",
+            "content": "what's a parsec"
+        }
+    ],
+    [
+        {
+            "role": "system",
+            "content": "Decompose the utterance into a list of semantic frames like in the examples."
+        },
+        {
+            "role": "user",
+            "content": "what are some updates about the stock market"
+        },
+        {
+            "role": "assistant",
+            "content": "[('update-02',), ('amr-unknown',), ('market-01',), ('some',), ('stock',), ('update-02', ':ARG2', 'amr-unknown'), ('update-02', ':topic', 'market-01'), ('update-02', ':mod', 'some'), ('market-01', ':ARG1', 'stock'), ('update-02', ':topic', 'market-01', ':ARG1', 'stock')]"
+        },
+        {
+            "role": "user",
+            "content": "what is a fjord"
+        },
+        {
+            "role": "assistant",
+            "content": "[('fjord',), ('amr-unknown',), ('fjord', ':mod', 'amr-unknown')]"
+        },
+        {
+            "role": "user",
+            "content": "what is five over three"
+        },
+        {
+            "role": "assistant",
+            "content": "[('equal-01',), ('quotient-of',), ('amr-unknown',), ('3',), ('5',), ('equal-01', ':ARG1', 'quotient-of'), ('equal-01', ':ARG2', 'amr-unknown'), ('quotient-of', ':op2', '3'), ('quotient-of', ':op1', '5'), ('equal-01', ':ARG1', 'quotient-of', ':op2', '3'), ('equal-01', ':ARG1', 'quotient-of', ':op1', '5')]"
+        },
+        {
+            "role": "user",
+            "content": "who is the governor of new york"
+        },
+        {
+            "role": "assistant",
+            "content": "[('have-org-role-91',), ('amr-unknown',), ('state',), ('governor',), ('name',), ('new',), ('york',), ('have-org-role-91', ':ARG0', 'amr-unknown'), ('have-org-role-91', ':ARG1', 'state'), ('have-org-role-91', ':ARG2', 'governor'), ('state', ':name', 'name'), ('name', ':op1', 'new'), ('name', ':op2', 'york'), ('have-org-role-91', ':ARG1', 'state', ':name', 'name'), ('state', ':name', 'name', ':op1', 'new'), ('state', ':name', 'name', ':op2', 'york')]"
+        },
+        {
+            "role": "user",
+            "content": "can you tell me about the middle east"
+        },
+        {
+            "role": "assistant",
+            "content": "[('tell-01',), ('imperative',), ('+',), ('you',), ('thing',), ('i',), ('world-region',), ('name',), ('middle',), ('east',), ('tell-01', ':mode', 'imperative'), ('tell-01', ':polite', '+'), ('tell-01', ':ARG0', 'you'), ('tell-01', ':ARG1', 'thing'), ('tell-01', ':ARG2', 'i'), ('thing', ':topic', 'world-region'), ('world-region', ':name', 'name'), ('name', ':op1', 'middle'), ('name', ':op2', 'east'), ('tell-01', ':ARG1', 'thing', ':topic', 'world-region'), ('thing', ':topic', 'world-region', ':name', 'name'), ('world-region', ':name', 'name', ':op1', 'middle'), ('world-region', ':name', 'name', ':op2', 'east')]"
+        },
+        {
+            "role": "user",
+            "content": "how old was elvis when he died"
+        }
+    ],
+    [
+        {
+            "role": "system",
+            "content": "Decompose the utterance into a list of semantic frames like in the examples."
+        },
+        {
+            "role": "user",
+            "content": "what are some updates about the stock market"
+        },
+        {
+            "role": "assistant",
+            "content": "[('update-02',), ('amr-unknown',), ('market-01',), ('some',), ('stock',), ('update-02', ':ARG2', 'amr-unknown'), ('update-02', ':topic', 'market-01'), ('update-02', ':mod', 'some'), ('market-01', ':ARG1', 'stock'), ('update-02', ':topic', 'market-01', ':ARG1', 'stock')]"
+        },
+        {
+            "role": "user",
+            "content": "what is a fjord"
+        },
+        {
+            "role": "assistant",
+            "content": "[('fjord',), ('amr-unknown',), ('fjord', ':mod', 'amr-unknown')]"
+        },
+        {
+            "role": "user",
+            "content": "what is five over three"
+        },
+        {
+            "role": "assistant",
+            "content": "[('equal-01',), ('quotient-of',), ('amr-unknown',), ('3',), ('5',), ('equal-01', ':ARG1', 'quotient-of'), ('equal-01', ':ARG2', 'amr-unknown'), ('quotient-of', ':op2', '3'), ('quotient-of', ':op1', '5'), ('equal-01', ':ARG1', 'quotient-of', ':op2', '3'), ('equal-01', ':ARG1', 'quotient-of', ':op1', '5')]"
+        },
+        {
+            "role": "user",
+            "content": "who is the governor of new york"
+        },
+        {
+            "role": "assistant",
+            "content": "[('have-org-role-91',), ('amr-unknown',), ('state',), ('governor',), ('name',), ('new',), ('york',), ('have-org-role-91', ':ARG0', 'amr-unknown'), ('have-org-role-91', ':ARG1', 'state'), ('have-org-role-91', ':ARG2', 'governor'), ('state', ':name', 'name'), ('name', ':op1', 'new'), ('name', ':op2', 'york'), ('have-org-role-91', ':ARG1', 'state', ':name', 'name'), ('state', ':name', 'name', ':op1', 'new'), ('state', ':name', 'name', ':op2', 'york')]"
+        },
+        {
+            "role": "user",
+            "content": "can you tell me about the middle east"
+        },
+        {
+            "role": "assistant",
+            "content": "[('tell-01',), ('imperative',), ('+',), ('you',), ('thing',), ('i',), ('world-region',), ('name',), ('middle',), ('east',), ('tell-01', ':mode', 'imperative'), ('tell-01', ':polite', '+'), ('tell-01', ':ARG0', 'you'), ('tell-01', ':ARG1', 'thing'), ('tell-01', ':ARG2', 'i'), ('thing', ':topic', 'world-region'), ('world-region', ':name', 'name'), ('name', ':op1', 'middle'), ('name', ':op2', 'east'), ('tell-01', ':ARG1', 'thing', ':topic', 'world-region'), ('thing', ':topic', 'world-region', ':name', 'name'), ('world-region', ':name', 'name', ':op1', 'middle'), ('world-region', ':name', 'name', ':op2', 'east')]"
+        },
+        {
+            "role": "user",
+            "content": "currency to currency rate"
+        }
+    ],
+    [
+        {
+            "role": "system",
+            "content": "Decompose the utterance into a list of semantic frames like in the examples."
+        },
+        {
+            "role": "user",
+            "content": "what are some updates about the stock market"
+        },
+        {
+            "role": "assistant",
+            "content": "[('update-02',), ('amr-unknown',), ('market-01',), ('some',), ('stock',), ('update-02', ':ARG2', 'amr-unknown'), ('update-02', ':topic', 'market-01'), ('update-02', ':mod', 'some'), ('market-01', ':ARG1', 'stock'), ('update-02', ':topic', 'market-01', ':ARG1', 'stock')]"
+        },
+        {
+            "role": "user",
+            "content": "what is a fjord"
+        },
+        {
+            "role": "assistant",
+            "content": "[('fjord',), ('amr-unknown',), ('fjord', ':mod', 'amr-unknown')]"
+        },
+        {
+            "role": "user",
+            "content": "what is five over three"
+        },
+        {
+            "role": "assistant",
+            "content": "[('equal-01',), ('quotient-of',), ('amr-unknown',), ('3',), ('5',), ('equal-01', ':ARG1', 'quotient-of'), ('equal-01', ':ARG2', 'amr-unknown'), ('quotient-of', ':op2', '3'), ('quotient-of', ':op1', '5'), ('equal-01', ':ARG1', 'quotient-of', ':op2', '3'), ('equal-01', ':ARG1', 'quotient-of', ':op1', '5')]"
+        },
+        {
+            "role": "user",
+            "content": "who is the governor of new york"
+        },
+        {
+            "role": "assistant",
+            "content": "[('have-org-role-91',), ('amr-unknown',), ('state',), ('governor',), ('name',), ('new',), ('york',), ('have-org-role-91', ':ARG0', 'amr-unknown'), ('have-org-role-91', ':ARG1', 'state'), ('have-org-role-91', ':ARG2', 'governor'), ('state', ':name', 'name'), ('name', ':op1', 'new'), ('name', ':op2', 'york'), ('have-org-role-91', ':ARG1', 'state', ':name', 'name'), ('state', ':name', 'name', ':op1', 'new'), ('state', ':name', 'name', ':op2', 'york')]"
+        },
+        {
+            "role": "user",
+            "content": "can you tell me about the middle east"
+        },
+        {
+            "role": "assistant",
+            "content": "[('tell-01',), ('imperative',), ('+',), ('you',), ('thing',), ('i',), ('world-region',), ('name',), ('middle',), ('east',), ('tell-01', ':mode', 'imperative'), ('tell-01', ':polite', '+'), ('tell-01', ':ARG0', 'you'), ('tell-01', ':ARG1', 'thing'), ('tell-01', ':ARG2', 'i'), ('thing', ':topic', 'world-region'), ('world-region', ':name', 'name'), ('name', ':op1', 'middle'), ('name', ':op2', 'east'), ('tell-01', ':ARG1', 'thing', ':topic', 'world-region'), ('thing', ':topic', 'world-region', ':name', 'name'), ('world-region', ':name', 'name', ':op1', 'middle'), ('world-region', ':name', 'name', ':op2', 'east')]"
+        },
+        {
+            "role": "user",
+            "content": "what is the us dollar equivalent of one euro"
+        }
+    ],
+    [
+        {
+            "role": "system",
+            "content": "Decompose the utterance into a list of semantic frames like in the examples."
+        },
+        {
+            "role": "user",
+            "content": "what are some updates about the stock market"
+        },
+        {
+            "role": "assistant",
+            "content": "[('update-02',), ('amr-unknown',), ('market-01',), ('some',), ('stock',), ('update-02', ':ARG2', 'amr-unknown'), ('update-02', ':topic', 'market-01'), ('update-02', ':mod', 'some'), ('market-01', ':ARG1', 'stock'), ('update-02', ':topic', 'market-01', ':ARG1', 'stock')]"
+        },
+        {
+            "role": "user",
+            "content": "what is a fjord"
+        },
+        {
+            "role": "assistant",
+            "content": "[('fjord',), ('amr-unknown',), ('fjord', ':mod', 'amr-unknown')]"
+        },
+        {
+            "role": "user",
+            "content": "what is five over three"
+        },
+        {
+            "role": "assistant",
+            "content": "[('equal-01',), ('quotient-of',), ('amr-unknown',), ('3',), ('5',), ('equal-01', ':ARG1', 'quotient-of'), ('equal-01', ':ARG2', 'amr-unknown'), ('quotient-of', ':op2', '3'), ('quotient-of', ':op1', '5'), ('equal-01', ':ARG1', 'quotient-of', ':op2', '3'), ('equal-01', ':ARG1', 'quotient-of', ':op1', '5')]"
+        },
+        {
+            "role": "user",
+            "content": "who is the governor of new york"
+        },
+        {
+            "role": "assistant",
+            "content": "[('have-org-role-91',), ('amr-unknown',), ('state',), ('governor',), ('name',), ('new',), ('york',), ('have-org-role-91', ':ARG0', 'amr-unknown'), ('have-org-role-91', ':ARG1', 'state'), ('have-org-role-91', ':ARG2', 'governor'), ('state', ':name', 'name'), ('name', ':op1', 'new'), ('name', ':op2', 'york'), ('have-org-role-91', ':ARG1', 'state', ':name', 'name'), ('state', ':name', 'name', ':op1', 'new'), ('state', ':name', 'name', ':op2', 'york')]"
+        },
+        {
+            "role": "user",
+            "content": "can you tell me about the middle east"
+        },
+        {
+            "role": "assistant",
+            "content": "[('tell-01',), ('imperative',), ('+',), ('you',), ('thing',), ('i',), ('world-region',), ('name',), ('middle',), ('east',), ('tell-01', ':mode', 'imperative'), ('tell-01', ':polite', '+'), ('tell-01', ':ARG0', 'you'), ('tell-01', ':ARG1', 'thing'), ('tell-01', ':ARG2', 'i'), ('thing', ':topic', 'world-region'), ('world-region', ':name', 'name'), ('name', ':op1', 'middle'), ('name', ':op2', 'east'), ('tell-01', ':ARG1', 'thing', ':topic', 'world-region'), ('thing', ':topic', 'world-region', ':name', 'name'), ('world-region', ':name', 'name', ':op1', 'middle'), ('world-region', ':name', 'name', ':op2', 'east')]"
+        },
+        {
+            "role": "user",
+            "content": "how much is the average house"
+        }
+    ],
+    [
+        {
+            "role": "system",
+            "content": "Decompose the utterance into a list of semantic frames like in the examples."
+        },
+        {
+            "role": "user",
+            "content": "what are some updates about the stock market"
+        },
+        {
+            "role": "assistant",
+            "content": "[('update-02',), ('amr-unknown',), ('market-01',), ('some',), ('stock',), ('update-02', ':ARG2', 'amr-unknown'), ('update-02', ':topic', 'market-01'), ('update-02', ':mod', 'some'), ('market-01', ':ARG1', 'stock'), ('update-02', ':topic', 'market-01', ':ARG1', 'stock')]"
+        },
+        {
+            "role": "user",
+            "content": "what is a fjord"
+        },
+        {
+            "role": "assistant",
+            "content": "[('fjord',), ('amr-unknown',), ('fjord', ':mod', 'amr-unknown')]"
+        },
+        {
+            "role": "user",
+            "content": "what is five over three"
+        },
+        {
+            "role": "assistant",
+            "content": "[('equal-01',), ('quotient-of',), ('amr-unknown',), ('3',), ('5',), ('equal-01', ':ARG1', 'quotient-of'), ('equal-01', ':ARG2', 'amr-unknown'), ('quotient-of', ':op2', '3'), ('quotient-of', ':op1', '5'), ('equal-01', ':ARG1', 'quotient-of', ':op2', '3'), ('equal-01', ':ARG1', 'quotient-of', ':op1', '5')]"
+        },
+        {
+            "role": "user",
+            "content": "who is the governor of new york"
+        },
+        {
+            "role": "assistant",
+            "content": "[('have-org-role-91',), ('amr-unknown',), ('state',), ('governor',), ('name',), ('new',), ('york',), ('have-org-role-91', ':ARG0', 'amr-unknown'), ('have-org-role-91', ':ARG1', 'state'), ('have-org-role-91', ':ARG2', 'governor'), ('state', ':name', 'name'), ('name', ':op1', 'new'), ('name', ':op2', 'york'), ('have-org-role-91', ':ARG1', 'state', ':name', 'name'), ('state', ':name', 'name', ':op1', 'new'), ('state', ':name', 'name', ':op2', 'york')]"
+        },
+        {
+            "role": "user",
+            "content": "can you tell me about the middle east"
+        },
+        {
+            "role": "assistant",
+            "content": "[('tell-01',), ('imperative',), ('+',), ('you',), ('thing',), ('i',), ('world-region',), ('name',), ('middle',), ('east',), ('tell-01', ':mode', 'imperative'), ('tell-01', ':polite', '+'), ('tell-01', ':ARG0', 'you'), ('tell-01', ':ARG1', 'thing'), ('tell-01', ':ARG2', 'i'), ('thing', ':topic', 'world-region'), ('world-region', ':name', 'name'), ('name', ':op1', 'middle'), ('name', ':op2', 'east'), ('tell-01', ':ARG1', 'thing', ':topic', 'world-region'), ('thing', ':topic', 'world-region', ':name', 'name'), ('world-region', ':name', 'name', ':op1', 'middle'), ('world-region', ':name', 'name', ':op2', 'east')]"
+        },
+        {
+            "role": "user",
+            "content": "what causes in burmuda triangle"
+        }
+    ],
+    [
+        {
+            "role": "system",
+            "content": "Decompose the utterance into a list of semantic frames like in the examples."
+        },
+        {
+            "role": "user",
+            "content": "what are some updates about the stock market"
+        },
+        {
+            "role": "assistant",
+            "content": "[('update-02',), ('amr-unknown',), ('market-01',), ('some',), ('stock',), ('update-02', ':ARG2', 'amr-unknown'), ('update-02', ':topic', 'market-01'), ('update-02', ':mod', 'some'), ('market-01', ':ARG1', 'stock'), ('update-02', ':topic', 'market-01', ':ARG1', 'stock')]"
+        },
+        {
+            "role": "user",
+            "content": "what is a fjord"
+        },
+        {
+            "role": "assistant",
+            "content": "[('fjord',), ('amr-unknown',), ('fjord', ':mod', 'amr-unknown')]"
+        },
+        {
+            "role": "user",
+            "content": "what is five over three"
+        },
+        {
+            "role": "assistant",
+            "content": "[('equal-01',), ('quotient-of',), ('amr-unknown',), ('3',), ('5',), ('equal-01', ':ARG1', 'quotient-of'), ('equal-01', ':ARG2', 'amr-unknown'), ('quotient-of', ':op2', '3'), ('quotient-of', ':op1', '5'), ('equal-01', ':ARG1', 'quotient-of', ':op2', '3'), ('equal-01', ':ARG1', 'quotient-of', ':op1', '5')]"
+        },
+        {
+            "role": "user",
+            "content": "who is the governor of new york"
+        },
+        {
+            "role": "assistant",
+            "content": "[('have-org-role-91',), ('amr-unknown',), ('state',), ('governor',), ('name',), ('new',), ('york',), ('have-org-role-91', ':ARG0', 'amr-unknown'), ('have-org-role-91', ':ARG1', 'state'), ('have-org-role-91', ':ARG2', 'governor'), ('state', ':name', 'name'), ('name', ':op1', 'new'), ('name', ':op2', 'york'), ('have-org-role-91', ':ARG1', 'state', ':name', 'name'), ('state', ':name', 'name', ':op1', 'new'), ('state', ':name', 'name', ':op2', 'york')]"
+        },
+        {
+            "role": "user",
+            "content": "can you tell me about the middle east"
+        },
+        {
+            "role": "assistant",
+            "content": "[('tell-01',), ('imperative',), ('+',), ('you',), ('thing',), ('i',), ('world-region',), ('name',), ('middle',), ('east',), ('tell-01', ':mode', 'imperative'), ('tell-01', ':polite', '+'), ('tell-01', ':ARG0', 'you'), ('tell-01', ':ARG1', 'thing'), ('tell-01', ':ARG2', 'i'), ('thing', ':topic', 'world-region'), ('world-region', ':name', 'name'), ('name', ':op1', 'middle'), ('name', ':op2', 'east'), ('tell-01', ':ARG1', 'thing', ':topic', 'world-region'), ('thing', ':topic', 'world-region', ':name', 'name'), ('world-region', ':name', 'name', ':op1', 'middle'), ('world-region', ':name', 'name', ':op2', 'east')]"
+        },
+        {
+            "role": "user",
+            "content": "how old is barack obaba"
+        }
+    ],
+    [
+        {
+            "role": "system",
+            "content": "Decompose the utterance into a list of semantic frames like in the examples."
+        },
+        {
+            "role": "user",
+            "content": "what are some updates about the stock market"
+        },
+        {
+            "role": "assistant",
+            "content": "[('update-02',), ('amr-unknown',), ('market-01',), ('some',), ('stock',), ('update-02', ':ARG2', 'amr-unknown'), ('update-02', ':topic', 'market-01'), ('update-02', ':mod', 'some'), ('market-01', ':ARG1', 'stock'), ('update-02', ':topic', 'market-01', ':ARG1', 'stock')]"
+        },
+        {
+            "role": "user",
+            "content": "what is a fjord"
+        },
+        {
+            "role": "assistant",
+            "content": "[('fjord',), ('amr-unknown',), ('fjord', ':mod', 'amr-unknown')]"
+        },
+        {
+            "role": "user",
+            "content": "what is five over three"
+        },
+        {
+            "role": "assistant",
+            "content": "[('equal-01',), ('quotient-of',), ('amr-unknown',), ('3',), ('5',), ('equal-01', ':ARG1', 'quotient-of'), ('equal-01', ':ARG2', 'amr-unknown'), ('quotient-of', ':op2', '3'), ('quotient-of', ':op1', '5'), ('equal-01', ':ARG1', 'quotient-of', ':op2', '3'), ('equal-01', ':ARG1', 'quotient-of', ':op1', '5')]"
+        },
+        {
+            "role": "user",
+            "content": "who is the governor of new york"
+        },
+        {
+            "role": "assistant",
+            "content": "[('have-org-role-91',), ('amr-unknown',), ('state',), ('governor',), ('name',), ('new',), ('york',), ('have-org-role-91', ':ARG0', 'amr-unknown'), ('have-org-role-91', ':ARG1', 'state'), ('have-org-role-91', ':ARG2', 'governor'), ('state', ':name', 'name'), ('name', ':op1', 'new'), ('name', ':op2', 'york'), ('have-org-role-91', ':ARG1', 'state', ':name', 'name'), ('state', ':name', 'name', ':op1', 'new'), ('state', ':name', 'name', ':op2', 'york')]"
+        },
+        {
+            "role": "user",
+            "content": "can you tell me about the middle east"
+        },
+        {
+            "role": "assistant",
+            "content": "[('tell-01',), ('imperative',), ('+',), ('you',), ('thing',), ('i',), ('world-region',), ('name',), ('middle',), ('east',), ('tell-01', ':mode', 'imperative'), ('tell-01', ':polite', '+'), ('tell-01', ':ARG0', 'you'), ('tell-01', ':ARG1', 'thing'), ('tell-01', ':ARG2', 'i'), ('thing', ':topic', 'world-region'), ('world-region', ':name', 'name'), ('name', ':op1', 'middle'), ('name', ':op2', 'east'), ('tell-01', ':ARG1', 'thing', ':topic', 'world-region'), ('thing', ':topic', 'world-region', ':name', 'name'), ('world-region', ':name', 'name', ':op1', 'middle'), ('world-region', ':name', 'name', ':op2', 'east')]"
+        },
+        {
+            "role": "user",
+            "content": "where on earth has the most volcanoes"
+        }
+    ],
+    [
+        {
+            "role": "system",
+            "content": "Decompose the utterance into a list of semantic frames like in the examples."
+        },
+        {
+            "role": "user",
+            "content": "what are some updates about the stock market"
+        },
+        {
+            "role": "assistant",
+            "content": "[('update-02',), ('amr-unknown',), ('market-01',), ('some',), ('stock',), ('update-02', ':ARG2', 'amr-unknown'), ('update-02', ':topic', 'market-01'), ('update-02', ':mod', 'some'), ('market-01', ':ARG1', 'stock'), ('update-02', ':topic', 'market-01', ':ARG1', 'stock')]"
+        },
+        {
+            "role": "user",
+            "content": "what is a fjord"
+        },
+        {
+            "role": "assistant",
+            "content": "[('fjord',), ('amr-unknown',), ('fjord', ':mod', 'amr-unknown')]"
+        },
+        {
+            "role": "user",
+            "content": "what is five over three"
+        },
+        {
+            "role": "assistant",
+            "content": "[('equal-01',), ('quotient-of',), ('amr-unknown',), ('3',), ('5',), ('equal-01', ':ARG1', 'quotient-of'), ('equal-01', ':ARG2', 'amr-unknown'), ('quotient-of', ':op2', '3'), ('quotient-of', ':op1', '5'), ('equal-01', ':ARG1', 'quotient-of', ':op2', '3'), ('equal-01', ':ARG1', 'quotient-of', ':op1', '5')]"
+        },
+        {
+            "role": "user",
+            "content": "who is the governor of new york"
+        },
+        {
+            "role": "assistant",
+            "content": "[('have-org-role-91',), ('amr-unknown',), ('state',), ('governor',), ('name',), ('new',), ('york',), ('have-org-role-91', ':ARG0', 'amr-unknown'), ('have-org-role-91', ':ARG1', 'state'), ('have-org-role-91', ':ARG2', 'governor'), ('state', ':name', 'name'), ('name', ':op1', 'new'), ('name', ':op2', 'york'), ('have-org-role-91', ':ARG1', 'state', ':name', 'name'), ('state', ':name', 'name', ':op1', 'new'), ('state', ':name', 'name', ':op2', 'york')]"
+        },
+        {
+            "role": "user",
+            "content": "can you tell me about the middle east"
+        },
+        {
+            "role": "assistant",
+            "content": "[('tell-01',), ('imperative',), ('+',), ('you',), ('thing',), ('i',), ('world-region',), ('name',), ('middle',), ('east',), ('tell-01', ':mode', 'imperative'), ('tell-01', ':polite', '+'), ('tell-01', ':ARG0', 'you'), ('tell-01', ':ARG1', 'thing'), ('tell-01', ':ARG2', 'i'), ('thing', ':topic', 'world-region'), ('world-region', ':name', 'name'), ('name', ':op1', 'middle'), ('name', ':op2', 'east'), ('tell-01', ':ARG1', 'thing', ':topic', 'world-region'), ('thing', ':topic', 'world-region', ':name', 'name'), ('world-region', ':name', 'name', ':op1', 'middle'), ('world-region', ':name', 'name', ':op2', 'east')]"
+        },
+        {
+            "role": "user",
+            "content": "what are i. b. m.'s stock prices"
+        }
+    ],
+    [
+        {
+            "role": "system",
+            "content": "Decompose the utterance into a list of semantic frames like in the examples."
+        },
+        {
+            "role": "user",
+            "content": "what are some updates about the stock market"
+        },
+        {
+            "role": "assistant",
+            "content": "[('update-02',), ('amr-unknown',), ('market-01',), ('some',), ('stock',), ('update-02', ':ARG2', 'amr-unknown'), ('update-02', ':topic', 'market-01'), ('update-02', ':mod', 'some'), ('market-01', ':ARG1', 'stock'), ('update-02', ':topic', 'market-01', ':ARG1', 'stock')]"
+        },
+        {
+            "role": "user",
+            "content": "what is a fjord"
+        },
+        {
+            "role": "assistant",
+            "content": "[('fjord',), ('amr-unknown',), ('fjord', ':mod', 'amr-unknown')]"
+        },
+        {
+            "role": "user",
+            "content": "what is five over three"
+        },
+        {
+            "role": "assistant",
+            "content": "[('equal-01',), ('quotient-of',), ('amr-unknown',), ('3',), ('5',), ('equal-01', ':ARG1', 'quotient-of'), ('equal-01', ':ARG2', 'amr-unknown'), ('quotient-of', ':op2', '3'), ('quotient-of', ':op1', '5'), ('equal-01', ':ARG1', 'quotient-of', ':op2', '3'), ('equal-01', ':ARG1', 'quotient-of', ':op1', '5')]"
+        },
+        {
+            "role": "user",
+            "content": "who is the governor of new york"
+        },
+        {
+            "role": "assistant",
+            "content": "[('have-org-role-91',), ('amr-unknown',), ('state',), ('governor',), ('name',), ('new',), ('york',), ('have-org-role-91', ':ARG0', 'amr-unknown'), ('have-org-role-91', ':ARG1', 'state'), ('have-org-role-91', ':ARG2', 'governor'), ('state', ':name', 'name'), ('name', ':op1', 'new'), ('name', ':op2', 'york'), ('have-org-role-91', ':ARG1', 'state', ':name', 'name'), ('state', ':name', 'name', ':op1', 'new'), ('state', ':name', 'name', ':op2', 'york')]"
+        },
+        {
+            "role": "user",
+            "content": "can you tell me about the middle east"
+        },
+        {
+            "role": "assistant",
+            "content": "[('tell-01',), ('imperative',), ('+',), ('you',), ('thing',), ('i',), ('world-region',), ('name',), ('middle',), ('east',), ('tell-01', ':mode', 'imperative'), ('tell-01', ':polite', '+'), ('tell-01', ':ARG0', 'you'), ('tell-01', ':ARG1', 'thing'), ('tell-01', ':ARG2', 'i'), ('thing', ':topic', 'world-region'), ('world-region', ':name', 'name'), ('name', ':op1', 'middle'), ('name', ':op2', 'east'), ('tell-01', ':ARG1', 'thing', ':topic', 'world-region'), ('thing', ':topic', 'world-region', ':name', 'name'), ('world-region', ':name', 'name', ':op1', 'middle'), ('world-region', ':name', 'name', ':op2', 'east')]"
+        },
+        {
+            "role": "user",
+            "content": "what high school did halley barry go to"
+        }
+    ],
+    [
+        {
+            "role": "system",
+            "content": "Decompose the utterance into a list of semantic frames like in the examples."
+        },
+        {
+            "role": "user",
+            "content": "what are some updates about the stock market"
+        },
+        {
+            "role": "assistant",
+            "content": "[('update-02',), ('amr-unknown',), ('market-01',), ('some',), ('stock',), ('update-02', ':ARG2', 'amr-unknown'), ('update-02', ':topic', 'market-01'), ('update-02', ':mod', 'some'), ('market-01', ':ARG1', 'stock'), ('update-02', ':topic', 'market-01', ':ARG1', 'stock')]"
+        },
+        {
+            "role": "user",
+            "content": "what is a fjord"
+        },
+        {
+            "role": "assistant",
+            "content": "[('fjord',), ('amr-unknown',), ('fjord', ':mod', 'amr-unknown')]"
+        },
+        {
+            "role": "user",
+            "content": "what is five over three"
+        },
+        {
+            "role": "assistant",
+            "content": "[('equal-01',), ('quotient-of',), ('amr-unknown',), ('3',), ('5',), ('equal-01', ':ARG1', 'quotient-of'), ('equal-01', ':ARG2', 'amr-unknown'), ('quotient-of', ':op2', '3'), ('quotient-of', ':op1', '5'), ('equal-01', ':ARG1', 'quotient-of', ':op2', '3'), ('equal-01', ':ARG1', 'quotient-of', ':op1', '5')]"
+        },
+        {
+            "role": "user",
+            "content": "who is the governor of new york"
+        },
+        {
+            "role": "assistant",
+            "content": "[('have-org-role-91',), ('amr-unknown',), ('state',), ('governor',), ('name',), ('new',), ('york',), ('have-org-role-91', ':ARG0', 'amr-unknown'), ('have-org-role-91', ':ARG1', 'state'), ('have-org-role-91', ':ARG2', 'governor'), ('state', ':name', 'name'), ('name', ':op1', 'new'), ('name', ':op2', 'york'), ('have-org-role-91', ':ARG1', 'state', ':name', 'name'), ('state', ':name', 'name', ':op1', 'new'), ('state', ':name', 'name', ':op2', 'york')]"
+        },
+        {
+            "role": "user",
+            "content": "can you tell me about the middle east"
+        },
+        {
+            "role": "assistant",
+            "content": "[('tell-01',), ('imperative',), ('+',), ('you',), ('thing',), ('i',), ('world-region',), ('name',), ('middle',), ('east',), ('tell-01', ':mode', 'imperative'), ('tell-01', ':polite', '+'), ('tell-01', ':ARG0', 'you'), ('tell-01', ':ARG1', 'thing'), ('tell-01', ':ARG2', 'i'), ('thing', ':topic', 'world-region'), ('world-region', ':name', 'name'), ('name', ':op1', 'middle'), ('name', ':op2', 'east'), ('tell-01', ':ARG1', 'thing', ':topic', 'world-region'), ('thing', ':topic', 'world-region', ':name', 'name'), ('world-region', ':name', 'name', ':op1', 'middle'), ('world-region', ':name', 'name', ':op2', 'east')]"
+        },
+        {
+            "role": "user",
+            "content": "why isn't adam sandler funny"
+        }
+    ],
+    [
+        {
+            "role": "system",
+            "content": "Decompose the utterance into a list of semantic frames like in the examples."
+        },
+        {
+            "role": "user",
+            "content": "what are some updates about the stock market"
+        },
+        {
+            "role": "assistant",
+            "content": "[('update-02',), ('amr-unknown',), ('market-01',), ('some',), ('stock',), ('update-02', ':ARG2', 'amr-unknown'), ('update-02', ':topic', 'market-01'), ('update-02', ':mod', 'some'), ('market-01', ':ARG1', 'stock'), ('update-02', ':topic', 'market-01', ':ARG1', 'stock')]"
+        },
+        {
+            "role": "user",
+            "content": "what is a fjord"
+        },
+        {
+            "role": "assistant",
+            "content": "[('fjord',), ('amr-unknown',), ('fjord', ':mod', 'amr-unknown')]"
+        },
+        {
+            "role": "user",
+            "content": "what is five over three"
+        },
+        {
+            "role": "assistant",
+            "content": "[('equal-01',), ('quotient-of',), ('amr-unknown',), ('3',), ('5',), ('equal-01', ':ARG1', 'quotient-of'), ('equal-01', ':ARG2', 'amr-unknown'), ('quotient-of', ':op2', '3'), ('quotient-of', ':op1', '5'), ('equal-01', ':ARG1', 'quotient-of', ':op2', '3'), ('equal-01', ':ARG1', 'quotient-of', ':op1', '5')]"
+        },
+        {
+            "role": "user",
+            "content": "who is the governor of new york"
+        },
+        {
+            "role": "assistant",
+            "content": "[('have-org-role-91',), ('amr-unknown',), ('state',), ('governor',), ('name',), ('new',), ('york',), ('have-org-role-91', ':ARG0', 'amr-unknown'), ('have-org-role-91', ':ARG1', 'state'), ('have-org-role-91', ':ARG2', 'governor'), ('state', ':name', 'name'), ('name', ':op1', 'new'), ('name', ':op2', 'york'), ('have-org-role-91', ':ARG1', 'state', ':name', 'name'), ('state', ':name', 'name', ':op1', 'new'), ('state', ':name', 'name', ':op2', 'york')]"
+        },
+        {
+            "role": "user",
+            "content": "can you tell me about the middle east"
+        },
+        {
+            "role": "assistant",
+            "content": "[('tell-01',), ('imperative',), ('+',), ('you',), ('thing',), ('i',), ('world-region',), ('name',), ('middle',), ('east',), ('tell-01', ':mode', 'imperative'), ('tell-01', ':polite', '+'), ('tell-01', ':ARG0', 'you'), ('tell-01', ':ARG1', 'thing'), ('tell-01', ':ARG2', 'i'), ('thing', ':topic', 'world-region'), ('world-region', ':name', 'name'), ('name', ':op1', 'middle'), ('name', ':op2', 'east'), ('tell-01', ':ARG1', 'thing', ':topic', 'world-region'), ('thing', ':topic', 'world-region', ':name', 'name'), ('world-region', ':name', 'name', ':op1', 'middle'), ('world-region', ':name', 'name', ':op2', 'east')]"
+        },
+        {
+            "role": "user",
+            "content": "how far is san francisco from la"
+        }
+    ],
+    [
+        {
+            "role": "system",
+            "content": "Decompose the utterance into a list of semantic frames like in the examples."
+        },
+        {
+            "role": "user",
+            "content": "what are some updates about the stock market"
+        },
+        {
+            "role": "assistant",
+            "content": "[('update-02',), ('amr-unknown',), ('market-01',), ('some',), ('stock',), ('update-02', ':ARG2', 'amr-unknown'), ('update-02', ':topic', 'market-01'), ('update-02', ':mod', 'some'), ('market-01', ':ARG1', 'stock'), ('update-02', ':topic', 'market-01', ':ARG1', 'stock')]"
+        },
+        {
+            "role": "user",
+            "content": "what is a fjord"
+        },
+        {
+            "role": "assistant",
+            "content": "[('fjord',), ('amr-unknown',), ('fjord', ':mod', 'amr-unknown')]"
+        },
+        {
+            "role": "user",
+            "content": "what is five over three"
+        },
+        {
+            "role": "assistant",
+            "content": "[('equal-01',), ('quotient-of',), ('amr-unknown',), ('3',), ('5',), ('equal-01', ':ARG1', 'quotient-of'), ('equal-01', ':ARG2', 'amr-unknown'), ('quotient-of', ':op2', '3'), ('quotient-of', ':op1', '5'), ('equal-01', ':ARG1', 'quotient-of', ':op2', '3'), ('equal-01', ':ARG1', 'quotient-of', ':op1', '5')]"
+        },
+        {
+            "role": "user",
+            "content": "who is the governor of new york"
+        },
+        {
+            "role": "assistant",
+            "content": "[('have-org-role-91',), ('amr-unknown',), ('state',), ('governor',), ('name',), ('new',), ('york',), ('have-org-role-91', ':ARG0', 'amr-unknown'), ('have-org-role-91', ':ARG1', 'state'), ('have-org-role-91', ':ARG2', 'governor'), ('state', ':name', 'name'), ('name', ':op1', 'new'), ('name', ':op2', 'york'), ('have-org-role-91', ':ARG1', 'state', ':name', 'name'), ('state', ':name', 'name', ':op1', 'new'), ('state', ':name', 'name', ':op2', 'york')]"
+        },
+        {
+            "role": "user",
+            "content": "can you tell me about the middle east"
+        },
+        {
+            "role": "assistant",
+            "content": "[('tell-01',), ('imperative',), ('+',), ('you',), ('thing',), ('i',), ('world-region',), ('name',), ('middle',), ('east',), ('tell-01', ':mode', 'imperative'), ('tell-01', ':polite', '+'), ('tell-01', ':ARG0', 'you'), ('tell-01', ':ARG1', 'thing'), ('tell-01', ':ARG2', 'i'), ('thing', ':topic', 'world-region'), ('world-region', ':name', 'name'), ('name', ':op1', 'middle'), ('name', ':op2', 'east'), ('tell-01', ':ARG1', 'thing', ':topic', 'world-region'), ('thing', ':topic', 'world-region', ':name', 'name'), ('world-region', ':name', 'name', ':op1', 'middle'), ('world-region', ':name', 'name', ':op2', 'east')]"
+        },
+        {
+            "role": "user",
+            "content": "what country uses the most coal"
+        }
+    ],
+    [
+        {
+            "role": "system",
+            "content": "Decompose the utterance into a list of semantic frames like in the examples."
+        },
+        {
+            "role": "user",
+            "content": "what are some updates about the stock market"
+        },
+        {
+            "role": "assistant",
+            "content": "[('update-02',), ('amr-unknown',), ('market-01',), ('some',), ('stock',), ('update-02', ':ARG2', 'amr-unknown'), ('update-02', ':topic', 'market-01'), ('update-02', ':mod', 'some'), ('market-01', ':ARG1', 'stock'), ('update-02', ':topic', 'market-01', ':ARG1', 'stock')]"
+        },
+        {
+            "role": "user",
+            "content": "what is a fjord"
+        },
+        {
+            "role": "assistant",
+            "content": "[('fjord',), ('amr-unknown',), ('fjord', ':mod', 'amr-unknown')]"
+        },
+        {
+            "role": "user",
+            "content": "what is five over three"
+        },
+        {
+            "role": "assistant",
+            "content": "[('equal-01',), ('quotient-of',), ('amr-unknown',), ('3',), ('5',), ('equal-01', ':ARG1', 'quotient-of'), ('equal-01', ':ARG2', 'amr-unknown'), ('quotient-of', ':op2', '3'), ('quotient-of', ':op1', '5'), ('equal-01', ':ARG1', 'quotient-of', ':op2', '3'), ('equal-01', ':ARG1', 'quotient-of', ':op1', '5')]"
+        },
+        {
+            "role": "user",
+            "content": "who is the governor of new york"
+        },
+        {
+            "role": "assistant",
+            "content": "[('have-org-role-91',), ('amr-unknown',), ('state',), ('governor',), ('name',), ('new',), ('york',), ('have-org-role-91', ':ARG0', 'amr-unknown'), ('have-org-role-91', ':ARG1', 'state'), ('have-org-role-91', ':ARG2', 'governor'), ('state', ':name', 'name'), ('name', ':op1', 'new'), ('name', ':op2', 'york'), ('have-org-role-91', ':ARG1', 'state', ':name', 'name'), ('state', ':name', 'name', ':op1', 'new'), ('state', ':name', 'name', ':op2', 'york')]"
+        },
+        {
+            "role": "user",
+            "content": "can you tell me about the middle east"
+        },
+        {
+            "role": "assistant",
+            "content": "[('tell-01',), ('imperative',), ('+',), ('you',), ('thing',), ('i',), ('world-region',), ('name',), ('middle',), ('east',), ('tell-01', ':mode', 'imperative'), ('tell-01', ':polite', '+'), ('tell-01', ':ARG0', 'you'), ('tell-01', ':ARG1', 'thing'), ('tell-01', ':ARG2', 'i'), ('thing', ':topic', 'world-region'), ('world-region', ':name', 'name'), ('name', ':op1', 'middle'), ('name', ':op2', 'east'), ('tell-01', ':ARG1', 'thing', ':topic', 'world-region'), ('thing', ':topic', 'world-region', ':name', 'name'), ('world-region', ':name', 'name', ':op1', 'middle'), ('world-region', ':name', 'name', ':op2', 'east')]"
+        },
+        {
+            "role": "user",
+            "content": "alexa who is bob dean"
+        }
+    ],
+    [
+        {
+            "role": "system",
+            "content": "Decompose the utterance into a list of semantic frames like in the examples."
+        },
+        {
+            "role": "user",
+            "content": "what are some updates about the stock market"
+        },
+        {
+            "role": "assistant",
+            "content": "[('update-02',), ('amr-unknown',), ('market-01',), ('some',), ('stock',), ('update-02', ':ARG2', 'amr-unknown'), ('update-02', ':topic', 'market-01'), ('update-02', ':mod', 'some'), ('market-01', ':ARG1', 'stock'), ('update-02', ':topic', 'market-01', ':ARG1', 'stock')]"
+        },
+        {
+            "role": "user",
+            "content": "what is a fjord"
+        },
+        {
+            "role": "assistant",
+            "content": "[('fjord',), ('amr-unknown',), ('fjord', ':mod', 'amr-unknown')]"
+        },
+        {
+            "role": "user",
+            "content": "what is five over three"
+        },
+        {
+            "role": "assistant",
+            "content": "[('equal-01',), ('quotient-of',), ('amr-unknown',), ('3',), ('5',), ('equal-01', ':ARG1', 'quotient-of'), ('equal-01', ':ARG2', 'amr-unknown'), ('quotient-of', ':op2', '3'), ('quotient-of', ':op1', '5'), ('equal-01', ':ARG1', 'quotient-of', ':op2', '3'), ('equal-01', ':ARG1', 'quotient-of', ':op1', '5')]"
+        },
+        {
+            "role": "user",
+            "content": "who is the governor of new york"
+        },
+        {
+            "role": "assistant",
+            "content": "[('have-org-role-91',), ('amr-unknown',), ('state',), ('governor',), ('name',), ('new',), ('york',), ('have-org-role-91', ':ARG0', 'amr-unknown'), ('have-org-role-91', ':ARG1', 'state'), ('have-org-role-91', ':ARG2', 'governor'), ('state', ':name', 'name'), ('name', ':op1', 'new'), ('name', ':op2', 'york'), ('have-org-role-91', ':ARG1', 'state', ':name', 'name'), ('state', ':name', 'name', ':op1', 'new'), ('state', ':name', 'name', ':op2', 'york')]"
+        },
+        {
+            "role": "user",
+            "content": "can you tell me about the middle east"
+        },
+        {
+            "role": "assistant",
+            "content": "[('tell-01',), ('imperative',), ('+',), ('you',), ('thing',), ('i',), ('world-region',), ('name',), ('middle',), ('east',), ('tell-01', ':mode', 'imperative'), ('tell-01', ':polite', '+'), ('tell-01', ':ARG0', 'you'), ('tell-01', ':ARG1', 'thing'), ('tell-01', ':ARG2', 'i'), ('thing', ':topic', 'world-region'), ('world-region', ':name', 'name'), ('name', ':op1', 'middle'), ('name', ':op2', 'east'), ('tell-01', ':ARG1', 'thing', ':topic', 'world-region'), ('thing', ':topic', 'world-region', ':name', 'name'), ('world-region', ':name', 'name', ':op1', 'middle'), ('world-region', ':name', 'name', ':op2', 'east')]"
+        },
+        {
+            "role": "user",
+            "content": "find the sum of thirteen and fourteen"
+        }
+    ],
+    [
+        {
+            "role": "system",
+            "content": "Decompose the utterance into a list of semantic frames like in the examples."
+        },
+        {
+            "role": "user",
+            "content": "what are some updates about the stock market"
+        },
+        {
+            "role": "assistant",
+            "content": "[('update-02',), ('amr-unknown',), ('market-01',), ('some',), ('stock',), ('update-02', ':ARG2', 'amr-unknown'), ('update-02', ':topic', 'market-01'), ('update-02', ':mod', 'some'), ('market-01', ':ARG1', 'stock'), ('update-02', ':topic', 'market-01', ':ARG1', 'stock')]"
+        },
+        {
+            "role": "user",
+            "content": "what is a fjord"
+        },
+        {
+            "role": "assistant",
+            "content": "[('fjord',), ('amr-unknown',), ('fjord', ':mod', 'amr-unknown')]"
+        },
+        {
+            "role": "user",
+            "content": "what is five over three"
+        },
+        {
+            "role": "assistant",
+            "content": "[('equal-01',), ('quotient-of',), ('amr-unknown',), ('3',), ('5',), ('equal-01', ':ARG1', 'quotient-of'), ('equal-01', ':ARG2', 'amr-unknown'), ('quotient-of', ':op2', '3'), ('quotient-of', ':op1', '5'), ('equal-01', ':ARG1', 'quotient-of', ':op2', '3'), ('equal-01', ':ARG1', 'quotient-of', ':op1', '5')]"
+        },
+        {
+            "role": "user",
+            "content": "who is the governor of new york"
+        },
+        {
+            "role": "assistant",
+            "content": "[('have-org-role-91',), ('amr-unknown',), ('state',), ('governor',), ('name',), ('new',), ('york',), ('have-org-role-91', ':ARG0', 'amr-unknown'), ('have-org-role-91', ':ARG1', 'state'), ('have-org-role-91', ':ARG2', 'governor'), ('state', ':name', 'name'), ('name', ':op1', 'new'), ('name', ':op2', 'york'), ('have-org-role-91', ':ARG1', 'state', ':name', 'name'), ('state', ':name', 'name', ':op1', 'new'), ('state', ':name', 'name', ':op2', 'york')]"
+        },
+        {
+            "role": "user",
+            "content": "can you tell me about the middle east"
+        },
+        {
+            "role": "assistant",
+            "content": "[('tell-01',), ('imperative',), ('+',), ('you',), ('thing',), ('i',), ('world-region',), ('name',), ('middle',), ('east',), ('tell-01', ':mode', 'imperative'), ('tell-01', ':polite', '+'), ('tell-01', ':ARG0', 'you'), ('tell-01', ':ARG1', 'thing'), ('tell-01', ':ARG2', 'i'), ('thing', ':topic', 'world-region'), ('world-region', ':name', 'name'), ('name', ':op1', 'middle'), ('name', ':op2', 'east'), ('tell-01', ':ARG1', 'thing', ':topic', 'world-region'), ('thing', ':topic', 'world-region', ':name', 'name'), ('world-region', ':name', 'name', ':op1', 'middle'), ('world-region', ':name', 'name', ':op2', 'east')]"
+        },
+        {
+            "role": "user",
+            "content": "what is the capital of france"
+        }
+    ],
+    [
+        {
+            "role": "system",
+            "content": "Decompose the utterance into a list of semantic frames like in the examples."
+        },
+        {
+            "role": "user",
+            "content": "what are some updates about the stock market"
+        },
+        {
+            "role": "assistant",
+            "content": "[('update-02',), ('amr-unknown',), ('market-01',), ('some',), ('stock',), ('update-02', ':ARG2', 'amr-unknown'), ('update-02', ':topic', 'market-01'), ('update-02', ':mod', 'some'), ('market-01', ':ARG1', 'stock'), ('update-02', ':topic', 'market-01', ':ARG1', 'stock')]"
+        },
+        {
+            "role": "user",
+            "content": "what is a fjord"
+        },
+        {
+            "role": "assistant",
+            "content": "[('fjord',), ('amr-unknown',), ('fjord', ':mod', 'amr-unknown')]"
+        },
+        {
+            "role": "user",
+            "content": "what is five over three"
+        },
+        {
+            "role": "assistant",
+            "content": "[('equal-01',), ('quotient-of',), ('amr-unknown',), ('3',), ('5',), ('equal-01', ':ARG1', 'quotient-of'), ('equal-01', ':ARG2', 'amr-unknown'), ('quotient-of', ':op2', '3'), ('quotient-of', ':op1', '5'), ('equal-01', ':ARG1', 'quotient-of', ':op2', '3'), ('equal-01', ':ARG1', 'quotient-of', ':op1', '5')]"
+        },
+        {
+            "role": "user",
+            "content": "who is the governor of new york"
+        },
+        {
+            "role": "assistant",
+            "content": "[('have-org-role-91',), ('amr-unknown',), ('state',), ('governor',), ('name',), ('new',), ('york',), ('have-org-role-91', ':ARG0', 'amr-unknown'), ('have-org-role-91', ':ARG1', 'state'), ('have-org-role-91', ':ARG2', 'governor'), ('state', ':name', 'name'), ('name', ':op1', 'new'), ('name', ':op2', 'york'), ('have-org-role-91', ':ARG1', 'state', ':name', 'name'), ('state', ':name', 'name', ':op1', 'new'), ('state', ':name', 'name', ':op2', 'york')]"
+        },
+        {
+            "role": "user",
+            "content": "can you tell me about the middle east"
+        },
+        {
+            "role": "assistant",
+            "content": "[('tell-01',), ('imperative',), ('+',), ('you',), ('thing',), ('i',), ('world-region',), ('name',), ('middle',), ('east',), ('tell-01', ':mode', 'imperative'), ('tell-01', ':polite', '+'), ('tell-01', ':ARG0', 'you'), ('tell-01', ':ARG1', 'thing'), ('tell-01', ':ARG2', 'i'), ('thing', ':topic', 'world-region'), ('world-region', ':name', 'name'), ('name', ':op1', 'middle'), ('name', ':op2', 'east'), ('tell-01', ':ARG1', 'thing', ':topic', 'world-region'), ('thing', ':topic', 'world-region', ':name', 'name'), ('world-region', ':name', 'name', ':op1', 'middle'), ('world-region', ':name', 'name', ':op2', 'east')]"
+        },
+        {
+            "role": "user",
+            "content": "how many countries"
+        }
+    ],
+    [
+        {
+            "role": "system",
+            "content": "Decompose the utterance into a list of semantic frames like in the examples."
+        },
+        {
+            "role": "user",
+            "content": "what are some updates about the stock market"
+        },
+        {
+            "role": "assistant",
+            "content": "[('update-02',), ('amr-unknown',), ('market-01',), ('some',), ('stock',), ('update-02', ':ARG2', 'amr-unknown'), ('update-02', ':topic', 'market-01'), ('update-02', ':mod', 'some'), ('market-01', ':ARG1', 'stock'), ('update-02', ':topic', 'market-01', ':ARG1', 'stock')]"
+        },
+        {
+            "role": "user",
+            "content": "what is a fjord"
+        },
+        {
+            "role": "assistant",
+            "content": "[('fjord',), ('amr-unknown',), ('fjord', ':mod', 'amr-unknown')]"
+        },
+        {
+            "role": "user",
+            "content": "what is five over three"
+        },
+        {
+            "role": "assistant",
+            "content": "[('equal-01',), ('quotient-of',), ('amr-unknown',), ('3',), ('5',), ('equal-01', ':ARG1', 'quotient-of'), ('equal-01', ':ARG2', 'amr-unknown'), ('quotient-of', ':op2', '3'), ('quotient-of', ':op1', '5'), ('equal-01', ':ARG1', 'quotient-of', ':op2', '3'), ('equal-01', ':ARG1', 'quotient-of', ':op1', '5')]"
+        },
+        {
+            "role": "user",
+            "content": "who is the governor of new york"
+        },
+        {
+            "role": "assistant",
+            "content": "[('have-org-role-91',), ('amr-unknown',), ('state',), ('governor',), ('name',), ('new',), ('york',), ('have-org-role-91', ':ARG0', 'amr-unknown'), ('have-org-role-91', ':ARG1', 'state'), ('have-org-role-91', ':ARG2', 'governor'), ('state', ':name', 'name'), ('name', ':op1', 'new'), ('name', ':op2', 'york'), ('have-org-role-91', ':ARG1', 'state', ':name', 'name'), ('state', ':name', 'name', ':op1', 'new'), ('state', ':name', 'name', ':op2', 'york')]"
+        },
+        {
+            "role": "user",
+            "content": "can you tell me about the middle east"
+        },
+        {
+            "role": "assistant",
+            "content": "[('tell-01',), ('imperative',), ('+',), ('you',), ('thing',), ('i',), ('world-region',), ('name',), ('middle',), ('east',), ('tell-01', ':mode', 'imperative'), ('tell-01', ':polite', '+'), ('tell-01', ':ARG0', 'you'), ('tell-01', ':ARG1', 'thing'), ('tell-01', ':ARG2', 'i'), ('thing', ':topic', 'world-region'), ('world-region', ':name', 'name'), ('name', ':op1', 'middle'), ('name', ':op2', 'east'), ('tell-01', ':ARG1', 'thing', ':topic', 'world-region'), ('thing', ':topic', 'world-region', ':name', 'name'), ('world-region', ':name', 'name', ':op1', 'middle'), ('world-region', ':name', 'name', ':op2', 'east')]"
+        },
+        {
+            "role": "user",
+            "content": "is angeline having a new movie this year"
+        }
+    ],
+    [
+        {
+            "role": "system",
+            "content": "Decompose the utterance into a list of semantic frames like in the examples."
+        },
+        {
+            "role": "user",
+            "content": "what are some updates about the stock market"
+        },
+        {
+            "role": "assistant",
+            "content": "[('update-02',), ('amr-unknown',), ('market-01',), ('some',), ('stock',), ('update-02', ':ARG2', 'amr-unknown'), ('update-02', ':topic', 'market-01'), ('update-02', ':mod', 'some'), ('market-01', ':ARG1', 'stock'), ('update-02', ':topic', 'market-01', ':ARG1', 'stock')]"
+        },
+        {
+            "role": "user",
+            "content": "what is a fjord"
+        },
+        {
+            "role": "assistant",
+            "content": "[('fjord',), ('amr-unknown',), ('fjord', ':mod', 'amr-unknown')]"
+        },
+        {
+            "role": "user",
+            "content": "what is five over three"
+        },
+        {
+            "role": "assistant",
+            "content": "[('equal-01',), ('quotient-of',), ('amr-unknown',), ('3',), ('5',), ('equal-01', ':ARG1', 'quotient-of'), ('equal-01', ':ARG2', 'amr-unknown'), ('quotient-of', ':op2', '3'), ('quotient-of', ':op1', '5'), ('equal-01', ':ARG1', 'quotient-of', ':op2', '3'), ('equal-01', ':ARG1', 'quotient-of', ':op1', '5')]"
+        },
+        {
+            "role": "user",
+            "content": "who is the governor of new york"
+        },
+        {
+            "role": "assistant",
+            "content": "[('have-org-role-91',), ('amr-unknown',), ('state',), ('governor',), ('name',), ('new',), ('york',), ('have-org-role-91', ':ARG0', 'amr-unknown'), ('have-org-role-91', ':ARG1', 'state'), ('have-org-role-91', ':ARG2', 'governor'), ('state', ':name', 'name'), ('name', ':op1', 'new'), ('name', ':op2', 'york'), ('have-org-role-91', ':ARG1', 'state', ':name', 'name'), ('state', ':name', 'name', ':op1', 'new'), ('state', ':name', 'name', ':op2', 'york')]"
+        },
+        {
+            "role": "user",
+            "content": "can you tell me about the middle east"
+        },
+        {
+            "role": "assistant",
+            "content": "[('tell-01',), ('imperative',), ('+',), ('you',), ('thing',), ('i',), ('world-region',), ('name',), ('middle',), ('east',), ('tell-01', ':mode', 'imperative'), ('tell-01', ':polite', '+'), ('tell-01', ':ARG0', 'you'), ('tell-01', ':ARG1', 'thing'), ('tell-01', ':ARG2', 'i'), ('thing', ':topic', 'world-region'), ('world-region', ':name', 'name'), ('name', ':op1', 'middle'), ('name', ':op2', 'east'), ('tell-01', ':ARG1', 'thing', ':topic', 'world-region'), ('thing', ':topic', 'world-region', ':name', 'name'), ('world-region', ':name', 'name', ':op1', 'middle'), ('world-region', ':name', 'name', ':op2', 'east')]"
+        },
+        {
+            "role": "user",
+            "content": "how many countries are in the european union"
+        }
+    ],
+    [
+        {
+            "role": "system",
+            "content": "Decompose the utterance into a list of semantic frames like in the examples."
+        },
+        {
+            "role": "user",
+            "content": "what are some updates about the stock market"
+        },
+        {
+            "role": "assistant",
+            "content": "[('update-02',), ('amr-unknown',), ('market-01',), ('some',), ('stock',), ('update-02', ':ARG2', 'amr-unknown'), ('update-02', ':topic', 'market-01'), ('update-02', ':mod', 'some'), ('market-01', ':ARG1', 'stock'), ('update-02', ':topic', 'market-01', ':ARG1', 'stock')]"
+        },
+        {
+            "role": "user",
+            "content": "what is a fjord"
+        },
+        {
+            "role": "assistant",
+            "content": "[('fjord',), ('amr-unknown',), ('fjord', ':mod', 'amr-unknown')]"
+        },
+        {
+            "role": "user",
+            "content": "what is five over three"
+        },
+        {
+            "role": "assistant",
+            "content": "[('equal-01',), ('quotient-of',), ('amr-unknown',), ('3',), ('5',), ('equal-01', ':ARG1', 'quotient-of'), ('equal-01', ':ARG2', 'amr-unknown'), ('quotient-of', ':op2', '3'), ('quotient-of', ':op1', '5'), ('equal-01', ':ARG1', 'quotient-of', ':op2', '3'), ('equal-01', ':ARG1', 'quotient-of', ':op1', '5')]"
+        },
+        {
+            "role": "user",
+            "content": "who is the governor of new york"
+        },
+        {
+            "role": "assistant",
+            "content": "[('have-org-role-91',), ('amr-unknown',), ('state',), ('governor',), ('name',), ('new',), ('york',), ('have-org-role-91', ':ARG0', 'amr-unknown'), ('have-org-role-91', ':ARG1', 'state'), ('have-org-role-91', ':ARG2', 'governor'), ('state', ':name', 'name'), ('name', ':op1', 'new'), ('name', ':op2', 'york'), ('have-org-role-91', ':ARG1', 'state', ':name', 'name'), ('state', ':name', 'name', ':op1', 'new'), ('state', ':name', 'name', ':op2', 'york')]"
+        },
+        {
+            "role": "user",
+            "content": "can you tell me about the middle east"
+        },
+        {
+            "role": "assistant",
+            "content": "[('tell-01',), ('imperative',), ('+',), ('you',), ('thing',), ('i',), ('world-region',), ('name',), ('middle',), ('east',), ('tell-01', ':mode', 'imperative'), ('tell-01', ':polite', '+'), ('tell-01', ':ARG0', 'you'), ('tell-01', ':ARG1', 'thing'), ('tell-01', ':ARG2', 'i'), ('thing', ':topic', 'world-region'), ('world-region', ':name', 'name'), ('name', ':op1', 'middle'), ('name', ':op2', 'east'), ('tell-01', ':ARG1', 'thing', ':topic', 'world-region'), ('thing', ':topic', 'world-region', ':name', 'name'), ('world-region', ':name', 'name', ':op1', 'middle'), ('world-region', ':name', 'name', ':op2', 'east')]"
+        },
+        {
+            "role": "user",
+            "content": "how many plays has patrick stewart been in"
+        }
+    ],
+    [
+        {
+            "role": "system",
+            "content": "Decompose the utterance into a list of semantic frames like in the examples."
+        },
+        {
+            "role": "user",
+            "content": "what are some updates about the stock market"
+        },
+        {
+            "role": "assistant",
+            "content": "[('update-02',), ('amr-unknown',), ('market-01',), ('some',), ('stock',), ('update-02', ':ARG2', 'amr-unknown'), ('update-02', ':topic', 'market-01'), ('update-02', ':mod', 'some'), ('market-01', ':ARG1', 'stock'), ('update-02', ':topic', 'market-01', ':ARG1', 'stock')]"
+        },
+        {
+            "role": "user",
+            "content": "what is a fjord"
+        },
+        {
+            "role": "assistant",
+            "content": "[('fjord',), ('amr-unknown',), ('fjord', ':mod', 'amr-unknown')]"
+        },
+        {
+            "role": "user",
+            "content": "what is five over three"
+        },
+        {
+            "role": "assistant",
+            "content": "[('equal-01',), ('quotient-of',), ('amr-unknown',), ('3',), ('5',), ('equal-01', ':ARG1', 'quotient-of'), ('equal-01', ':ARG2', 'amr-unknown'), ('quotient-of', ':op2', '3'), ('quotient-of', ':op1', '5'), ('equal-01', ':ARG1', 'quotient-of', ':op2', '3'), ('equal-01', ':ARG1', 'quotient-of', ':op1', '5')]"
+        },
+        {
+            "role": "user",
+            "content": "who is the governor of new york"
+        },
+        {
+            "role": "assistant",
+            "content": "[('have-org-role-91',), ('amr-unknown',), ('state',), ('governor',), ('name',), ('new',), ('york',), ('have-org-role-91', ':ARG0', 'amr-unknown'), ('have-org-role-91', ':ARG1', 'state'), ('have-org-role-91', ':ARG2', 'governor'), ('state', ':name', 'name'), ('name', ':op1', 'new'), ('name', ':op2', 'york'), ('have-org-role-91', ':ARG1', 'state', ':name', 'name'), ('state', ':name', 'name', ':op1', 'new'), ('state', ':name', 'name', ':op2', 'york')]"
+        },
+        {
+            "role": "user",
+            "content": "can you tell me about the middle east"
+        },
+        {
+            "role": "assistant",
+            "content": "[('tell-01',), ('imperative',), ('+',), ('you',), ('thing',), ('i',), ('world-region',), ('name',), ('middle',), ('east',), ('tell-01', ':mode', 'imperative'), ('tell-01', ':polite', '+'), ('tell-01', ':ARG0', 'you'), ('tell-01', ':ARG1', 'thing'), ('tell-01', ':ARG2', 'i'), ('thing', ':topic', 'world-region'), ('world-region', ':name', 'name'), ('name', ':op1', 'middle'), ('name', ':op2', 'east'), ('tell-01', ':ARG1', 'thing', ':topic', 'world-region'), ('thing', ':topic', 'world-region', ':name', 'name'), ('world-region', ':name', 'name', ':op1', 'middle'), ('world-region', ':name', 'name', ':op2', 'east')]"
+        },
+        {
+            "role": "user",
+            "content": "where in the world is lyon"
+        }
+    ],
+    [
+        {
+            "role": "system",
+            "content": "Decompose the utterance into a list of semantic frames like in the examples."
+        },
+        {
+            "role": "user",
+            "content": "what are some updates about the stock market"
+        },
+        {
+            "role": "assistant",
+            "content": "[('update-02',), ('amr-unknown',), ('market-01',), ('some',), ('stock',), ('update-02', ':ARG2', 'amr-unknown'), ('update-02', ':topic', 'market-01'), ('update-02', ':mod', 'some'), ('market-01', ':ARG1', 'stock'), ('update-02', ':topic', 'market-01', ':ARG1', 'stock')]"
+        },
+        {
+            "role": "user",
+            "content": "what is a fjord"
+        },
+        {
+            "role": "assistant",
+            "content": "[('fjord',), ('amr-unknown',), ('fjord', ':mod', 'amr-unknown')]"
+        },
+        {
+            "role": "user",
+            "content": "what is five over three"
+        },
+        {
+            "role": "assistant",
+            "content": "[('equal-01',), ('quotient-of',), ('amr-unknown',), ('3',), ('5',), ('equal-01', ':ARG1', 'quotient-of'), ('equal-01', ':ARG2', 'amr-unknown'), ('quotient-of', ':op2', '3'), ('quotient-of', ':op1', '5'), ('equal-01', ':ARG1', 'quotient-of', ':op2', '3'), ('equal-01', ':ARG1', 'quotient-of', ':op1', '5')]"
+        },
+        {
+            "role": "user",
+            "content": "who is the governor of new york"
+        },
+        {
+            "role": "assistant",
+            "content": "[('have-org-role-91',), ('amr-unknown',), ('state',), ('governor',), ('name',), ('new',), ('york',), ('have-org-role-91', ':ARG0', 'amr-unknown'), ('have-org-role-91', ':ARG1', 'state'), ('have-org-role-91', ':ARG2', 'governor'), ('state', ':name', 'name'), ('name', ':op1', 'new'), ('name', ':op2', 'york'), ('have-org-role-91', ':ARG1', 'state', ':name', 'name'), ('state', ':name', 'name', ':op1', 'new'), ('state', ':name', 'name', ':op2', 'york')]"
+        },
+        {
+            "role": "user",
+            "content": "can you tell me about the middle east"
+        },
+        {
+            "role": "assistant",
+            "content": "[('tell-01',), ('imperative',), ('+',), ('you',), ('thing',), ('i',), ('world-region',), ('name',), ('middle',), ('east',), ('tell-01', ':mode', 'imperative'), ('tell-01', ':polite', '+'), ('tell-01', ':ARG0', 'you'), ('tell-01', ':ARG1', 'thing'), ('tell-01', ':ARG2', 'i'), ('thing', ':topic', 'world-region'), ('world-region', ':name', 'name'), ('name', ':op1', 'middle'), ('name', ':op2', 'east'), ('tell-01', ':ARG1', 'thing', ':topic', 'world-region'), ('thing', ':topic', 'world-region', ':name', 'name'), ('world-region', ':name', 'name', ':op1', 'middle'), ('world-region', ':name', 'name', ':op2', 'east')]"
+        },
+        {
+            "role": "user",
+            "content": "tell me about hugh lourie"
+        }
+    ],
+    [
+        {
+            "role": "system",
+            "content": "Decompose the utterance into a list of semantic frames like in the examples."
+        },
+        {
+            "role": "user",
+            "content": "what are some updates about the stock market"
+        },
+        {
+            "role": "assistant",
+            "content": "[('update-02',), ('amr-unknown',), ('market-01',), ('some',), ('stock',), ('update-02', ':ARG2', 'amr-unknown'), ('update-02', ':topic', 'market-01'), ('update-02', ':mod', 'some'), ('market-01', ':ARG1', 'stock'), ('update-02', ':topic', 'market-01', ':ARG1', 'stock')]"
+        },
+        {
+            "role": "user",
+            "content": "what is a fjord"
+        },
+        {
+            "role": "assistant",
+            "content": "[('fjord',), ('amr-unknown',), ('fjord', ':mod', 'amr-unknown')]"
+        },
+        {
+            "role": "user",
+            "content": "what is five over three"
+        },
+        {
+            "role": "assistant",
+            "content": "[('equal-01',), ('quotient-of',), ('amr-unknown',), ('3',), ('5',), ('equal-01', ':ARG1', 'quotient-of'), ('equal-01', ':ARG2', 'amr-unknown'), ('quotient-of', ':op2', '3'), ('quotient-of', ':op1', '5'), ('equal-01', ':ARG1', 'quotient-of', ':op2', '3'), ('equal-01', ':ARG1', 'quotient-of', ':op1', '5')]"
+        },
+        {
+            "role": "user",
+            "content": "who is the governor of new york"
+        },
+        {
+            "role": "assistant",
+            "content": "[('have-org-role-91',), ('amr-unknown',), ('state',), ('governor',), ('name',), ('new',), ('york',), ('have-org-role-91', ':ARG0', 'amr-unknown'), ('have-org-role-91', ':ARG1', 'state'), ('have-org-role-91', ':ARG2', 'governor'), ('state', ':name', 'name'), ('name', ':op1', 'new'), ('name', ':op2', 'york'), ('have-org-role-91', ':ARG1', 'state', ':name', 'name'), ('state', ':name', 'name', ':op1', 'new'), ('state', ':name', 'name', ':op2', 'york')]"
+        },
+        {
+            "role": "user",
+            "content": "can you tell me about the middle east"
+        },
+        {
+            "role": "assistant",
+            "content": "[('tell-01',), ('imperative',), ('+',), ('you',), ('thing',), ('i',), ('world-region',), ('name',), ('middle',), ('east',), ('tell-01', ':mode', 'imperative'), ('tell-01', ':polite', '+'), ('tell-01', ':ARG0', 'you'), ('tell-01', ':ARG1', 'thing'), ('tell-01', ':ARG2', 'i'), ('thing', ':topic', 'world-region'), ('world-region', ':name', 'name'), ('name', ':op1', 'middle'), ('name', ':op2', 'east'), ('tell-01', ':ARG1', 'thing', ':topic', 'world-region'), ('thing', ':topic', 'world-region', ':name', 'name'), ('world-region', ':name', 'name', ':op1', 'middle'), ('world-region', ':name', 'name', ':op2', 'east')]"
+        },
+        {
+            "role": "user",
+            "content": "how old is jennifer lopez"
+        }
+    ],
+    [
+        {
+            "role": "system",
+            "content": "Decompose the utterance into a list of semantic frames like in the examples."
+        },
+        {
+            "role": "user",
+            "content": "what are some updates about the stock market"
+        },
+        {
+            "role": "assistant",
+            "content": "[('update-02',), ('amr-unknown',), ('market-01',), ('some',), ('stock',), ('update-02', ':ARG2', 'amr-unknown'), ('update-02', ':topic', 'market-01'), ('update-02', ':mod', 'some'), ('market-01', ':ARG1', 'stock'), ('update-02', ':topic', 'market-01', ':ARG1', 'stock')]"
+        },
+        {
+            "role": "user",
+            "content": "what is a fjord"
+        },
+        {
+            "role": "assistant",
+            "content": "[('fjord',), ('amr-unknown',), ('fjord', ':mod', 'amr-unknown')]"
+        },
+        {
+            "role": "user",
+            "content": "what is five over three"
+        },
+        {
+            "role": "assistant",
+            "content": "[('equal-01',), ('quotient-of',), ('amr-unknown',), ('3',), ('5',), ('equal-01', ':ARG1', 'quotient-of'), ('equal-01', ':ARG2', 'amr-unknown'), ('quotient-of', ':op2', '3'), ('quotient-of', ':op1', '5'), ('equal-01', ':ARG1', 'quotient-of', ':op2', '3'), ('equal-01', ':ARG1', 'quotient-of', ':op1', '5')]"
+        },
+        {
+            "role": "user",
+            "content": "who is the governor of new york"
+        },
+        {
+            "role": "assistant",
+            "content": "[('have-org-role-91',), ('amr-unknown',), ('state',), ('governor',), ('name',), ('new',), ('york',), ('have-org-role-91', ':ARG0', 'amr-unknown'), ('have-org-role-91', ':ARG1', 'state'), ('have-org-role-91', ':ARG2', 'governor'), ('state', ':name', 'name'), ('name', ':op1', 'new'), ('name', ':op2', 'york'), ('have-org-role-91', ':ARG1', 'state', ':name', 'name'), ('state', ':name', 'name', ':op1', 'new'), ('state', ':name', 'name', ':op2', 'york')]"
+        },
+        {
+            "role": "user",
+            "content": "can you tell me about the middle east"
+        },
+        {
+            "role": "assistant",
+            "content": "[('tell-01',), ('imperative',), ('+',), ('you',), ('thing',), ('i',), ('world-region',), ('name',), ('middle',), ('east',), ('tell-01', ':mode', 'imperative'), ('tell-01', ':polite', '+'), ('tell-01', ':ARG0', 'you'), ('tell-01', ':ARG1', 'thing'), ('tell-01', ':ARG2', 'i'), ('thing', ':topic', 'world-region'), ('world-region', ':name', 'name'), ('name', ':op1', 'middle'), ('name', ':op2', 'east'), ('tell-01', ':ARG1', 'thing', ':topic', 'world-region'), ('thing', ':topic', 'world-region', ':name', 'name'), ('world-region', ':name', 'name', ':op1', 'middle'), ('world-region', ':name', 'name', ':op2', 'east')]"
+        },
+        {
+            "role": "user",
+            "content": "can you give me the details of indian embassy"
+        }
+    ],
+    [
+        {
+            "role": "system",
+            "content": "Decompose the utterance into a list of semantic frames like in the examples."
+        },
+        {
+            "role": "user",
+            "content": "what are some updates about the stock market"
+        },
+        {
+            "role": "assistant",
+            "content": "[('update-02',), ('amr-unknown',), ('market-01',), ('some',), ('stock',), ('update-02', ':ARG2', 'amr-unknown'), ('update-02', ':topic', 'market-01'), ('update-02', ':mod', 'some'), ('market-01', ':ARG1', 'stock'), ('update-02', ':topic', 'market-01', ':ARG1', 'stock')]"
+        },
+        {
+            "role": "user",
+            "content": "what is a fjord"
+        },
+        {
+            "role": "assistant",
+            "content": "[('fjord',), ('amr-unknown',), ('fjord', ':mod', 'amr-unknown')]"
+        },
+        {
+            "role": "user",
+            "content": "what is five over three"
+        },
+        {
+            "role": "assistant",
+            "content": "[('equal-01',), ('quotient-of',), ('amr-unknown',), ('3',), ('5',), ('equal-01', ':ARG1', 'quotient-of'), ('equal-01', ':ARG2', 'amr-unknown'), ('quotient-of', ':op2', '3'), ('quotient-of', ':op1', '5'), ('equal-01', ':ARG1', 'quotient-of', ':op2', '3'), ('equal-01', ':ARG1', 'quotient-of', ':op1', '5')]"
+        },
+        {
+            "role": "user",
+            "content": "who is the governor of new york"
+        },
+        {
+            "role": "assistant",
+            "content": "[('have-org-role-91',), ('amr-unknown',), ('state',), ('governor',), ('name',), ('new',), ('york',), ('have-org-role-91', ':ARG0', 'amr-unknown'), ('have-org-role-91', ':ARG1', 'state'), ('have-org-role-91', ':ARG2', 'governor'), ('state', ':name', 'name'), ('name', ':op1', 'new'), ('name', ':op2', 'york'), ('have-org-role-91', ':ARG1', 'state', ':name', 'name'), ('state', ':name', 'name', ':op1', 'new'), ('state', ':name', 'name', ':op2', 'york')]"
+        },
+        {
+            "role": "user",
+            "content": "can you tell me about the middle east"
+        },
+        {
+            "role": "assistant",
+            "content": "[('tell-01',), ('imperative',), ('+',), ('you',), ('thing',), ('i',), ('world-region',), ('name',), ('middle',), ('east',), ('tell-01', ':mode', 'imperative'), ('tell-01', ':polite', '+'), ('tell-01', ':ARG0', 'you'), ('tell-01', ':ARG1', 'thing'), ('tell-01', ':ARG2', 'i'), ('thing', ':topic', 'world-region'), ('world-region', ':name', 'name'), ('name', ':op1', 'middle'), ('name', ':op2', 'east'), ('tell-01', ':ARG1', 'thing', ':topic', 'world-region'), ('thing', ':topic', 'world-region', ':name', 'name'), ('world-region', ':name', 'name', ':op1', 'middle'), ('world-region', ':name', 'name', ':op2', 'east')]"
+        },
+        {
+            "role": "user",
+            "content": "which is worth more the us dollar or the euro"
+        }
+    ],
+    [
+        {
+            "role": "system",
+            "content": "Decompose the utterance into a list of semantic frames like in the examples."
+        },
+        {
+            "role": "user",
+            "content": "what are some updates about the stock market"
+        },
+        {
+            "role": "assistant",
+            "content": "[('update-02',), ('amr-unknown',), ('market-01',), ('some',), ('stock',), ('update-02', ':ARG2', 'amr-unknown'), ('update-02', ':topic', 'market-01'), ('update-02', ':mod', 'some'), ('market-01', ':ARG1', 'stock'), ('update-02', ':topic', 'market-01', ':ARG1', 'stock')]"
+        },
+        {
+            "role": "user",
+            "content": "what is a fjord"
+        },
+        {
+            "role": "assistant",
+            "content": "[('fjord',), ('amr-unknown',), ('fjord', ':mod', 'amr-unknown')]"
+        },
+        {
+            "role": "user",
+            "content": "what is five over three"
+        },
+        {
+            "role": "assistant",
+            "content": "[('equal-01',), ('quotient-of',), ('amr-unknown',), ('3',), ('5',), ('equal-01', ':ARG1', 'quotient-of'), ('equal-01', ':ARG2', 'amr-unknown'), ('quotient-of', ':op2', '3'), ('quotient-of', ':op1', '5'), ('equal-01', ':ARG1', 'quotient-of', ':op2', '3'), ('equal-01', ':ARG1', 'quotient-of', ':op1', '5')]"
+        },
+        {
+            "role": "user",
+            "content": "who is the governor of new york"
+        },
+        {
+            "role": "assistant",
+            "content": "[('have-org-role-91',), ('amr-unknown',), ('state',), ('governor',), ('name',), ('new',), ('york',), ('have-org-role-91', ':ARG0', 'amr-unknown'), ('have-org-role-91', ':ARG1', 'state'), ('have-org-role-91', ':ARG2', 'governor'), ('state', ':name', 'name'), ('name', ':op1', 'new'), ('name', ':op2', 'york'), ('have-org-role-91', ':ARG1', 'state', ':name', 'name'), ('state', ':name', 'name', ':op1', 'new'), ('state', ':name', 'name', ':op2', 'york')]"
+        },
+        {
+            "role": "user",
+            "content": "can you tell me about the middle east"
+        },
+        {
+            "role": "assistant",
+            "content": "[('tell-01',), ('imperative',), ('+',), ('you',), ('thing',), ('i',), ('world-region',), ('name',), ('middle',), ('east',), ('tell-01', ':mode', 'imperative'), ('tell-01', ':polite', '+'), ('tell-01', ':ARG0', 'you'), ('tell-01', ':ARG1', 'thing'), ('tell-01', ':ARG2', 'i'), ('thing', ':topic', 'world-region'), ('world-region', ':name', 'name'), ('name', ':op1', 'middle'), ('name', ':op2', 'east'), ('tell-01', ':ARG1', 'thing', ':topic', 'world-region'), ('thing', ':topic', 'world-region', ':name', 'name'), ('world-region', ':name', 'name', ':op1', 'middle'), ('world-region', ':name', 'name', ':op2', 'east')]"
+        },
+        {
+            "role": "user",
+            "content": "calc"
+        }
+    ],
+    [
+        {
+            "role": "system",
+            "content": "Decompose the utterance into a list of semantic frames like in the examples."
+        },
+        {
+            "role": "user",
+            "content": "what are some updates about the stock market"
+        },
+        {
+            "role": "assistant",
+            "content": "[('update-02',), ('amr-unknown',), ('market-01',), ('some',), ('stock',), ('update-02', ':ARG2', 'amr-unknown'), ('update-02', ':topic', 'market-01'), ('update-02', ':mod', 'some'), ('market-01', ':ARG1', 'stock'), ('update-02', ':topic', 'market-01', ':ARG1', 'stock')]"
+        },
+        {
+            "role": "user",
+            "content": "what is a fjord"
+        },
+        {
+            "role": "assistant",
+            "content": "[('fjord',), ('amr-unknown',), ('fjord', ':mod', 'amr-unknown')]"
+        },
+        {
+            "role": "user",
+            "content": "what is five over three"
+        },
+        {
+            "role": "assistant",
+            "content": "[('equal-01',), ('quotient-of',), ('amr-unknown',), ('3',), ('5',), ('equal-01', ':ARG1', 'quotient-of'), ('equal-01', ':ARG2', 'amr-unknown'), ('quotient-of', ':op2', '3'), ('quotient-of', ':op1', '5'), ('equal-01', ':ARG1', 'quotient-of', ':op2', '3'), ('equal-01', ':ARG1', 'quotient-of', ':op1', '5')]"
+        },
+        {
+            "role": "user",
+            "content": "who is the governor of new york"
+        },
+        {
+            "role": "assistant",
+            "content": "[('have-org-role-91',), ('amr-unknown',), ('state',), ('governor',), ('name',), ('new',), ('york',), ('have-org-role-91', ':ARG0', 'amr-unknown'), ('have-org-role-91', ':ARG1', 'state'), ('have-org-role-91', ':ARG2', 'governor'), ('state', ':name', 'name'), ('name', ':op1', 'new'), ('name', ':op2', 'york'), ('have-org-role-91', ':ARG1', 'state', ':name', 'name'), ('state', ':name', 'name', ':op1', 'new'), ('state', ':name', 'name', ':op2', 'york')]"
+        },
+        {
+            "role": "user",
+            "content": "can you tell me about the middle east"
+        },
+        {
+            "role": "assistant",
+            "content": "[('tell-01',), ('imperative',), ('+',), ('you',), ('thing',), ('i',), ('world-region',), ('name',), ('middle',), ('east',), ('tell-01', ':mode', 'imperative'), ('tell-01', ':polite', '+'), ('tell-01', ':ARG0', 'you'), ('tell-01', ':ARG1', 'thing'), ('tell-01', ':ARG2', 'i'), ('thing', ':topic', 'world-region'), ('world-region', ':name', 'name'), ('name', ':op1', 'middle'), ('name', ':op2', 'east'), ('tell-01', ':ARG1', 'thing', ':topic', 'world-region'), ('thing', ':topic', 'world-region', ':name', 'name'), ('world-region', ':name', 'name', ':op1', 'middle'), ('world-region', ':name', 'name', ':op2', 'east')]"
+        },
+        {
+            "role": "user",
+            "content": "how long is the great wall of china"
+        }
+    ]
+]
