@@ -1,0 +1,38 @@
+[
+    [
+        {
+            "role": "system",
+            "content": "Decompose the teacher's instructions into a list of numbered main events. Also decompose each event into its main arguments (ARG) and event modifiers (MOD) that help answer 'Who did what to whom when where and why?' Also provide lists of event relations, main events, and associated social attitudes."
+        },
+        {
+            "role": "user",
+            "content": "Teacher: So today, you're going to be setting up another pulley in the lab, um, to gather a little more data to, um, solidify your understanding of pulleys. So far you've set up 4 - or you've done some, um, testing with 4 different pulleys set up, okay. Does anyone remember what those names are without looking of the 4 different pulleys set up?"
+        },
+        {
+            "role": "assistant",
+            "content": "Main events:\n1. So today, you're going to be setting up another pulley in the lab,\nEvent=(e1, set-up)\nARG=(z1, \"you\", actor)\nARG=(z2, \"another pulley\", undergoer)\nMOD=(z3, \"today\", time)\nMOD=(z4, \"lab\", location)\n\n2. to gather a little more data\nEvent=(e2, gather)\nARG=(z5, \"you\", actor)\nARG=(z6, \"more data\", theme)\n\n3. your understanding of pulleys\nEvent=(e3, understand)\nARG=(z5, \"you\", experiencer)\nARG=(z7, \"pulleys\", stimulus)\n\n4. to, um, solidify your understanding of pulleys\nEvent=(e4, solidify)\nARG=(z5, \"you\", actor)\nARG=(z8, e3, theme)\n\n5. So far you've set up 4,\nEvent=(e5, set-up)\nARG=(z5, \"you\", actor)\nARG=(z9, \"4 pulleys\", undergoer)\n\n6. 4 different pulleys set up\nEvent=(e6, set-up)\nARG=(z10, \"4 different pulleys set up\", undergoer)\n\n7. you've done some, um, testing with 4 different pulleys set up\nEvent=(e7, test)\nARG=(z5, \"you\", agent)\nARG=(z10, \"4 different pulleys set up\", undergoer)\n\n8. names of the 4 different pulleys set up\nEvent=(e8, name)\nARG=(z10, \"4 different pulleys set up\", named)\n\n9. without looking \nEvent=(e9, look)\nARG=(z5, \"you\", experiencer)\nARG=(z10, e8, stimulus)\nPOLARITY=(z11, \"-\")\n\n10. Does anyone remember what those names are of the 4 different pulleys set up?\nEvent=(e10, remember)\nARG=(z12, unknown, experiencer),\nARG=(z10, e8, stimulus)\nMOD=(z13, e9, manner)\n\nRelationships:\nRelation=(e1, have-purpose, e2)\nRelation=(e1, have-purpose, e4)\nRelation=(e3, precondition, e1)\nRelation=(e4, scalar-increase, e3)\nRelation=(e5, time-before, e1)\nRelation=(e6, precondition, e7)\nRelation=(e7, time-before, e1)\nRelation=(e8, property, z9)\nRelation=(e10, time-overlap, e9)\nRelation=(z12, subset-of, z5)\n\nCentral events: e1, e10\ne1: plan for today\ne10: request for information\n\nSocial attitudes:\nMutual belief\nShared plans\nObligations"
+        },
+        {
+            "role": "user",
+            "content": "Teacher: Why. Right? It's not what you chose out of 4 multiple choice options, it's why did you choose that. Why does that option make the most sense."
+        }
+    ],
+    [
+        {
+            "role": "system",
+            "content": "Decompose the teacher's instructions into a list of numbered main events. Also decompose each event into its main arguments (ARG) and event modifiers (MOD) that help answer 'Who did what to whom when where and why?' Also provide lists of event relations, main events, and associated social attitudes."
+        },
+        {
+            "role": "user",
+            "content": "Teacher: So today, you're going to be setting up another pulley in the lab, um, to gather a little more data to, um, solidify your understanding of pulleys. So far you've set up 4 - or you've done some, um, testing with 4 different pulleys set up, okay. Does anyone remember what those names are without looking of the 4 different pulleys set up?\nMeaning representation:[('say-01', ':ARG1', 'multi-sentence'), ('say-01', ':ARG2', 'you'), ('differ-02', ':ARG1', 'pulley'), ('confirm-01', ':ARG1', 'or'), ('include-91', ':ARG1', 'person'), ('include-91', ':ARG2', 'you'), ('person', ':ARG0', 'teach-01'), ('set-up-03', ':ARG0', 'you'), ('set-up-03', ':ARG1', 'pulley'), ('remember-01', ':ARG1', 'thing'), ('remember-01', ':ARG0', 'person'), ('set-up-03', ':ARG0', 'you'), ('set-up-03', ':ARG1', 'pulley'), ('test-01', ':ARG0', 'you'), ('test-01', ':ARG1', 'pulley'), ('gather-01', ':ARG0', 'you'), ('gather-01', ':ARG1', 'data'), ('look-01', ':ARG0', 'person'), ('look-01', ':ARG1', 'name-01'), ('solidify-01', ':ARG0', 'you'), ('solidify-01', ':ARG1', 'understand-01'), ('name-01', ':ARG2', 'thing'), ('name-01', ':ARG1', 'pulley'), ('understand-01', ':ARG0', 'you'), ('understand-01', ':ARG1', 'pulley')]"
+        },
+        {
+            "role": "assistant",
+            "content": "Main events:\n1. So today, you're going to be setting up another pulley in the lab,\nEvent=(e1, set-up)\nARG=(z1, \"you\", actor)\nARG=(z2, \"another pulley\", undergoer)\nMOD=(z3, \"today\", time)\nMOD=(z4, \"lab\", location)\n\n2. to gather a little more data\nEvent=(e2, gather)\nARG=(z5, \"you\", actor)\nARG=(z6, \"more data\", theme)\n\n3. your understanding of pulleys\nEvent=(e3, understand)\nARG=(z5, \"you\", experiencer)\nARG=(z7, \"pulleys\", stimulus)\n\n4. to, um, solidify your understanding of pulleys\nEvent=(e4, solidify)\nARG=(z5, \"you\", actor)\nARG=(z8, e3, theme)\n\n5. So far you've set up 4,\nEvent=(e5, set-up)\nARG=(z5, \"you\", actor)\nARG=(z9, \"4 pulleys\", undergoer)\n\n6. 4 different pulleys set up\nEvent=(e6, set-up)\nARG=(z10, \"4 different pulleys set up\", undergoer)\n\n7. you've done some, um, testing with 4 different pulleys set up\nEvent=(e7, test)\nARG=(z5, \"you\", agent)\nARG=(z10, \"4 different pulleys set up\", undergoer)\n\n8. names of the 4 different pulleys set up\nEvent=(e8, name)\nARG=(z10, \"4 different pulleys set up\", named)\n\n9. without looking \nEvent=(e9, look)\nARG=(z5, \"you\", experiencer)\nARG=(z10, e8, stimulus)\nPOLARITY=(z11, \"-\")\n\n10. Does anyone remember what those names are of the 4 different pulleys set up?\nEvent=(e10, remember)\nARG=(z12, unknown, experiencer),\nARG=(z10, e8, stimulus)\nMOD=(z13, e9, manner)\n\nRelationships:\nRelation=(e1, have-purpose, e2)\nRelation=(e1, have-purpose, e4)\nRelation=(e3, precondition, e1)\nRelation=(e4, scalar-increase, e3)\nRelation=(e5, time-before, e1)\nRelation=(e6, precondition, e7)\nRelation=(e7, time-before, e1)\nRelation=(e8, property, z9)\nRelation=(e10, time-overlap, e9)\nRelation=(z12, subset-of, z5)\n\nCentral events: e1, e10\ne1: plan for today\ne10: request for information\n\nSocial attitudes:\nMutual belief\nShared plans\nObligations"
+        },
+        {
+            "role": "user",
+            "content": "Teacher: Why. Right? It's not what you chose out of 4 multiple choice options, it's why did you choose that. Why does that option make the most sense.\nMeaning representation: [('say-01', ':ARG1', 'multi-sentence'), ('teach-01', ':ARG0', 'person'), ('cause-01', ':ARG0', 'thing'), ('choose-01', ':ARG1', 'option'), ('cause-01', ':ARG0', 'thing'), ('cause-01', ':ARG1', 'choose-01'), ('have-degree-91', ':ARG2', 'sense-02'), ('have-degree-91', ':ARG1', 'thing'), ('have-degree-91', ':ARG3', 'most'), ('choose-01', ':ARG1', 'thing'), ('choose-01', ':ARG0', 'you'), ('choose-01', ':ARG2', 'option'), ('sense-02', ':ARG1', 'thing'), ('request-confirmation-91', ':ARG1', 'thing'), ('contrast-01', ':ARG2', 'thing'), ('contrast-01', ':ARG1', 'instruct-01'), ('cause-01', ':ARG0', 'amr-unknown'), ('cause-01', ':ARG1', 'sense-02'), ('instruct-01', ':ARG2', 'thing')]"
+        }
+    ]
+]
