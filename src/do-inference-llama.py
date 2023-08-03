@@ -40,7 +40,7 @@ def main(
         max_batch_size=max_batch_size,
     )
 
-    with open() as fin:
+    with open(data_path, 'r') as fin:
         dialogs = json.load(fin)
 
     results = generator.chat_completion(
