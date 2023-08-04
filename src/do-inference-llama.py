@@ -11,17 +11,21 @@ from llama import Llama
 
 
 """
-torchrun --nproc_per_node 2 do-inference-llama.py \
-    --ckpt_dir llama-2-13b-chat \
+torchrun --nproc_per_node 1 do-inference-llama.py \
+    --ckpt_dir llama-2-7b-chat \
     --tokenizer_path tokenizer.model \
-    --max_seq_len 1024 \
-    --max_batch_size 40 \
+    --max_seq_len 2048 \
+    --max_batch_size 128 \
     --data_path ~/portfolio/amr-distillation-private/data/llama-massive-prompts.json \
     --report_path ~/reports/llama-massive-as-triples-2023-08-03.json
 
 
 """
 
+def chunks(lst, n):
+    """Yield successive n-sized chunks from lst."""
+    for i in range(0, len(lst), n):
+        yield lst[i:i + n]
 
 
 def main(
@@ -31,7 +35,7 @@ def main(
     report_path: str,
     temperature: float = 0.6,
     top_p: float = 0.9,
-    max_seq_len: int = 2048,
+    max_seq_len: int = 4096,
     max_batch_size: int = 4,
     max_gen_len: Optional[int] = None
 ):
@@ -47,42 +51,47 @@ def main(
 
     theseDialogs = [i['dialog'] for i in dialogs]
 
-    results = generator.chat_completion(
-        theseDialogs,  # type: ignore
-        max_gen_len=max_gen_len,
-        temperature=temperature,
-        top_p=top_p,
-    )
+    theseDialogChunks = chunks(theseDialogs, 4)
 
-    results = list()
+    theseResults = list()
 
-    for d, result in zip(dialogs, results):
+    for dialogChunk in theseDialogChunks:
 
-        dialog = d['dialog']
-
-        print(f"Utt: {d['utt']}")
-
-        # for msg in dialog:
-        #     print(f"{msg['role'].capitalize()}: {msg['content']}\n")
-
-        print(
-            f"> {result['generation']['role'].capitalize()}: {result['generation']['content']}"
+        results = generator.chat_completion(
+            dialogChunk,  # type: ignore
+            max_gen_len=max_gen_len,
+            temperature=temperature,
+            top_p=top_p,
         )
 
-        print("ground truth")
-        print()
-        print(d['amr_triples'])
-        print()
+        for d, result in zip(dialogs, results):
 
-        thisContent = result['generation']['content']
+            dialog = d['dialog']
 
-        print("\n==================================\n")
+            print(f"Utt: {d['utt']}")
 
-        d['content'] = thisContent
-        results.append(d)
+            # for msg in dialog:
+            #     print(f"{msg['role'].capitalize()}: {msg['content']}\n")
+
+            print(
+                f"> {result['generation']['role'].capitalize()}: {result['generation']['content']}"
+            )
+
+            print("ground truth")
+            print()
+            print(d['amr_triples'])
+            print()
+
+            thisContent = result['generation']['content']
+
+            print("\n==================================\n")
+
+            d['content'] = thisContent
+
+            theseResults.append(d)
 
     with open(report_path, 'w') as fout:
-        json.dump(results, fout, indent=4)
+        json.dump(theseResults, fout, indent=4)
 
 
 if __name__ == "__main__":
