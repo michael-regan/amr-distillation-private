@@ -15,7 +15,7 @@ torchrun --nproc_per_node 1 do-inference-llama.py \
     --ckpt_dir llama-2-7b-chat \
     --tokenizer_path tokenizer.model \
     --max_seq_len 4096 \
-    --max_batch_size 4 \
+    --max_batch_size 128 \
     --data_path ~/portfolio/amr-distillation-private/data/llama-massive-prompts_2023-08-04.json \
     --report_path ~/reports/llama-massive-as-triples-2023-08-04.json
 
@@ -49,44 +49,47 @@ def main(
     with open(data_path, 'r') as fin:
         dialogs = json.load(fin)
 
-    # theseDialogs = [i['dialog'] for i in dialogs]
+    theseDialogs = [i['dialog'] for i in dialogs]
 
-    # theseDialogChunks = chunks(theseDialogs, 4)
+    theseDialogInstanceChunks = chunks(dialogs, 4)
+    theseDialogChunks = chunks(theseDialogs, 4)
 
     theseResults = list()
 
-    results = generator.chat_completion(
-        dialogs,  # type: ignore
-        max_gen_len=max_gen_len,
-        temperature=temperature,
-        top_p=top_p,
-    )
+    for dialogInstanceChunk, dialogChunk in zip(theseDialogInstanceChunks, theseDialogChunks):
 
-    for d, result in zip(dialogs, results):
-
-        dialog = d['dialog']
-
-        print(f"Question: {d['question']}")
-
-        # for msg in dialog:
-        #     print(f"{msg['role'].capitalize()}: {msg['content']}\n")
-
-        print(
-            f"> {result['generation']['role'].capitalize()}: {result['generation']['content']}"
+        results = generator.chat_completion(
+            dialogChunk,  # type: ignore
+            max_gen_len=max_gen_len,
+            temperature=temperature,
+            top_p=top_p,
         )
 
-        # print("ground truth")
-        # print()
-        # print(d['amr_triples'])
-        # print()
+        for d, result in zip(dialogInstanceChunk, results):
 
-        thisContent = result['generation']['content']
+            dialog = d['dialog']
 
-        print("\n==================================\n")
+            print(f"Question: {d['question']}")
 
-        d['content'] = thisContent
+            # for msg in dialog:
+            #     print(f"{msg['role'].capitalize()}: {msg['content']}\n")
 
-        theseResults.append(d)
+            print(
+                f"> {result['generation']['role'].capitalize()}: {result['generation']['content']}"
+            )
+
+            # print("ground truth")
+            # print()
+            # print(d['amr_triples'])
+            # print()
+
+            thisContent = result['generation']['content']
+
+            print("\n==================================\n")
+
+            d['content'] = thisContent
+
+            theseResults.append(d)
 
     with open(report_path, 'w') as fout:
         json.dump(theseResults, fout, indent=4)
