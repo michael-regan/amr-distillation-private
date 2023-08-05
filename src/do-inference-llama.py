@@ -15,7 +15,7 @@ torchrun --nproc_per_node 1 do-inference-llama.py \
     --ckpt_dir llama-2-7b-chat \
     --tokenizer_path tokenizer.model \
     --max_seq_len 4096 \
-    --max_batch_size 128 \
+    --max_batch_size 4 \
     --data_path ~/portfolio/amr-distillation-private/data/llama-massive-prompts_2023-08-04.json \
     --report_path ~/reports/llama-massive-as-triples-2023-08-04.json
 
@@ -84,6 +84,9 @@ def main(
             # print()
 
             thisContent = result['generation']['content']
+
+            thisContent = thisContent('Abstract Meaning Representation (AMR)', '').strip()
+            thisContent = thisContent('list of semantic frames', '').strip()
 
             print("\n==================================\n")
 
