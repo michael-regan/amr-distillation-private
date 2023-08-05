@@ -85,8 +85,8 @@ def main(
 
             thisContent = result['generation']['content']
 
-            thisContent = thisContent('Abstract Meaning Representation (AMR)', '').strip()
-            thisContent = thisContent('list of semantic frames', '').strip()
+            thisContent = thisContent.replace('Abstract Meaning Representation (AMR)', '').strip()
+            thisContent = thisContent.replace('list of semantic frames', '').strip()
 
             print("\n==================================\n")
 
