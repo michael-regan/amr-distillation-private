@@ -123,7 +123,7 @@ def main(
 
             cnt_match_ngrams = 0
             for ngram in thisHyp:
-                if thisHyp in thisRef:
+                if ngram in thisRef:
                     cnt_match_ngrams+=1
             print(f"Sembleu: {cnt_match_ngrams/len(thisRef)}")
             
