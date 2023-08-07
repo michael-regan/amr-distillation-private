@@ -268,7 +268,7 @@ def main(
             print(f"Sembleu: {sntbleu}")
 
             cnt_match_ngrams = 0
-            for ngram in thisHyp.ngram[1]:
+            for ngram in thisHypInst.ngram[1]:
                 if ngram in thisRef.ngram[1]:
                     cnt_match_ngrams+=1
             print(f"Sembleu-fuzzy: {cnt_match_ngrams/len(thisRef)}")
