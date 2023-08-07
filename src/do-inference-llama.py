@@ -209,6 +209,9 @@ def main(
     with open(data_path, 'r') as fin:
         dialogs = json.load(fin)
 
+    # for testing amr smatch
+    dialogs = [dialogs[-4:]]
+
     theseDialogs = [i['dialog'] for i in dialogs]
 
     theseDialogInstanceChunks = chunks(dialogs, 4)
@@ -218,7 +221,7 @@ def main(
 
     smoofunc = getattr(SmoothingFunction(), 'method3')
 
-    for dialogInstanceChunk, dialogChunk in zip(theseDialogInstanceChunks[-1], theseDialogChunks[-1]):
+    for dialogInstanceChunk, dialogChunk in zip(theseDialogInstanceChunks, theseDialogChunks):
 
         results = generator.chat_completion(
             dialogChunk,  # type: ignore
