@@ -252,7 +252,9 @@ def main(
 
             thisHyp = {1: literal_eval(result['generation']['content'])}
             thisHypInst = NgramInst(ngram=thisHyp, length=len(thisHyp[1]))
-            thisRef = NgramInst(ngram=d['ngramInstance'][0], length=d['ngramInstance'][1])
+
+            refDict = {1: [tuple(i) for i in d['ngramInstance'][0]]}
+            thisRef = NgramInst(ngram=refDict, length=d['ngramInstance'][1])
 
             print(
                 f"> Hypothesis: {thisHypInst}"
