@@ -245,13 +245,6 @@ def main(
 
             print(f"Question: {d['question']}")
 
-            # for msg in dialog:
-            #     print(f"{msg['role'].capitalize()}: {msg['content']}\n")
-
-            # print(
-            #     f"> {result['generation']['role'].capitalize()}: {result['generation']['content']}"
-            # )
-
             if d['target']=='amr_ngrams':
                 thisHyp = {1: literal_eval(result['generation']['content'])}
                 thisHypInst = NgramInst(ngram=thisHyp, length=len(thisHyp[1]))
@@ -269,7 +262,7 @@ def main(
                     sntbleu = round(sentence_bleu([thisRef], thisHypInst, weights=weights, smoothing_function=smoofunc, auto_reweigh=False), max_ngrams)
                 except Exception as e:
                     print("Error in sentence_bleu")
-                    sntbleu = 'Error: variable repeated'
+                    sntbleu = 'Error'
                 print(f"Sembleu: {sntbleu}")
                 d['score']=sntbleu
                 cnt_match_ngrams = 0
@@ -293,7 +286,7 @@ def main(
                     smatch_score = smatch_main.main([thisRef], [thisHyp])
                 except Exception as e:
                     print("Error in smatch scoring")
-                    smatch_score = 'Error: variable repeated'
+                    smatch_score = 'Error'
                 print(f">Smatch:{smatch_score}")
                 d['score']=smatch_score
 
