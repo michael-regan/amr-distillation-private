@@ -16,7 +16,7 @@ from sembleu.src.bleu_score import SmoothingFunction, NgramInst
 # from sembleu.src.amr_graph import AMRGraph
 import math
 
-from smatch import *
+from smatch import smatch_main
 
 import fractions
 try:
@@ -287,7 +287,7 @@ def main(
                     f"> Reference: {thisRef}"
                 )
 
-                smatch_score = smatch.main([thisRef], [thisHyp])
+                smatch_score = smatch_main([thisRef], [thisHyp])
                 print(f">Smatch:{smatch_score}")
                 d['score']=smatch_score
 
