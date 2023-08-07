@@ -276,7 +276,7 @@ def main(
                 for ngram in thisHypInst.ngram[1]:
                     if ngram in thisRef.ngram[1]:
                         cnt_match_ngrams+=1
-                print(f"Sembleu-fuzzy: {cnt_match_ngrams/len(thisRef)}")
+                print(f"Sembleu-precision: {cnt_match_ngrams/len(thisHypInst)}")
 
             else:
                 thisHyp = result['generation']['content']
@@ -289,8 +289,11 @@ def main(
                 print(
                     f"> Reference: {thisRef}"
                 )
-
-                smatch_score = smatch_main.main([thisRef], [thisHyp])
+                try:
+                    smatch_score = smatch_main.main([thisRef], [thisHyp])
+                except Exception as e:
+                    print("Error in smatch scoring")
+                    smatch_score = 'Error: variable repeated'
                 print(f">Smatch:{smatch_score}")
                 d['score']=smatch_score
 
