@@ -109,8 +109,15 @@ def main(
             thisHyp = result['generation']['content']
             thisRef = d['amr_ngrams']
 
-            sntbleu = round(sentence_bleu([thisRef], thisHyp, weights=weights, smoothing_function=smoofunc, auto_reweigh=True), max_ngrams)
-            print(f"Sembleu: {sntbleu}")
+            # sntbleu = round(sentence_bleu([thisRef], thisHyp, weights=weights, smoothing_function=smoofunc, auto_reweigh=True), max_ngrams)
+            # print(f"Sembleu: {sntbleu}")
+
+            cnt_match_ngrams = 0
+            for ngram in thisHyp:
+                if thisHyp in thisRef:
+                    cnt_match_ngrams+=1
+            print(f"Sembleu: {cnt_match_ngrams/len(thisRef)}")
+            
 
             #thisContent = thisContent.replace('Abstract Meaning Representation (AMR)', '').strip()
             #thisContent = thisContent.replace('list of semantic frames', '').strip()
