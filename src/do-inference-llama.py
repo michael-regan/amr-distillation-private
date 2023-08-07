@@ -108,7 +108,7 @@ def main(
             # print()
 
             thisHyp = literal_eval(result['generation']['content'])
-            thisRef = d['amr_ngrams']
+            thisRef = [tuple(i) for i in d['amr_ngrams']]
 
             # sntbleu = round(sentence_bleu([thisRef], thisHyp, weights=weights, smoothing_function=smoofunc, auto_reweigh=True), max_ngrams)
             # print(f"Sembleu: {sntbleu}")
