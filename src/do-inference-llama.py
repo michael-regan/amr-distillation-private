@@ -124,7 +124,7 @@ def main(
 
             print("\n==================================\n")
 
-            d['content'] = thisContent
+            d['content'] = thisHyp
 
             theseResults.append(d)
 
