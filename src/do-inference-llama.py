@@ -16,7 +16,7 @@ from sembleu.src.bleu_score import SmoothingFunction, NgramInst
 # from sembleu.src.amr_graph import AMRGraph
 import math
 
-import smatch
+from smatch import *
 
 import fractions
 try:
