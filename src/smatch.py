@@ -762,7 +762,7 @@ def score_amr_pairs(f1, f2, justinstance=False, justattribute=False, justrelatio
         yield compute_f(total_match_num, total_test_num, total_gold_num)
 
 
-def smatch_main(f1, f2):
+def smatch(f1, f2):
     """
     Main function of smatch score calculation
     """
@@ -799,8 +799,8 @@ def smatch_main(f1, f2):
         print("F-score: " + floatdisplay % best_f_score)
         print()
 
-# # test AMR parsing
-# # run by amr.py [file containing AMR]
-# # a unittest can also be used.
-# if __name__ == "__main__":
-#     main()
+# test AMR parsing
+# run by amr.py [file containing AMR]
+# a unittest can also be used.
+if __name__ == "__main__":
+    main()
