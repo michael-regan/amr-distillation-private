@@ -1,0 +1,13 @@
+# ::id NW_APW_ENG_0082_2008_0908.9 ::date 2017-11-03T07:11:35 ::annotator LDC-AMR-14 ::preferred
+# ::snt It turned hundreds of square miles (kilometers) of land in Bihar into a giant lake.
+# ::save-date Tue Nov 28, 2017 ::file NW_APW_ENG_0082_2008_0908_9.txt
+(t / turn-02
+      :ARG0 (i2 / it)
+      :ARG1 (l / land
+            :quant (m / multiple
+                  :op1 (a / area-quantity :quant 100
+                        :unit (s / square-mile)))
+            :location (s2 / state :wiki "Bihar"
+                  :name (n / name :op1 "Bihar")))
+      :ARG2 (l2 / lake
+            :mod (g / giant)))

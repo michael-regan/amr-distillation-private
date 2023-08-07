@@ -799,6 +799,10 @@ def main(f1, f2):
         print("F-score: " + floatdisplay % best_f_score)
         print()
 
+    return {"precision": precision, "recall": recall, "f1": best_f_score}
+
+    
+
 # test AMR parsing
 # run by amr.py [file containing AMR]
 # a unittest can also be used.
