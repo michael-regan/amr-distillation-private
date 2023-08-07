@@ -210,7 +210,7 @@ def main(
         dialogs = json.load(fin)
 
     # for testing amr smatch
-    dialogs = dialogs[-4:]
+    # dialogs = dialogs[-4:]
 
     theseDialogs = [i['dialog'] for i in dialogs]
 
@@ -289,12 +289,11 @@ def main(
 
                 smatch_score = smatch_main.main([thisRef], [thisHyp])
                 print(f">Smatch:{smatch_score}")
-                d['score']=smatch_score
+                d['amr_score']=smatch_score
 
             print("\n==================================\n")
 
             d['content'] = result['generation']['content']
-
 
             theseResults.append(d)
 
