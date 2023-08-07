@@ -265,8 +265,11 @@ def main(
                 print(
                     f"> Reference: {thisRef}"
                 )
-
-                sntbleu = round(sentence_bleu([thisRef], thisHypInst, weights=weights, smoothing_function=smoofunc, auto_reweigh=False), max_ngrams)
+                try:
+                    sntbleu = round(sentence_bleu([thisRef], thisHypInst, weights=weights, smoothing_function=smoofunc, auto_reweigh=False), max_ngrams)
+                except Exception as e:
+                    print("Error in sentence_bleu")
+                    sntbleu = 'Error: variable repeated'
                 print(f"Sembleu: {sntbleu}")
                 d['score']=sntbleu
                 cnt_match_ngrams = 0
@@ -289,7 +292,7 @@ def main(
 
                 smatch_score = smatch_main.main([thisRef], [thisHyp])
                 print(f">Smatch:{smatch_score}")
-                d['amr_score']=smatch_score
+                d['score']=smatch_score
 
             print("\n==================================\n")
 
