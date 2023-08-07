@@ -9,8 +9,8 @@ from sembleu import src
 from sembleu.src import bleu_score
 from sembleu.src.bleu_score import corpus_bleu, sentence_bleu, SmoothingFunction, NgramInst
 
-from sembleu.src import amr_graph
-from sembleu.src.amr_graph import AMRGraph
+# from sembleu.src import amr_graph
+# from sembleu.src.amr_graph import AMRGraph
 
 from typing import Optional
 
