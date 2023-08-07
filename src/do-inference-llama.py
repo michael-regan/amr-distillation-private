@@ -1,6 +1,17 @@
 # Copyright (c) Meta Platforms, Inc. and affiliates.
 # This software may be used and distributed according to the terms of the Llama 2 Community License Agreement.
 
+import sys
+sys.path.insert(0, "/home/michaelr/packages")
+import sembleu
+
+from sembleu import src
+from sembleu.src import bleu_score
+from sembleu.src.bleu_score import corpus_bleu, sentence_bleu, SmoothingFunction, NgramInst
+
+from sembleu.src import amr_graph
+from sembleu.src.amr_graph import AMRGraph
+
 from typing import Optional
 
 import fire
@@ -11,13 +22,14 @@ from llama import Llama
 
 
 """
-torchrun --nproc_per_node 1 do-inference-llama.py \
-    --ckpt_dir llama-2-7b-chat \
+torchrun --nproc_per_node 2 do-inference-llama.py \
+    --ckpt_dir llama-2-13b-chat \
     --tokenizer_path tokenizer.model \
     --max_seq_len 4096 \
     --max_batch_size 4 \
-    --data_path ~/portfolio/amr-distillation-private/data/llama-massive-prompts_2023-08-04.json \
-    --report_path ~/reports/llama-massive-as-triples-2023-08-04.json
+    --temperature 0.0 \
+    --data_path ~/portfolio/amr-distillation-private/data/llama-massive-prompts_2023-08-07.json \
+    --report_path ~/reports/llama-massive-13b-chat-2023-08-07.json
 
 
 """
@@ -44,6 +56,7 @@ def main(
         tokenizer_path=tokenizer_path,
         max_seq_len=max_seq_len,
         max_batch_size=max_batch_size,
+        temperature=temperature
     )
 
     with open(data_path, 'r') as fin:
