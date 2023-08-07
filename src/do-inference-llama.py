@@ -39,8 +39,8 @@ from llama import Llama
 
 """
 torchrun --nproc_per_node 2 do-inference-llama.py \
-    --ckpt_dir llama-2-13b-chat \
-    --tokenizer_path tokenizer.model \
+    --ckpt_dir ../../../models/llama/llama-2-13b-chat \
+    --tokenizer_path ../../../models/llama/tokenizer.model \
     --max_seq_len 4096 \
     --max_batch_size 4 \
     --temperature 0.0 \
@@ -218,7 +218,7 @@ def main(
 
     smoofunc = getattr(SmoothingFunction(), 'method3')
 
-    for dialogInstanceChunk, dialogChunk in zip(theseDialogInstanceChunks, theseDialogChunks):
+    for dialogInstanceChunk, dialogChunk in zip(theseDialogInstanceChunks[-1], theseDialogChunks[-1]):
 
         results = generator.chat_completion(
             dialogChunk,  # type: ignore
@@ -248,8 +248,6 @@ def main(
             # print(
             #     f"> {result['generation']['role'].capitalize()}: {result['generation']['content']}"
             # )
-
-            
 
             if d['target']=='amr_ngrams':
                 thisHyp = {1: literal_eval(result['generation']['content'])}
@@ -286,7 +284,7 @@ def main(
                     f"> Reference: {thisRef}"
                 )
 
-                smatch_score = smatch([thisRef], [thisHyp])
+                smatch_score = smatch.main([thisRef], [thisHyp])
                 print(f">Smatch:{smatch_score}")
                 d['score']=smatch_score
 
