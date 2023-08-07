@@ -12,10 +12,11 @@ from sembleu.src import bleu_score
 # from sembleu.src.bleu_score import corpus_bleu, sentence_bleu, SmoothingFunction, NgramInst
 from sembleu.src.bleu_score import SmoothingFunction, NgramInst
 
-
 # from sembleu.src import amr_graph
 # from sembleu.src.amr_graph import AMRGraph
 import math
+
+import smatch
 
 import fractions
 try:
@@ -248,38 +249,51 @@ def main(
             #     f"> {result['generation']['role'].capitalize()}: {result['generation']['content']}"
             # )
 
-
-
-            thisHyp = {1: literal_eval(result['generation']['content'])}
-            thisHypInst = NgramInst(ngram=thisHyp, length=len(thisHyp[1]))
-
-            refDict = {1: [tuple(i) for i in d['ngramInstance'][0]["1"]]}
-            thisRef = NgramInst(ngram=refDict, length=d['ngramInstance'][1])
-
-            print(
-                f"> Hypothesis: {thisHypInst}"
-            )
-
-            print(
-                f"> Reference: {thisRef}"
-            )
-
-            sntbleu = round(sentence_bleu([thisRef], thisHypInst, weights=weights, smoothing_function=smoofunc, auto_reweigh=False), max_ngrams)
-            print(f"Sembleu: {sntbleu}")
-
-            cnt_match_ngrams = 0
-            for ngram in thisHypInst.ngram[1]:
-                if ngram in thisRef.ngram[1]:
-                    cnt_match_ngrams+=1
-            print(f"Sembleu-fuzzy: {cnt_match_ngrams/len(thisRef)}")
             
 
-            #thisContent = thisContent.replace('Abstract Meaning Representation (AMR)', '').strip()
-            #thisContent = thisContent.replace('list of semantic frames', '').strip()
+            if d['target']=='amr_ngrams':
+                thisHyp = {1: literal_eval(result['generation']['content'])}
+                thisHypInst = NgramInst(ngram=thisHyp, length=len(thisHyp[1]))
+                refDict = {1: [tuple(i) for i in d['ngramInstance'][0]["1"]]}
+                thisRef = NgramInst(ngram=refDict, length=d['ngramInstance'][1])
+
+                print(
+                    f"> Hypothesis: {thisHypInst}"
+                )
+
+                print(
+                    f"> Reference: {thisRef}"
+                )
+
+                sntbleu = round(sentence_bleu([thisRef], thisHypInst, weights=weights, smoothing_function=smoofunc, auto_reweigh=False), max_ngrams)
+                print(f"Sembleu: {sntbleu}")
+                d['score']=sntbleu
+                cnt_match_ngrams = 0
+                for ngram in thisHypInst.ngram[1]:
+                    if ngram in thisRef.ngram[1]:
+                        cnt_match_ngrams+=1
+                print(f"Sembleu-fuzzy: {cnt_match_ngrams/len(thisRef)}")
+
+            else:
+                thisHyp = result['generation']['content']
+                thisRef = d['raw_amr']
+
+                print(
+                    f"> Hypothesis: {thisHyp}"
+                )
+
+                print(
+                    f"> Reference: {thisRef}"
+                )
+
+                smatch_score = smatch([thisRef], [thisHyp])
+                print(f">Smatch:{smatch_score}")
+                d['score']=smatch_score
 
             print("\n==================================\n")
 
-            d['content'] = thisHyp
+            d['content'] = result['generation']['content']
+
 
             theseResults.append(d)
 
