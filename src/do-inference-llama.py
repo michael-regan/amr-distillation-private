@@ -287,7 +287,7 @@ def main(
                     f"> Reference: {thisRef}"
                 )
 
-                smatch_score = smatch_main([thisRef], [thisHyp])
+                smatch_score = smatch_main.main([thisRef], [thisHyp])
                 print(f">Smatch:{smatch_score}")
                 d['score']=smatch_score
 
