@@ -5,6 +5,7 @@ import sys
 sys.path.insert(0, "/home/michaelr/packages")
 import sembleu
 
+from ast import literal_eval
 from sembleu import src
 from sembleu.src import bleu_score
 from sembleu.src.bleu_score import corpus_bleu, sentence_bleu, SmoothingFunction, NgramInst
@@ -106,7 +107,7 @@ def main(
             # print(d['amr_triples'])
             # print()
 
-            thisHyp = result['generation']['content']
+            thisHyp = literal_eval(result['generation']['content'])
             thisRef = d['amr_ngrams']
 
             # sntbleu = round(sentence_bleu([thisRef], thisHyp, weights=weights, smoothing_function=smoofunc, auto_reweigh=True), max_ngrams)
