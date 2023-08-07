@@ -98,9 +98,9 @@ def main(
             # for msg in dialog:
             #     print(f"{msg['role'].capitalize()}: {msg['content']}\n")
 
-            print(
-                f"> {result['generation']['role'].capitalize()}: {result['generation']['content']}"
-            )
+            # print(
+            #     f"> {result['generation']['role'].capitalize()}: {result['generation']['content']}"
+            # )
 
             # print("ground truth")
             # print()
@@ -109,6 +109,14 @@ def main(
 
             thisHyp = literal_eval(result['generation']['content'])
             thisRef = [tuple(i) for i in d['amr_ngrams']]
+
+            print(
+                f"> Hypothesis: {thisHyp}"
+            )
+
+            print(
+                f"> Reference: {thisRef}"
+            )
 
             # sntbleu = round(sentence_bleu([thisRef], thisHyp, weights=weights, smoothing_function=smoofunc, auto_reweigh=True), max_ngrams)
             # print(f"Sembleu: {sntbleu}")
