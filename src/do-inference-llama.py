@@ -55,8 +55,7 @@ def main(
         ckpt_dir=ckpt_dir,
         tokenizer_path=tokenizer_path,
         max_seq_len=max_seq_len,
-        max_batch_size=max_batch_size,
-        temperature=temperature
+        max_batch_size=max_batch_size    
     )
 
     with open(data_path, 'r') as fin:
@@ -69,6 +68,8 @@ def main(
 
     theseResults = list()
 
+    smoofunc = getattr(SmoothingFunction(), 'method3')
+
     for dialogInstanceChunk, dialogChunk in zip(theseDialogInstanceChunks, theseDialogChunks):
 
         results = generator.chat_completion(
@@ -79,6 +80,15 @@ def main(
         )
 
         for d, result in zip(dialogInstanceChunk, results):
+
+            max_ngrams = d['max_ngrams']
+
+            if max_ngrams == 3:
+                weights = (0.34, 0.33, 0.34)
+            elif max_ngrams == 2:
+                weights = (0.5, 0.5)
+            else:
+                weights = (1.0,)
 
             dialog = d['dialog']
 
@@ -96,10 +106,14 @@ def main(
             # print(d['amr_triples'])
             # print()
 
-            thisContent = result['generation']['content']
+            thisHyp = result['generation']['content']
+            thisRef = d['amr_ngrams']
 
-            thisContent = thisContent.replace('Abstract Meaning Representation (AMR)', '').strip()
-            thisContent = thisContent.replace('list of semantic frames', '').strip()
+            sntbleu = round(sentence_bleu([thisRef], thisHyp, weights=weights, smoothing_function=smoofunc, auto_reweigh=True), max_ngrams)
+            print(f"Sembleu: {sntbleu}")
+
+            #thisContent = thisContent.replace('Abstract Meaning Representation (AMR)', '').strip()
+            #thisContent = thisContent.replace('list of semantic frames', '').strip()
 
             print("\n==================================\n")
 
