@@ -246,25 +246,29 @@ def main(
                         rc += ']'
                         print(rc)
                 
-                literal_results = literal_eval(rc)
+                try:
+                    literal_results = literal_eval(rc)
 
-                thisHyp, length_thisHyp = convert_to_ngram(literal_results)
-                thisHypInst = NgramInst(ngram=thisHyp, length=length_thisHyp)
+                    thisHyp, length_thisHyp = convert_to_ngram(literal_results)
+                    thisHypInst = NgramInst(ngram=thisHyp, length=length_thisHyp)
 
-                refDict, length_thisRef = convert_to_ngram(d['amr_ngrams'])
-                thisRef = NgramInst(ngram=refDict, length=length_thisRef)
+                    refDict, length_thisRef = convert_to_ngram(d['amr_ngrams'])
+                    thisRef = NgramInst(ngram=refDict, length=length_thisRef)
 
-                print(
-                    f"> Hypothesis: {thisHypInst}"
-                )
+                    print(
+                        f"> Hypothesis: {thisHypInst}"
+                    )
+                    print(
+                        f"> Reference: {thisRef}"
+                    )
+                except Exception as e:
+                    print(f"Error in literal_eval: {e}")
+                    sntbleu = 'Error in literal_eval'
 
-                print(
-                    f"> Reference: {thisRef}"
-                )
                 try:
                     sntbleu = round(sembleu_script.sentence_bleu([thisRef], thisHypInst, weights=weights, smoothing_function=smoofunc, auto_reweigh=False), max_ngrams)
                 except Exception as e:
-                    print("Error in sentence_bleu")
+                    print(f"Error in sentence_bleu: {e}")
                     sntbleu = 'Error in sentence_bleu'
                 print(f"Sembleu: {sntbleu}")
                 d['score']=sntbleu
