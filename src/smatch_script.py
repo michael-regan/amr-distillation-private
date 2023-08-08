@@ -799,7 +799,10 @@ def main(f1, f2):
         print("F-score: " + floatdisplay % best_f_score)
         print()
 
-    return {"precision": floatdisplay % precision, "recall": floatdisplay % recall, "f1": floatdisplay % best_f_score}
+    #score_obj =  {"precision": floatdisplay % precision, "recall": floatdisplay % recall, "f1": floatdisplay % best_f_score}
+    score_obj =  {"precision": precision, "recall": recall, "f1": best_f_score}
+
+    return score_obj
 
 # test AMR parsing
 # run by amr.py [file containing AMR]
