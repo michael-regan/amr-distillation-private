@@ -200,6 +200,7 @@ def convert_to_ngram(obj):
     len_ngrams = [1, 2, 3]
     for len_ngram in len_ngrams:
         for item in obj:
+            item = tuple(item)
             if len(item)==len_ngram:
                 if len_ngram not in converted_data:
                     converted_data[len_ngram]=[]
