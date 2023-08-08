@@ -112,19 +112,22 @@ def analyze_results(results_list, model_name):
     print()
 
     print(f"# errors: {df['error'].sum()}")
-    print(f"% errors: {df['error'].sum()/len(df)}")
+    print(f"% errors: {df['error'].sum()/len(df):.2f}")
     print(df['note'].value_counts())
     print()
 
     df_amr = df[df.target=='raw_amr']
-    df_amr_scores = df[df.target=='raw_amr' & df.error==0]
+    #df_amr_scores = df[df.target=='raw_amr' & df.error==0]
     print("Smatch scores, ignoring errors")
 
     precision, recall, f1 = [],[],[]
-    for obj in df_amr_scores[['score']]:
-        precision.append(obj['precision'])
-        recall.append(obj['recall'])
-        f1.append(obj['f1'])
+
+    for idx, row in df_amr.iterrows():
+        if row.error==0:
+            obj = row.score
+            precision.append(obj['precision'])
+            recall.append(obj['recall'])
+            f1.append(obj['f1'])
     print(f"Mean precision:\t{np.mean(precision)}")
     print(f"Mean recall:\t{np.mean(recall)}")
     print(f"Mean f1-score:\t{np.mean(f1)}")
