@@ -192,8 +192,6 @@ def main(
 
     theseResults = list()
 
-    generation_errors = list()
-
     smoofunc = getattr(sembleu_script.SmoothingFunction(), 'method3')
 
     for dialogInstanceChunk, dialogChunk in zip(theseDialogInstanceChunks, theseDialogChunks):
