@@ -192,6 +192,30 @@ def clean_up_output(output_str):
     clean_str = ''
     return clean_str
 
+def convert_to_ngram(obj):
+
+    converted_data = dict()
+    length_this_ngram = 0
+    for item in obj:
+        if len(item)==1:
+            if 1 not in converted_data:
+                hypothesis_ngram[1]=[]
+            converted_data[1].append(item)
+            length_this_ngram+=1
+        elif len(item)==2:
+            if 2 not in converted_data:
+                converted_data[2]=[]
+            converted_data[2].append(item)
+            length_this_ngram+=1
+        elif len(item)==3:
+            if 3 not in converted_data:
+                converted_data[3]=[]
+            converted_data[3].append(item)
+            length_this_ngram+=1
+
+    return converted_data, length_this_ngram
+
+
 
 def main(
     ckpt_dir: str,
@@ -264,10 +288,15 @@ def main(
                     d['score'] = 'Error in generation'
                 else:
                     literal_results = literal_eval(rc)
-                    thisHyp = {1: literal_results}
-                    thisHypInst = NgramInst(ngram=thisHyp, length=len(thisHyp[1]))
-                    refDict = {1: [tuple(i) for i in d['ngramInstance'][0]["1"]]}
-                    thisRef = NgramInst(ngram=refDict, length=d['ngramInstance'][1])
+
+                    thisHyp, length_thisHyp = convert_to_ngram(literal_results)
+
+                    #thisHyp = {1: literal_results}
+                    thisHypInst = NgramInst(ngram=thisHyp, length=length_thisHyp)
+
+                    refDict, length_thisRef = convert_to_ngram(d['ngramInstance'])
+                    #refDict = {1: [tuple(i) for i in d['ngramInstance'][0]["1"]]}
+                    thisRef = NgramInst(ngram=refDict, length=length_thisRef)
 
                     print(
                         f"> Hypothesis: {thisHypInst}"
