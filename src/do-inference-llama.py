@@ -3,22 +3,20 @@
 
 import sys
 
-from ast import literal_eval
-
-# from sembleu.src import amr_graph
-# from sembleu.src.amr_graph import AMRGraph
+import fire
+import json
 import math
+import pandas as pd
 
 import sembleu_script
 import smatch_script
+
+from ast import literal_eval
 
 from collections import namedtuple
 NgramInst = namedtuple('NgramInst', 'ngram length')
 
 from typing import Optional
-
-import fire
-import json
 
 from llama import Llama
 
@@ -73,6 +71,67 @@ def convert_to_ngram(obj):
 
     return converted_data, length_this_ngram
 
+
+def analyze_results(results_list):
+
+    errors, targets, max_ngrams, scores, notes = [],[],[],[],[]
+
+    for item in results_list:
+
+        targets.append(item['target'])
+        max_ngrams.append(item['max_ngrams'])
+
+        score = item['score']
+
+        if 'error' in str(score).lower():
+            errors.append(1)
+            notes.append(score)
+            scores.append(0)
+
+        else:
+            errors.append(0)
+            notes.append(None)
+            scores.append(score)
+
+    df = pd.DataFrame(
+            {'error': errors,
+            'target': targets,
+            'max_ngram': max_ngrams,
+            'score': scores,
+            'note': notes
+            })
+    
+    print("-----------------------")
+    print("Results")
+
+    print(f"Temp:{}")
+
+    print(f"# errors: {df['error'].sum()}")
+    print(df['note'].value_counts())
+    print()
+
+    df_amr = df[df.targets=='raw_amr']
+    print("Smatch scores")
+    print(df_amr[['score']].describe())
+    print()
+
+    df_ngram_1 = df[df.targets=='amr_ngrams' & df.max_ngrams==1]
+    print("Sembleu scores, max_ngram==1")
+    print(df_ngram_1[['score']].describe())
+    print()
+
+    df_ngram_2 = df[df.targets=='amr_ngrams' & df.max_ngrams==2]
+    print("Sembleu scores, max_ngram==2")
+    print(df_ngram_2[['score']].describe())
+    print()
+    print("-----------------------")
+
+    
+
+
+
+
+    
 
 
 def main(
@@ -200,6 +259,9 @@ def main(
     #this_report_path = report_path.replace('{temp}', f'temp={temperature}')
     with open(report_path, 'w') as fout:
         json.dump(theseResults, fout, indent=4)
+
+    # quick view of results
+    analyze_results(theseResults)
 
 
 if __name__ == "__main__":
