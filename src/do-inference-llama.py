@@ -113,7 +113,7 @@ def analyze_results(results_list, model_name):
 
     print(f"# errors: {df['error'].sum()}")
     print(f"% errors: {df['error'].sum()/len(df):.2f}")
-    print(df['note'].value_counts())
+    print(df[['note']].describe())
     print()
 
     df_amr = df[df.target=='raw_amr']
@@ -131,14 +131,14 @@ def analyze_results(results_list, model_name):
             f1.append(obj['f1'])
         else:
             cnt_smatch_errors+=1
-    print(f"Mean precision:\t{np.mean(precision)}")
-    print(f"Mean recall:\t{np.mean(recall)}")
-    print(f"Mean f1-score:\t{np.mean(f1)}")
+    print(f"Mean precision:\t{np.mean(precision):.2f}")
+    print(f"Mean recall:\t{np.mean(recall):.2f}")
+    print(f"Mean f1-score:\t{np.mean(f1):.2f}")
     print(f"Count smatch errors:\t{cnt_smatch_errors}")
     print()
 
-    df_ngram_1 = df[df.target=='amr_ngrams' & df.max_ngram==1]
-    df_ngram_1_scores = df[df.target=='amr_ngrams' & df.error==0]
+    df_ngram_1 = df[(df.target=='amr_ngrams') & (df.max_ngram==1)]
+    df_ngram_1_scores = df[(df.target=='amr_ngrams') & (df.error==0)]
     print("Sembleu scores, max_ngram==1")
     print(df_ngram_1[['score']].describe())
     print()
@@ -146,8 +146,8 @@ def analyze_results(results_list, model_name):
     print(df_ngram_1_scores[['score']].describe())
     print()
 
-    df_ngram_2 = df[df.target=='amr_ngrams' & df.max_ngram==2]
-    df_ngram_2_scores = df[df.target=='amr_ngrams' & df.error==0]
+    df_ngram_2 = df[(df.target=='amr_ngrams') & (df.max_ngram==2)]
+    df_ngram_2_scores = df[(df.target=='amr_ngrams') & (df.error==0)]
     print("Sembleu scores, max_ngram==2")
     print(df_ngram_2[['score']].describe())
     print()
@@ -274,7 +274,7 @@ def main(
                 except Exception as e:
                     print("Error in smatch scoring")
                     smatch_score = 'Error in smatch'
-                print(f">Smatch:{smatch_score}")
+                print(f"> Smatch: {smatch_score}")
                 d['score']=smatch_score
 
             print("\n==================================\n")
