@@ -257,7 +257,7 @@ def main(
 
                 rc = result['generation']['content']
 
-                if rc[0]!='{' or rc[-1]!='}':
+                if rc[0]!='[' or rc[-1]!=']':
                     print("Error in generation")
                     print(rc)
                     print()
