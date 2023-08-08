@@ -196,22 +196,15 @@ def convert_to_ngram(obj):
 
     converted_data = dict()
     length_this_ngram = 0
-    for item in obj:
-        if len(item)==1:
-            if 1 not in converted_data:
-                hypothesis_ngram[1]=[]
-            converted_data[1].append(item)
-            length_this_ngram+=1
-        elif len(item)==2:
-            if 2 not in converted_data:
-                converted_data[2]=[]
-            converted_data[2].append(item)
-            length_this_ngram+=1
-        elif len(item)==3:
-            if 3 not in converted_data:
-                converted_data[3]=[]
-            converted_data[3].append(item)
-            length_this_ngram+=1
+
+    len_ngrams = [1, 2, 3]
+    for len_ngram in len_ngrams:
+        for item in obj:
+            if len(item)==len_ngram:
+                if len_ngram not in converted_data:
+                    converted_data[len_ngram]=[]
+                converted_data[len_ngram].append(item)
+                length_this_ngram+=1
 
     return converted_data, length_this_ngram
 
