@@ -14,6 +14,8 @@ from sembleu import src
 from sembleu.src import bleu_score
 # from sembleu.src.bleu_score import corpus_bleu, sentence_bleu, SmoothingFunction, NgramInst
 from sembleu.src.bleu_score import SmoothingFunction, NgramInst
+from sembleu.src import amr_graph
+from sembleu.src.amr_graph import AMRGraph
 
 import fractions
 try:
@@ -156,3 +158,11 @@ def sentence_bleu(references, hypothesis, weights=(0.34, 0.33, 0.33),
     return corpus_bleu([references], [hypothesis],
                         weights, smoothing_function, auto_reweigh,
                         emulate_multibleu)
+
+def convert_amr_to_ngram(amr_str, max_ngrams=2):
+
+    amr = AMRGraph(amr_str.strip())
+    amr.revert_of_edges()
+    ngrams = amr.extract_ngrams(max_ngrams, multi_roots=True)
+    
+    return ngrams

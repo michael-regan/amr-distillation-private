@@ -272,10 +272,11 @@ def main(
                     sntbleu = 'Error in sentence_bleu'
                 print(f"Sembleu: {sntbleu}")
                 d['score']=sntbleu
+                d['convert_score']=None
 
             else:
 
-                thisHyp = result['generation']['content']
+                thisHyp = result['generation']['content'].strip()
                 thisRef = d['raw_amr']
 
                 print(
@@ -292,6 +293,20 @@ def main(
                     smatch_score = 'Error in smatch'
                 print(f"> Smatch: {smatch_score}")
                 d['score']=smatch_score
+
+                amr_ngrams_hyp = sembleu_script.convert_amr_to_ngram(thisHyp, max_ngrams=max_ngrams)
+                amr_ngrams_ref = sembleu_script.convert_amr_to_ngram(thisRef, max_ngrams=max_ngrams)
+
+                print(
+                    f"> Hypothesis converted: {amr_ngrams_hyp}"
+                )
+
+                try:
+                    sntbleu_conversion = round(sembleu_script.sentence_bleu([amr_ngrams_ref], amr_ngrams_hyp, weights=weights, smoothing_function=smoofunc, auto_reweigh=False), max_ngrams)
+                except Exception as e:
+                    print(f"Error in conversion sentence_bleu: {e}")
+                    sntbleu_conversion = 'Error in conversion sentence_bleu'
+                d['convert_score'] = sntbleu_conversion
 
             print("\n==================================\n")
 
