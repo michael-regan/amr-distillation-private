@@ -32,8 +32,8 @@ torchrun --nproc_per_node 2 do-inference-llama.py \
     --max_batch_size 4 \
     --num_chunks 2 \
     --temperature 0.0 \
-    --data_path ~/portfolio/amr-distillation-private/data/llama-massive-prompts-8_exs_test_2023-08-08.json \
-    --report_path ~/reports/llama-massive-13b-chat_8_exs_test_2023-08-08.json
+    --data_path ~/portfolio/amr-distillation-private/data/llama-massive-prompts-8_exs_2023-08-07.json \
+    --report_path ~/reports/llama-massive-13b-chat_8_exs_2023-08-07.json
 
 
 """
@@ -138,21 +138,19 @@ def analyze_results(results_list, model_name):
     print()
 
     df_ngram_1 = df[(df.target=='amr_ngrams') & (df.max_ngram==1)]
-    df_ngram_1_scores = df[(df.target=='amr_ngrams') & (df.error==0)]
-    print("Sembleu scores, max_ngram==1")
-    print(df_ngram_1[['score']].describe())
-    print()
-    print("Sembleu scores, max_ngram==1, ignoring errors")
-    print(df_ngram_1_scores[['score']].describe())
+    df_ngram_1_scores = df[(df.target=='amr_ngrams') & (df.max_ngram==1) & (df.error==0)]
+    # print("Sembleu scores, max_ngram==1")
+    # print(df_ngram_1[['score']].describe())
+    # print()
+    print(f"Sembleu scores, max_ngram==1, w/o errors:\t{df_ngram_1_scores.score.mean()}")
     print()
 
     df_ngram_2 = df[(df.target=='amr_ngrams') & (df.max_ngram==2)]
-    df_ngram_2_scores = df[(df.target=='amr_ngrams') & (df.error==0)]
-    print("Sembleu scores, max_ngram==2")
-    print(df_ngram_2[['score']].describe())
-    print()
-    print("Sembleu scores, max_ngram==2, ignoring errors")
-    print(df_ngram_2_scores[['score']].describe())
+    df_ngram_2_scores = df[(df.target=='amr_ngrams') & (df.max_ngram==2) & (df.error==0)]
+    # print("Sembleu scores, max_ngram==2")
+    # print(df_ngram_2[['score']].describe())
+    # print()
+    print(f"Sembleu mean, max_ngram==2, w/o errors:\t{df_ngram_2_scores.score.mean()}")
     print()
     print("-----------------------")
 
