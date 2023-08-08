@@ -297,8 +297,8 @@ def main(
 
             theseResults.append(d)
 
-    this_report_path = report_path.replace('{temp}', f'temp={temperature}')
-    with open(this_report_path, 'w') as fout:
+    #this_report_path = report_path.replace('{temp}', f'temp={temperature}')
+    with open(report_path, 'w') as fout:
         json.dump(theseResults, fout, indent=4)
 
 
