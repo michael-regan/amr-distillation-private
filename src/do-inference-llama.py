@@ -113,12 +113,12 @@ def analyze_results(results_list, model_name):
 
     print(f"# errors: {df['error'].sum()}")
     print(f"% errors: {df['error'].sum()/len(df):.2f}")
-    print(df[['note']].describe())
+    print(df['note'].describe())
     print()
 
     df_amr = df[df.target=='raw_amr']
     #df_amr_scores = df[df.target=='raw_amr' & df.error==0]
-    print("Smatch scores, ignoring errors")
+    print("Smatch scores, w/o errors")
 
     precision, recall, f1 = [],[],[]
     cnt_smatch_errors = 0
@@ -142,7 +142,7 @@ def analyze_results(results_list, model_name):
     # print("Sembleu scores, max_ngram==1")
     # print(df_ngram_1[['score']].describe())
     # print()
-    print(f"Sembleu scores, max_ngram==1, w/o errors:\t{df_ngram_1_scores.score.mean()}")
+    print(f"Mean sembleu, max_ngram==1, w/o errors:\t{df_ngram_1_scores.score.mean()}")
     print()
 
     df_ngram_2 = df[(df.target=='amr_ngrams') & (df.max_ngram==2)]
@@ -150,7 +150,7 @@ def analyze_results(results_list, model_name):
     # print("Sembleu scores, max_ngram==2")
     # print(df_ngram_2[['score']].describe())
     # print()
-    print(f"Sembleu mean, max_ngram==2, w/o errors:\t{df_ngram_2_scores.score.mean()}")
+    print(f"Mean sembleu, max_ngram==2, w/o errors:\t{df_ngram_2_scores.score.mean()}")
     print()
     print("-----------------------")
 
