@@ -92,7 +92,7 @@ def analyze_results(results_list, model_name):
 
         else:
             errors.append(0)
-            notes.append(None)
+            notes.append('n/a')
             scores.append(score)
 
     df = pd.DataFrame(
@@ -124,7 +124,7 @@ def analyze_results(results_list, model_name):
 
     for idx, row in df_amr.iterrows():
         if row.error==0:
-            obj = row.score
+            obj = literal_eval(row.score)
             precision.append(obj['precision'])
             recall.append(obj['recall'])
             f1.append(obj['f1'])
