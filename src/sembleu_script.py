@@ -10,11 +10,12 @@ import sys
 sys.path.insert(0, "/home/michaelr/packages")
 import sembleu
 
+import amr_parser
+
 from sembleu import src
 from sembleu.src import bleu_score
 # from sembleu.src.bleu_score import corpus_bleu, sentence_bleu, SmoothingFunction, NgramInst
 from sembleu.src.bleu_score import SmoothingFunction, NgramInst
-from sembleu.src import amr_parser
 from sembleu.src import amr_graph
 from sembleu.src.amr_graph import AMRGraph
 
