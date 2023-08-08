@@ -43,7 +43,7 @@ torchrun --nproc_per_node 2 do-inference-llama.py \
     --tokenizer_path ../../../models/llama/tokenizer.model \
     --max_seq_len 4096 \
     --max_batch_size 4 \
-    --num_chunks 4 \
+    --num_chunks 2 \
     --temperature 0.0 \
     --data_path ~/portfolio/amr-distillation-private/data/llama-massive-prompts-8_exs_2023-08-07.json \
     --report_path ~/reports/llama-massive-13b-chat_8_exs_2023-08-07.json
@@ -188,6 +188,10 @@ def chunks(lst, n):
     for i in range(0, len(lst), n):
         yield lst[i:i + n]
 
+def clean_up_output(output_str):
+    clean_str = ''
+    return clean_str
+
 
 def main(
     ckpt_dir: str,
@@ -216,8 +220,8 @@ def main(
 
     theseDialogs = [i['dialog'] for i in dialogs]
 
-    theseDialogInstanceChunks = chunks(dialogs, 4)
-    theseDialogChunks = chunks(theseDialogs, 4)
+    theseDialogInstanceChunks = chunks(dialogs, num_chunks)
+    theseDialogChunks = chunks(theseDialogs, num_chunks)
 
     theseResults = list()
 
