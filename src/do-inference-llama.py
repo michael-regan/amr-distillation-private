@@ -7,6 +7,7 @@ import datetime
 import fire
 import json
 import math
+import numpy as np
 import pandas as pd
 
 import sembleu_script
@@ -117,11 +118,16 @@ def analyze_results(results_list, model_name):
 
     df_amr = df[df.target=='raw_amr']
     df_amr_scores = df[df.target=='raw_amr' & df.error==0]
-    print("Smatch scores")
-    print(df_amr[['score']].describe())
-    print()
     print("Smatch scores, ignoring errors")
-    print(df_amr_scores[['score']].describe)
+
+    precision, recall, f1 = [],[],[]
+    for obj in df_amr_scores[['score']]:
+        precision.append(obj['precision'])
+        recall.append(obj['recall'])
+        f1.append(obj['f1'])
+    print(f"Mean precision:\t{np.mean(precision)}")
+    print(f"Mean recall:\t{np.mean(recall)}")
+    print(f"Mean f1-score:\t{np.mean(f1)}")
     print()
 
     df_ngram_1 = df[df.target=='amr_ngrams' & df.max_ngram==1]
