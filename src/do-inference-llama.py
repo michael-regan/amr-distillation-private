@@ -12,13 +12,6 @@ import math
 import sembleu_script
 import smatch_script
 
-import fractions
-try:
-    fractions.Fraction(0, 1000, _normalize=False)
-    from fractions import Fraction
-except TypeError:
-    from nltk.compat import Fraction
-
 from collections import namedtuple
 NgramInst = namedtuple('NgramInst', 'ngram length')
 

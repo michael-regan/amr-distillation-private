@@ -1,3 +1,12 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+"""
+This script computes sembleu score between two AMRs represented as ngrams
+For detailed description of sembleu, see https://github.com/freesunshine0316/sembleu/
+
+"""
+import sys
 sys.path.insert(0, "/home/michaelr/packages")
 import sembleu
 
@@ -5,6 +14,13 @@ from sembleu import src
 from sembleu.src import bleu_score
 # from sembleu.src.bleu_score import corpus_bleu, sentence_bleu, SmoothingFunction, NgramInst
 from sembleu.src.bleu_score import SmoothingFunction, NgramInst
+
+import fractions
+try:
+    fractions.Fraction(0, 1000, _normalize=False)
+    from fractions import Fraction
+except TypeError:
+    from nltk.compat import Fraction
 
 import math
 from collections import Counter
