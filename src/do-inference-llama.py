@@ -255,6 +255,8 @@ def main(
 
                 if rc[0]!='{' or rc[-1]!='}':
                     print("Error in generation")
+                    print(rc)
+                    print()
                     d['score'] = 'Error in generation'
                 else:
                     literal_results = literal_eval(rc)
