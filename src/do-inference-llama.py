@@ -153,7 +153,8 @@ def analyze_results(results_list, language, model_name):
     print()
     print("-----------------------")
 
-    final_results_dict = {'timestamp': now,
+    final_results_dict = {
+                          'timestamp': now,
                           'model': model_name,
                           'lang': language,
                           'temperature': results_list[0]['temperature'],
@@ -164,7 +165,8 @@ def analyze_results(results_list, language, model_name):
                           'smatch_recall': smatch_recall,
                           'smatch_f1': smatch_f1,
                           'sembleu_ngram1': sembleu_ngram_1,
-                          'sembleu_ngram2': sembleu_ngram_2}
+                          'sembleu_ngram2': sembleu_ngram_2
+                          }
     
     return final_results_dict
 
