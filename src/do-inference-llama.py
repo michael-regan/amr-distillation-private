@@ -121,18 +121,20 @@ def analyze_results(results_list, model_name):
     print("Smatch scores, ignoring errors")
 
     precision, recall, f1 = [],[],[]
-
+    cnt_smatch_errors = 0
     for idx, row in df_amr.iterrows():
-        if row.error==0:
-            print(row.score, type(row.score))
-            #obj = literal_eval(row.score)
+        if row.error==0 and type(row.score)==dict:
+            #print(row.score, type(row.score))
             obj = row.score
             precision.append(obj['precision'])
             recall.append(obj['recall'])
             f1.append(obj['f1'])
+        else:
+            cnt_smatch_errors+=1
     print(f"Mean precision:\t{np.mean(precision)}")
     print(f"Mean recall:\t{np.mean(recall)}")
     print(f"Mean f1-score:\t{np.mean(f1)}")
+    print(f"Count smatch errors:\t{cnt_smatch_errors}")
     print()
 
     df_ngram_1 = df[df.target=='amr_ngrams' & df.max_ngram==1]
