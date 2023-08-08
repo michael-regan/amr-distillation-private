@@ -32,8 +32,8 @@ torchrun --nproc_per_node 2 do-inference-llama.py \
     --max_batch_size 4 \
     --num_chunks 2 \
     --temperature 0.0 \
-    --data_path ~/portfolio/amr-distillation-private/data/llama-massive-prompts-8_exs_2023-08-07.json \
-    --report_path ~/reports/llama-massive-13b-chat_8_exs_2023-08-07.json
+    --data_path ~/portfolio/amr-distillation-private/data/llama-massive-prompts-8_exs_test_2023-08-08.json \
+    --report_path ~/reports/llama-massive-13b-chat_8_exs_test_2023-08-08.json
 
 
 """
@@ -124,7 +124,9 @@ def analyze_results(results_list, model_name):
 
     for idx, row in df_amr.iterrows():
         if row.error==0:
-            obj = literal_eval(row.score)
+            print(row.score, type(row.score))
+            #obj = literal_eval(row.score)
+            obj = row.score
             precision.append(obj['precision'])
             recall.append(obj['recall'])
             f1.append(obj['f1'])
