@@ -32,10 +32,10 @@ torchrun --nproc_per_node 2 do-inference-llama.py \
     --max_seq_len 4096 \
     --max_batch_size 4 \
     --num_chunks 2 \
-    --temperature 0.6 \
+    --temperature 0.9 \
     --data_path ~/portfolio/amr-distillation-private/data/llama-massive-prompts-8_exs_2023-08-07.json \
     --report_path ~/reports/llama-massive-13b-chat_8_exs_2023-08-07.json \
-    --compiled_results_path ~/reports/llama-massive-13b-chat_8_exs_2023-08-07.jsonl
+    --compiled_results_path ~/reports/llama-massive-compiled-results_2023-08-07.jsonl
 
 
 """
@@ -159,8 +159,9 @@ def analyze_results(results_list, language, model_name):
                           'model': model_name,
                           'lang': language,
                           'temperature': results_list[0]['temperature'],
-                          'num_errors': df['error'].sum(), 
-                          'num_valid': len(df), 
+                          'num_samples_in_prompt': results_list[0]['num_samples_in_prompt'],
+                          'num_errors': int(df['error'].sum()), 
+                          'num_total': len(df), 
                           'smatch_precision': smatch_precision,
                           'smatch_recall': smatch_recall,
                           'smatch_f1': smatch_f1,
