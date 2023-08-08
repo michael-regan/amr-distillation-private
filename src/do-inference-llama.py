@@ -3,6 +3,7 @@
 
 import sys
 
+import datetime
 import fire
 import json
 import math
@@ -72,7 +73,7 @@ def convert_to_ngram(obj):
     return converted_data, length_this_ngram
 
 
-def analyze_results(results_list):
+def analyze_results(results_list, model_name):
 
     errors, targets, max_ngrams, scores, notes = [],[],[],[],[]
 
@@ -103,8 +104,10 @@ def analyze_results(results_list):
     
     print("-----------------------")
     print("Results")
+    now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
+    print(f"{now}")
 
-    print(f"Temp:{}")
+    print(f"Model: {model_name}\tTemperature:{results_list[0]['temperature']}")
 
     print(f"# errors: {df['error'].sum()}")
     print(df['note'].value_counts())
@@ -256,12 +259,14 @@ def main(
 
             theseResults.append(d)
 
-    #this_report_path = report_path.replace('{temp}', f'temp={temperature}')
+    print(f"Write report to: {report_path}")
     with open(report_path, 'w') as fout:
         json.dump(theseResults, fout, indent=4)
 
     # quick view of results
-    analyze_results(theseResults)
+
+    ckpt_name = ckpt_dir.split('/')[-1]
+    analyze_results(theseResults, ckpt_name)
 
 
 if __name__ == "__main__":
