@@ -16,7 +16,7 @@ from sembleu import src
 from sembleu.src import bleu_score
 # from sembleu.src.bleu_score import corpus_bleu, sentence_bleu, SmoothingFunction, NgramInst
 from sembleu.src.bleu_score import SmoothingFunction, NgramInst
-from sembleu.src import amr_graph
+from sembleu.src import amr_graph, re_utils
 from sembleu.src.amr_graph import AMRGraph
 
 import fractions
