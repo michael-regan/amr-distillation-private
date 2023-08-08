@@ -142,7 +142,7 @@ def analyze_results(results_list, model_name):
     # print("Sembleu scores, max_ngram==1")
     # print(df_ngram_1[['score']].describe())
     # print()
-    print(f"Mean sembleu, max_ngram==1, w/o errors:\t{df_ngram_1_scores.score.mean()}")
+    print(f"Mean sembleu, max_ngram==1, w/o errors:\t{df_ngram_1_scores.score.mean():.2f}")
     print()
 
     df_ngram_2 = df[(df.target=='amr_ngrams') & (df.max_ngram==2)]
@@ -150,7 +150,7 @@ def analyze_results(results_list, model_name):
     # print("Sembleu scores, max_ngram==2")
     # print(df_ngram_2[['score']].describe())
     # print()
-    print(f"Mean sembleu, max_ngram==2, w/o errors:\t{df_ngram_2_scores.score.mean()}")
+    print(f"Mean sembleu, max_ngram==2, w/o errors:\t{df_ngram_2_scores.score.mean():.2f}")
     print()
     print("-----------------------")
 
