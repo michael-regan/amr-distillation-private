@@ -43,6 +43,7 @@ torchrun --nproc_per_node 2 do-inference-llama.py \
     --tokenizer_path ../../../models/llama/tokenizer.model \
     --max_seq_len 4096 \
     --max_batch_size 4 \
+    --num_chunks 4 \
     --temperature 0.0 \
     --data_path ~/portfolio/amr-distillation-private/data/llama-massive-prompts-8_exs_2023-08-07.json \
     --report_path ~/reports/llama-massive-13b-chat_8_exs_2023-08-07.json
@@ -197,6 +198,7 @@ def main(
     top_p: float = 0.9,
     max_seq_len: int = 4096,
     max_batch_size: int = 4,
+    num_chunks: int = 4,
     max_gen_len: Optional[int] = None
 ):
     generator = Llama.build(
@@ -252,6 +254,7 @@ def main(
                 rc = result['generation']['content']
 
                 if rc[0]!='{' or rc[-1]!='}':
+                    print("Error in generation")
                     d['score'] = 'Error in generation'
                 else:
                     literal_results = literal_eval(rc)
