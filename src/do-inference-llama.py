@@ -107,25 +107,39 @@ def analyze_results(results_list, model_name):
     now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
     print(f"{now}")
 
-    print(f"Model: {model_name}\tTemperature:{results_list[0]['temperature']}")
+    print(f"Model: {model_name}\tTemperature: {results_list[0]['temperature']}")
+    print()
 
     print(f"# errors: {df['error'].sum()}")
+    print(f"% errors: {df['error'].sum()/len(df)}")
     print(df['note'].value_counts())
     print()
 
-    df_amr = df[df.targets=='raw_amr']
+    df_amr = df[df.target=='raw_amr']
+    df_amr_scores = df[df.target=='raw_amr' & df.error==0]
     print("Smatch scores")
     print(df_amr[['score']].describe())
     print()
+    print("Smatch scores, ignoring errors")
+    print(df_amr_scores[['score']].describe)
+    print()
 
-    df_ngram_1 = df[df.targets=='amr_ngrams' & df.max_ngrams==1]
+    df_ngram_1 = df[df.target=='amr_ngrams' & df.max_ngram==1]
+    df_ngram_1_scores = df[df.target=='amr_ngrams' & df.error==0]
     print("Sembleu scores, max_ngram==1")
     print(df_ngram_1[['score']].describe())
     print()
+    print("Sembleu scores, max_ngram==1, ignoring errors")
+    print(df_ngram_1_scores[['score']].describe())
+    print()
 
-    df_ngram_2 = df[df.targets=='amr_ngrams' & df.max_ngrams==2]
+    df_ngram_2 = df[df.target=='amr_ngrams' & df.max_ngram==2]
+    df_ngram_2_scores = df[df.target=='amr_ngrams' & df.error==0]
     print("Sembleu scores, max_ngram==2")
     print(df_ngram_2[['score']].describe())
+    print()
+    print("Sembleu scores, max_ngram==2, ignoring errors")
+    print(df_ngram_2_scores[['score']].describe())
     print()
     print("-----------------------")
 
