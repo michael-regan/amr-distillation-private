@@ -6,6 +6,7 @@ import sys
 import datetime
 import fire
 import json
+import jsonlines
 import math
 import numpy as np
 import pandas as pd
@@ -31,9 +32,10 @@ torchrun --nproc_per_node 2 do-inference-llama.py \
     --max_seq_len 4096 \
     --max_batch_size 4 \
     --num_chunks 2 \
-    --temperature 0.0 \
+    --temperature 0.6 \
     --data_path ~/portfolio/amr-distillation-private/data/llama-massive-prompts-8_exs_2023-08-07.json \
-    --report_path ~/reports/llama-massive-13b-chat_8_exs_2023-08-07.json
+    --report_path ~/reports/llama-massive-13b-chat_8_exs_2023-08-07.json \
+    --compiled_results_path ~/reports/llama-massive-13b-chat_8_exs_2023-08-07.jsonl
 
 
 """
@@ -74,7 +76,9 @@ def convert_to_ngram(obj):
     return converted_data, length_this_ngram
 
 
-def analyze_results(results_list, model_name):
+def analyze_results(results_list, language, model_name):
+
+    final_results_dict = dict()
 
     errors, targets, max_ngrams, scores, notes = [],[],[],[],[]
 
@@ -102,18 +106,18 @@ def analyze_results(results_list, model_name):
             'score': scores,
             'note': notes
             })
-    
+
     print("-----------------------")
     print("Results")
     now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
     print(f"{now}")
-
+    
     print(f"Model: {model_name}\tTemperature: {results_list[0]['temperature']}")
     print()
 
     print(f"# errors: {df['error'].sum()}")
     print(f"% errors: {df['error'].sum()/len(df):.2f}")
-    print(df['note'].describe())
+    print(df['note'].value_counts())
     print()
 
     df_amr = df[df.target=='raw_amr']
@@ -124,42 +128,47 @@ def analyze_results(results_list, model_name):
     cnt_smatch_errors = 0
     for idx, row in df_amr.iterrows():
         if row.error==0 and type(row.score)==dict:
-            #print(row.score, type(row.score))
             obj = row.score
             precision.append(obj['precision'])
             recall.append(obj['recall'])
             f1.append(obj['f1'])
         else:
             cnt_smatch_errors+=1
-    print(f"Mean precision:\t{np.mean(precision):.2f}")
-    print(f"Mean recall:\t{np.mean(recall):.2f}")
-    print(f"Mean f1-score:\t{np.mean(f1):.2f}")
+
+    smatch_precision = np.mean(precision)
+    smatch_recall = np.mean(recall)
+    smatch_f1 = np.mean(f1)
+    print(f"Mean precision:\t{smatch_precision:.2f}")
+    print(f"Mean recall:\t{smatch_recall:.2f}")
+    print(f"Mean f1-score:\t{smatch_f1:.2f}")
     print(f"Count smatch errors:\t{cnt_smatch_errors}")
     print()
 
-    df_ngram_1 = df[(df.target=='amr_ngrams') & (df.max_ngram==1)]
     df_ngram_1_scores = df[(df.target=='amr_ngrams') & (df.max_ngram==1) & (df.error==0)]
-    # print("Sembleu scores, max_ngram==1")
-    # print(df_ngram_1[['score']].describe())
-    # print()
-    print(f"Mean sembleu, max_ngram==1, w/o errors:\t{df_ngram_1_scores.score.mean():.2f}")
+    sembleu_ngram_1 = df_ngram_1_scores.score.mean()
+    print(f"Mean sembleu, max_ngram==1, w/o errors:\t{sembleu_ngram_1:.2f}")
     print()
 
-    df_ngram_2 = df[(df.target=='amr_ngrams') & (df.max_ngram==2)]
     df_ngram_2_scores = df[(df.target=='amr_ngrams') & (df.max_ngram==2) & (df.error==0)]
-    # print("Sembleu scores, max_ngram==2")
-    # print(df_ngram_2[['score']].describe())
-    # print()
-    print(f"Mean sembleu, max_ngram==2, w/o errors:\t{df_ngram_2_scores.score.mean():.2f}")
+    sembleu_ngram_2 = df_ngram_2_scores.score.mean()
+    print(f"Mean sembleu, max_ngram==2, w/o errors:\t{sembleu_ngram_2:.2f}")
     print()
     print("-----------------------")
 
+    final_results_dict = {'timestamp': now,
+                          'model': model_name,
+                          'lang': language,
+                          'temperature': results_list[0]['temperature'],
+                          'num_errors': df['error'].sum(), 
+                          'num_valid': len(df), 
+                          'smatch_precision': smatch_precision,
+                          'smatch_recall': smatch_recall,
+                          'smatch_f1': smatch_f1,
+                          'sembleu_ngram1': sembleu_ngram_1,
+                          'sembleu_ngram2': sembleu_ngram_2}
     
+    return final_results_dict
 
-
-
-
-    
 
 
 def main(
@@ -167,6 +176,7 @@ def main(
     tokenizer_path: str,
     data_path: str,
     report_path: str,
+    compiled_results_path: str,
     temperature: float = 0.6,
     top_p: float = 0.9,
     max_seq_len: int = 4096,
@@ -288,9 +298,14 @@ def main(
 
     # quick view of results
 
-    ckpt_name = ckpt_dir.split('/')[-1]
-    analyze_results(theseResults, ckpt_name)
+    language = '-'.join(theseResults[0]['id'].split('-')[1:])
 
+    ckpt_name = ckpt_dir.split('/')[-1]
+    final_results_dict = analyze_results(theseResults, language, ckpt_name)
+
+    print(f"Adding compiled results to: {compiled_results_path}")
+    with jsonlines.open(compiled_results_path, 'a') as writer:
+        writer.write(final_results_dict)
 
 if __name__ == "__main__":
     fire.Fire(main)
