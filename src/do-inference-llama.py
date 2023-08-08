@@ -44,8 +44,8 @@ torchrun --nproc_per_node 2 do-inference-llama.py \
     --max_seq_len 4096 \
     --max_batch_size 4 \
     --temperature 0.0 \
-    --data_path ~/portfolio/amr-distillation-private/data/llama-massive-prompts_2023-08-07.json \
-    --report_path ~/reports/llama-massive-13b-chat_{temp}_2023-08-07.json
+    --data_path ~/portfolio/amr-distillation-private/data/llama-massive-prompts-8_exs_2023-08-07.json \
+    --report_path ~/reports/llama-massive-13b-chat_8_exs_2023-08-07.json
 
 
 """
@@ -219,6 +219,8 @@ def main(
 
     theseResults = list()
 
+    cnt_generation_errors = 0
+
     smoofunc = getattr(SmoothingFunction(), 'method3')
 
     for dialogInstanceChunk, dialogChunk in zip(theseDialogInstanceChunks, theseDialogChunks):
@@ -246,30 +248,37 @@ def main(
             print(f"Question: {d['question']}")
 
             if d['target']=='amr_ngrams':
-                thisHyp = {1: literal_eval(result['generation']['content'])}
-                thisHypInst = NgramInst(ngram=thisHyp, length=len(thisHyp[1]))
-                refDict = {1: [tuple(i) for i in d['ngramInstance'][0]["1"]]}
-                thisRef = NgramInst(ngram=refDict, length=d['ngramInstance'][1])
 
-                print(
-                    f"> Hypothesis: {thisHypInst}"
-                )
+                rc = result['generation']['content']
 
-                print(
-                    f"> Reference: {thisRef}"
-                )
-                try:
-                    sntbleu = round(sentence_bleu([thisRef], thisHypInst, weights=weights, smoothing_function=smoofunc, auto_reweigh=False), max_ngrams)
-                except Exception as e:
-                    print("Error in sentence_bleu")
-                    sntbleu = 'Error'
-                print(f"Sembleu: {sntbleu}")
-                d['score']=sntbleu
-                cnt_match_ngrams = 0
-                for ngram in thisHypInst.ngram[1]:
-                    if ngram in thisRef.ngram[1]:
-                        cnt_match_ngrams+=1
-                print(f"Sembleu-precision: {cnt_match_ngrams/len(thisHypInst)}")
+                if rc[0]!='{' or rc[-1]!='}':
+                    cnt_generation_errors += 1
+                else:
+                    literal_results = literal_eval(rc)
+                    thisHyp = {1: literal_results}
+                    thisHypInst = NgramInst(ngram=thisHyp, length=len(thisHyp[1]))
+                    refDict = {1: [tuple(i) for i in d['ngramInstance'][0]["1"]]}
+                    thisRef = NgramInst(ngram=refDict, length=d['ngramInstance'][1])
+
+                    print(
+                        f"> Hypothesis: {thisHypInst}"
+                    )
+
+                    print(
+                        f"> Reference: {thisRef}"
+                    )
+                    try:
+                        sntbleu = round(sentence_bleu([thisRef], thisHypInst, weights=weights, smoothing_function=smoofunc, auto_reweigh=False), max_ngrams)
+                    except Exception as e:
+                        print("Error in sentence_bleu")
+                        sntbleu = 'Error'
+                    print(f"Sembleu: {sntbleu}")
+                    d['score']=sntbleu
+                    cnt_match_ngrams = 0
+                    for ngram in thisHypInst.ngram[1]:
+                        if ngram in thisRef.ngram[1]:
+                            cnt_match_ngrams+=1
+                    print(f"Sembleu-precision: {cnt_match_ngrams/len(thisHypInst)}")
 
             else:
                 thisHyp = result['generation']['content']
