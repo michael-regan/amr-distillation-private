@@ -219,7 +219,7 @@ def main(
 
     theseResults = list()
 
-    cnt_generation_errors = 0
+    generation_errors = list()
 
     smoofunc = getattr(SmoothingFunction(), 'method3')
 
@@ -252,7 +252,7 @@ def main(
                 rc = result['generation']['content']
 
                 if rc[0]!='{' or rc[-1]!='}':
-                    cnt_generation_errors += 1
+                    d['score'] = 'Error in generation'
                 else:
                     literal_results = literal_eval(rc)
                     thisHyp = {1: literal_results}
@@ -271,7 +271,7 @@ def main(
                         sntbleu = round(sentence_bleu([thisRef], thisHypInst, weights=weights, smoothing_function=smoofunc, auto_reweigh=False), max_ngrams)
                     except Exception as e:
                         print("Error in sentence_bleu")
-                        sntbleu = 'Error'
+                        sntbleu = 'Error in sentence_bleu'
                     print(f"Sembleu: {sntbleu}")
                     d['score']=sntbleu
                     cnt_match_ngrams = 0
@@ -281,6 +281,7 @@ def main(
                     print(f"Sembleu-precision: {cnt_match_ngrams/len(thisHypInst)}")
 
             else:
+
                 thisHyp = result['generation']['content']
                 thisRef = d['raw_amr']
 
@@ -295,7 +296,7 @@ def main(
                     smatch_score = smatch_main.main([thisRef], [thisHyp])
                 except Exception as e:
                     print("Error in smatch scoring")
-                    smatch_score = 'Error'
+                    smatch_score = 'Error in smatch'
                 print(f">Smatch:{smatch_score}")
                 d['score']=smatch_score
 
