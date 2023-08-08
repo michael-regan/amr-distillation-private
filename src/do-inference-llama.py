@@ -45,7 +45,7 @@ torchrun --nproc_per_node 2 do-inference-llama.py \
     --max_batch_size 4 \
     --temperature 0.0 \
     --data_path ~/portfolio/amr-distillation-private/data/llama-massive-prompts_2023-08-07.json \
-    --report_path ~/reports/llama-massive-13b-chat-2023-08-07.json
+    --report_path ~/reports/llama-massive-13b-chat_{temp}_2023-08-07.json
 
 
 """
@@ -293,10 +293,12 @@ def main(
             print("\n==================================\n")
 
             d['content'] = result['generation']['content']
+            d['temperature'] = temperature
 
             theseResults.append(d)
 
-    with open(report_path, 'w') as fout:
+    this_report_path = report_path.replace('{temp}', temperature)
+    with open(this_report_path, 'w') as fout:
         json.dump(theseResults, fout, indent=4)
 
 
