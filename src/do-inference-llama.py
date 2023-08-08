@@ -140,41 +140,35 @@ def main(
                 rc = result['generation']['content']
 
                 if rc[0]!='[' or rc[-1]!=']':
-                    print("Error in generation")
+                    print("Error in generation, cleaning up...")
                     print(rc)
-                    print()
-                    d['score'] = 'Error in generation'
-                else:
-                    literal_results = literal_eval(rc)
+                    rc, sep, tail = rc.partition(']')
+                    rc += ']'
+                    print(rc)
+                    #d['score'] = 'Error in generation'
+                
+                literal_results = literal_eval(rc)
 
-                    thisHyp, length_thisHyp = convert_to_ngram(literal_results)
+                thisHyp, length_thisHyp = convert_to_ngram(literal_results)
+                thisHypInst = NgramInst(ngram=thisHyp, length=length_thisHyp)
 
-                    #thisHyp = {1: literal_results}
-                    thisHypInst = NgramInst(ngram=thisHyp, length=length_thisHyp)
+                refDict, length_thisRef = convert_to_ngram(d['amr_ngrams'])
+                thisRef = NgramInst(ngram=refDict, length=length_thisRef)
 
-                    refDict, length_thisRef = convert_to_ngram(d['amr_ngrams'])
-                    #refDict = {1: [tuple(i) for i in d['ngramInstance'][0]["1"]]}
-                    thisRef = NgramInst(ngram=refDict, length=length_thisRef)
+                print(
+                    f"> Hypothesis: {thisHypInst}"
+                )
 
-                    print(
-                        f"> Hypothesis: {thisHypInst}"
-                    )
-
-                    print(
-                        f"> Reference: {thisRef}"
-                    )
-                    try:
-                        sntbleu = round(sembleu_script.sentence_bleu([thisRef], thisHypInst, weights=weights, smoothing_function=smoofunc, auto_reweigh=False), max_ngrams)
-                    except Exception as e:
-                        print("Error in sentence_bleu")
-                        sntbleu = 'Error in sentence_bleu'
-                    print(f"Sembleu: {sntbleu}")
-                    d['score']=sntbleu
-                    cnt_match_ngrams = 0
-                    for ngram in thisHypInst.ngram[1]:
-                        if ngram in thisRef.ngram[1]:
-                            cnt_match_ngrams+=1
-                    print(f"Sembleu-precision: {cnt_match_ngrams/len(thisHypInst)}")
+                print(
+                    f"> Reference: {thisRef}"
+                )
+                try:
+                    sntbleu = round(sembleu_script.sentence_bleu([thisRef], thisHypInst, weights=weights, smoothing_function=smoofunc, auto_reweigh=False), max_ngrams)
+                except Exception as e:
+                    print("Error in sentence_bleu")
+                    sntbleu = 'Error in sentence_bleu'
+                print(f"Sembleu: {sntbleu}")
+                d['score']=sntbleu
 
             else:
 
