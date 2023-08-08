@@ -287,7 +287,7 @@ def main(
                     #thisHyp = {1: literal_results}
                     thisHypInst = NgramInst(ngram=thisHyp, length=length_thisHyp)
 
-                    refDict, length_thisRef = convert_to_ngram(d['ngramInstance'])
+                    refDict, length_thisRef = convert_to_ngram(d['amr_ngrams'])
                     #refDict = {1: [tuple(i) for i in d['ngramInstance'][0]["1"]]}
                     thisRef = NgramInst(ngram=refDict, length=length_thisRef)
 
