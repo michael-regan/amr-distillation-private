@@ -32,7 +32,7 @@ torchrun --nproc_per_node 2 do-inference-llama.py \
     --max_seq_len 4096 \
     --max_batch_size 4 \
     --num_chunks 2 \
-    --temperature 0.9 \
+    --temperature 1.0 \
     --data_path ~/portfolio/amr-distillation-private/data/llama-massive-prompts-8_exs_2023-08-07.json \
     --report_path ~/reports/llama-massive-13b-chat_8_exs_2023-08-07.json \
     --compiled_results_path ~/reports/llama-massive-compiled-results_2023-08-07.jsonl
@@ -77,8 +77,6 @@ def convert_to_ngram(obj):
 
 
 def analyze_results(results_list, language, model_name):
-
-    final_results_dict = dict()
 
     errors, targets, max_ngrams, scores, notes = [],[],[],[],[]
 
@@ -195,9 +193,6 @@ def main(
     with open(data_path, 'r') as fin:
         dialogs = json.load(fin)
 
-    # for testing amr smatch
-    # dialogs = dialogs[-4:]
-
     theseDialogs = [i['dialog'] for i in dialogs]
 
     theseDialogInstanceChunks = chunks(dialogs, num_chunks)
@@ -238,10 +233,16 @@ def main(
                 if rc[0]!='[' or rc[-1]!=']':
                     print("Error in generation, cleaning up...")
                     print(rc)
-                    rc, sep, tail = rc.partition(']')
-                    rc += ']'
-                    print(rc)
-                    #d['score'] = 'Error in generation'
+                    if '[' not in rc or ']' not in rc:
+                        d['score'] = 'Error in generation'
+                        d['content'] = result['generation']['content']
+                        d['temperature'] = temperature
+                        theseResults.append(d)
+                        continue
+                    else:
+                        rc, sep, tail = rc.partition(']')
+                        rc += ']'
+                        print(rc)
                 
                 literal_results = literal_eval(rc)
 
@@ -290,7 +291,6 @@ def main(
 
             d['content'] = result['generation']['content']
             d['temperature'] = temperature
-
             theseResults.append(d)
 
     print(f"Write report to: {report_path}")
