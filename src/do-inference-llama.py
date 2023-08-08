@@ -230,7 +230,7 @@ def main(
 
             if d['target']=='amr_ngrams':
 
-                rc = result['generation']['content']
+                rc = result['generation']['content'].strip()
 
                 if rc[0]!='[' or rc[-1]!=']':
                     print("Error in generation, cleaning up...")
