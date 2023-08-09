@@ -303,15 +303,21 @@ def main(
                     )
 
                     try:
-                        sntbleu_conversion = round(sembleu_script.sentence_bleu([amr_ngrams_ref], amr_ngrams_hyp, weights=weights, smoothing_function=smoofunc, auto_reweigh=False), max_ngrams)
+                        sembleu_conversion = round(sembleu_script.sentence_bleu([amr_ngrams_ref], 
+                                                                                amr_ngrams_hyp, 
+                                                                                weights=weights, 
+                                                                                smoothing_function=smoofunc, 
+                                                                                auto_reweigh=False), max_ngrams)
+                        print(f"> Sembleu converted: {sembleu_conversion:.2f}")
+                        
                     except Exception as e:
                         print(f"Error in conversion sentence_bleu: {e}")
-                        sntbleu_conversion = 'Error in conversion sentence_bleu'
+                        sembleu_conversion = 'Error in conversion sentence_bleu'
 
                 else:
-                    sntbleu_conversion = 'Error in smatch invalidates conversion'
+                    sembleu_conversion = 'Error in smatch invalidates conversion'
                     
-                d['convert_score'] = sntbleu_conversion
+                d['convert_score'] = sembleu_conversion
 
             print("\n==================================\n")
 
