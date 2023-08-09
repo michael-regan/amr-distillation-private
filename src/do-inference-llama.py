@@ -87,7 +87,7 @@ def analyze_results(results_list, language, model_name):
 
         score = item['score']
         converted_score = item['converted_score']
-
+        
         if type(converted_score)==float:
             converted_scores.append(converted_score)
         else:
@@ -285,7 +285,7 @@ def main(
                     sntbleu = 'Error in sentence_bleu'
                 print(f"Sembleu: {sntbleu}")
                 d['score']=sntbleu
-                d['convert_score']=None
+                d['converted_score']=None
 
             else:
 
