@@ -32,7 +32,7 @@ torchrun --nproc_per_node 2 do-inference-llama.py \
     --max_seq_len 4096 \
     --max_batch_size 4 \
     --num_chunks 2 \
-    --temperature 0.6 \
+    --temperature 0.4 \
     --data_path ~/portfolio/amr-distillation-private/data/llama-massive-prompts-12_exs_test_2023-08-08.json \
     --report_path ~/reports/llama-massive-13b-chat_12_exs_test_2023-08-07.json \
     --compiled_results_path ~/reports/llama-massive-compiled-results_2023-08-08.jsonl
@@ -345,8 +345,13 @@ def main(
     final_results_dict = analyze_results(theseResults, language, ckpt_name)
 
     print(f"Adding compiled results to: {compiled_results_path}")
-    with jsonlines.open(compiled_results_path, 'a') as writer:
-        writer.write(final_results_dict)
+
+    write_jsonlines = True
+
+    if write_jsonlines:
+        write_jsonlines = False
+        with jsonlines.open(compiled_results_path, 'a') as writer:
+            writer.write(final_results_dict)
 
 if __name__ == "__main__":
     fire.Fire(main)
