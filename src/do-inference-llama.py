@@ -294,7 +294,7 @@ def main(
                 print(f"> Smatch: {smatch_score}")
                 d['score']=smatch_score
 
-                if "error" not in smatch_score.lower():
+                if type(smatch_score)==dict:
                     amr_ngrams_hyp = sembleu_script.convert_amr_to_ngram(thisHyp, max_ngrams=max_ngrams)
                     amr_ngrams_ref = sembleu_script.convert_amr_to_ngram(thisRef, max_ngrams=max_ngrams)
 
