@@ -86,12 +86,12 @@ def analyze_results(results_list, language, model_name):
         max_ngrams.append(item['max_ngrams'])
 
         score = item['score']
-        converted_score = item['converted_score']
         
-        if type(converted_score)==float:
-            converted_scores.append(converted_score)
-        else:
-            pass
+        if 'converted_score' in item:
+            converted_score = item['converted_score']
+
+            if type(converted_score)==float:
+                converted_scores.append(converted_score)
 
         if 'error' in str(score).lower():
             errors.append(1)
@@ -285,7 +285,7 @@ def main(
                     sntbleu = 'Error in sentence_bleu'
                 print(f"Sembleu: {sntbleu}")
                 d['score']=sntbleu
-                d['converted_score']=None
+                #d['converted_score']=None
 
             else:
 
