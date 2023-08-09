@@ -32,7 +32,7 @@ torchrun --nproc_per_node 2 do-inference-llama.py \
     --max_seq_len 4096 \
     --max_batch_size 4 \
     --num_chunks 2 \
-    --temperature 0.9 \
+    --temperature 0.6 \
     --data_path ~/portfolio/amr-distillation-private/data/llama-massive-prompts-8_exs_test_2023-08-08.json \
     --report_path ~/reports/llama-massive-13b-chat_8_exs_test_2023-08-07.json \
     --compiled_results_path ~/reports/llama-massive-compiled-results_2023-08-08.jsonl
@@ -78,7 +78,7 @@ def convert_to_ngram(obj):
 
 def analyze_results(results_list, language, model_name):
 
-    errors, targets, max_ngrams, scores, notes = [],[],[],[],[]
+    errors, targets, max_ngrams, converted_scores, scores, notes = [],[],[],[],[],[]
 
     for item in results_list:
 
@@ -86,6 +86,12 @@ def analyze_results(results_list, language, model_name):
         max_ngrams.append(item['max_ngrams'])
 
         score = item['score']
+        converted_score = item['converted_score']
+
+        if type(converted_score)==float:
+            converted_scores.append(converted_score)
+        else:
+            converted_scores.append(None)
 
         if 'error' in str(score).lower():
             errors.append(1)
@@ -94,7 +100,7 @@ def analyze_results(results_list, language, model_name):
 
         else:
             errors.append(0)
-            notes.append('n/a')
+            notes.append(None)
             scores.append(score)
 
     df = pd.DataFrame(
@@ -102,6 +108,7 @@ def analyze_results(results_list, language, model_name):
             'target': targets,
             'max_ngram': max_ngrams,
             'score': scores,
+            'converted_scores': converted_scores,
             'note': notes
             })
 
@@ -141,6 +148,7 @@ def analyze_results(results_list, language, model_name):
     print(f"Mean f1-score:\t{smatch_f1:.2f}")
     print(f"Count smatch errors:\t{cnt_smatch_errors}")
     print()
+    print(f"Mean converted sembleu scores: {np.mean(converted_scores):.2f}}")
 
     df_ngram_1_scores = df[(df.target=='amr_ngrams') & (df.max_ngram==1) & (df.error==0)]
     sembleu_ngram_1 = df_ngram_1_scores.score.mean()
@@ -317,7 +325,7 @@ def main(
                 else:
                     sembleu_conversion = 'Error in smatch invalidates conversion'
                     
-                d['convert_score'] = sembleu_conversion
+                d['converted_score'] = sembleu_conversion
 
             print("\n==================================\n")
 
