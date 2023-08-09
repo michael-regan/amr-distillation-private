@@ -91,7 +91,7 @@ def analyze_results(results_list, language, model_name):
         if type(converted_score)==float:
             converted_scores.append(converted_score)
         else:
-            converted_scores.append(None)
+            pass
 
         if 'error' in str(score).lower():
             errors.append(1)
@@ -108,7 +108,6 @@ def analyze_results(results_list, language, model_name):
             'target': targets,
             'max_ngram': max_ngrams,
             'score': scores,
-            'converted_scores': converted_scores,
             'note': notes
             })
 
@@ -148,6 +147,7 @@ def analyze_results(results_list, language, model_name):
     print(f"Mean f1-score:\t{smatch_f1:.2f}")
     print(f"Count smatch errors:\t{cnt_smatch_errors}")
     print()
+    print(f"# successfully converted to ngrams: {len(converted_scores)}")
     print(f"Mean converted sembleu scores: {np.mean(converted_scores):.2f}")
 
     df_ngram_1_scores = df[(df.target=='amr_ngrams') & (df.max_ngram==1) & (df.error==0)]
