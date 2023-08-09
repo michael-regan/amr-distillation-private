@@ -166,5 +166,9 @@ def convert_amr_to_ngram(amr_str, max_ngrams=2):
     amr = AMRGraph(amr_str.strip())
     amr.revert_of_edges()
     ngrams = amr.extract_ngrams(max_ngrams, multi_roots=True)
-    
-    return ngrams
+
+    length = 0
+    for k, v in ngrams.items():
+        length+=len(v)
+        
+    return NgramInst(ngram=ngrams, length=length)
