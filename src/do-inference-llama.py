@@ -33,8 +33,8 @@ torchrun --nproc_per_node 2 do-inference-llama.py \
     --max_batch_size 4 \
     --num_chunks 2 \
     --temperature 0.6 \
-    --data_path ~/portfolio/amr-distillation-private/data/llama-massive-prompts-8_exs_test_2023-08-08.json \
-    --report_path ~/reports/llama-massive-13b-chat_8_exs_test_2023-08-07.json \
+    --data_path ~/portfolio/amr-distillation-private/data/llama-massive-prompts-12_exs_test_2023-08-08.json \
+    --report_path ~/reports/llama-massive-13b-chat_12_exs_test_2023-08-07.json \
     --compiled_results_path ~/reports/llama-massive-compiled-results_2023-08-08.jsonl
 
 
@@ -148,7 +148,7 @@ def analyze_results(results_list, language, model_name):
     print(f"Mean f1-score:\t{smatch_f1:.2f}")
     print(f"Count smatch errors:\t{cnt_smatch_errors}")
     print()
-    print(f"Mean converted sembleu scores: {np.mean(converted_scores):.2f}}")
+    print(f"Mean converted sembleu scores: {np.mean(converted_scores):.2f}")
 
     df_ngram_1_scores = df[(df.target=='amr_ngrams') & (df.max_ngram==1) & (df.error==0)]
     sembleu_ngram_1 = df_ngram_1_scores.score.mean()
