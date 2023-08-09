@@ -33,9 +33,9 @@ torchrun --nproc_per_node 2 do-inference-llama.py \
     --max_batch_size 4 \
     --num_chunks 2 \
     --temperature 0.9 \
-    --data_path ~/portfolio/amr-distillation-private/data/llama-massive-prompts-16_exs_2023-08-07.json \
-    --report_path ~/reports/llama-massive-13b-chat_16_exs_2023-08-07.json \
-    --compiled_results_path ~/reports/llama-massive-compiled-results_2023-08-07.jsonl
+    --data_path ~/portfolio/amr-distillation-private/data/llama-massive-prompts-8_exs_test_2023-08-08.json \
+    --report_path ~/reports/llama-massive-13b-chat_8_exs_test_2023-08-07.json \
+    --compiled_results_path ~/reports/llama-massive-compiled-results_2023-08-08.jsonl
 
 
 """
@@ -294,18 +294,23 @@ def main(
                 print(f"> Smatch: {smatch_score}")
                 d['score']=smatch_score
 
-                amr_ngrams_hyp = sembleu_script.convert_amr_to_ngram(thisHyp, max_ngrams=max_ngrams)
-                amr_ngrams_ref = sembleu_script.convert_amr_to_ngram(thisRef, max_ngrams=max_ngrams)
+                if "error" not in smatch_score.lower():
+                    amr_ngrams_hyp = sembleu_script.convert_amr_to_ngram(thisHyp, max_ngrams=max_ngrams)
+                    amr_ngrams_ref = sembleu_script.convert_amr_to_ngram(thisRef, max_ngrams=max_ngrams)
 
-                print(
-                    f"> Hypothesis converted: {amr_ngrams_hyp}"
-                )
+                    print(
+                        f"> Hypothesis converted: {amr_ngrams_hyp}"
+                    )
 
-                try:
-                    sntbleu_conversion = round(sembleu_script.sentence_bleu([amr_ngrams_ref], amr_ngrams_hyp, weights=weights, smoothing_function=smoofunc, auto_reweigh=False), max_ngrams)
-                except Exception as e:
-                    print(f"Error in conversion sentence_bleu: {e}")
-                    sntbleu_conversion = 'Error in conversion sentence_bleu'
+                    try:
+                        sntbleu_conversion = round(sembleu_script.sentence_bleu([amr_ngrams_ref], amr_ngrams_hyp, weights=weights, smoothing_function=smoofunc, auto_reweigh=False), max_ngrams)
+                    except Exception as e:
+                        print(f"Error in conversion sentence_bleu: {e}")
+                        sntbleu_conversion = 'Error in conversion sentence_bleu'
+
+                else:
+                    sntbleu_conversion = 'Error in smatch invalidates conversion'
+                    
                 d['convert_score'] = sntbleu_conversion
 
             print("\n==================================\n")
