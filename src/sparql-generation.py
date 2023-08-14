@@ -136,8 +136,8 @@ def main(
         "unconstrained": {'count_hallucinations': 0, 
                           'count_valid_rels':0, 
                           'count_detected_hallucinations':0,
-                          'count_error_verification': 0,
-                          'total_chances': 0,
+                          'count_rels_false_positives': 0,
+                          'total_hypotheses': 0,
                           'total_queries': 0,
                           'total_answers_existing': 0,
                           'total_answers_verified': 0,
@@ -146,8 +146,8 @@ def main(
         "unconstrained_amr": {'count_hallucinations': 0, 
                           'count_valid_rels':0, 
                           'count_detected_hallucinations':0,
-                          'count_error_verification': 0,
-                          'total_chances': 0,
+                          'count_rels_false_positives': 0,
+                          'total_hypotheses': 0,
                           'total_queries': 0,
                           'total_answers_existing': 0,
                           'total_answers_verified': 0,
@@ -156,8 +156,8 @@ def main(
         "constrained": {'count_hallucinations': 0, 
                           'count_valid_rels':0, 
                           'count_detected_hallucinations':0,
-                          'count_error_verification': 0,
-                          'total_chances': 0,
+                          'count_rels_false_positives': 0,
+                          'total_hypotheses': 0,
                           'total_queries': 0,
                           'total_answers_existing': 0,
                           'total_answers_verified': 0,
@@ -166,8 +166,8 @@ def main(
         "constrained_amr":{'count_hallucinations': 0, 
                           'count_valid_rels':0, 
                           'count_detected_hallucinations':0,
-                          'count_error_verification': 0,
-                          'total_chances': 0,
+                          'count_rels_false_positives': 0,
+                          'total_hypotheses': 0,
                           'total_queries': 0,
                           'total_answers_existing': 0,
                           'total_answers_verified': 0,
@@ -253,13 +253,15 @@ def main(
                 for hyp_rel, hyp_ver in zip(hyp_relations, hyp_verification):
                     if hyp_ver and hyp_rel not in valid_dbpedia_props:
                         thisDict['count_hallucinations']+=1
+                        print(f"Hallucination: {hyp_rel}")
                     elif hyp_ver and hyp_rel in valid_dbpedia_props:
                         thisDict['count_valid_rels']+=1
                     elif not hyp_ver and hyp_rel not in valid_dbpedia_props:
                         thisDict['count_detected_hallucinations']+=1
-                    else:
-                        thisDict['count_error_verification']+=1
-                    thisDict['total_chances'] += 1
+                    elif not hyp_ver and hyp_rel in valid_dbpedia_props:
+                        thisDict['count_rels_false_positives']+=1
+
+                thisDict['total_hypotheses'] += len(hyp_relations)
 
                 thisDict['total_queries'] += 1
 
