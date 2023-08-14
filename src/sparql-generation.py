@@ -104,19 +104,27 @@ def main(
         "unconstrained": {'count_hallucinations': 0, 
                           'count_valid_rels':0, 
                           'count_detected_hallucinations':0,
-                          'count_error_verification': 0},
+                          'count_error_verification': 0,
+                          'total': 0,
+                          'total_queries': 0},
         "unconstrained_amr": {'count_hallucinations': 0, 
                           'count_valid_rels':0, 
                           'count_detected_hallucinations':0,
-                          'count_error_verification': 0},
+                          'count_error_verification': 0,
+                          'total': 0,
+                          'total_queries': 0},
         "constrained": {'count_hallucinations': 0, 
                           'count_valid_rels':0, 
                           'count_detected_hallucinations':0,
-                          'count_error_verification': 0},
+                          'count_error_verification': 0,
+                          'total': 0,
+                          'total_queries': 0},
         "constrained_amr":{'count_hallucinations': 0, 
                           'count_valid_rels':0, 
                           'count_detected_hallucinations':0,
-                          'count_error_verification': 0}
+                          'count_error_verification': 0,
+                          'total': 0,
+                          'total_queries': 0}
     }
     
     total_results, total_malformed, total_literal_eval_errors = 0,0,0
@@ -158,6 +166,7 @@ def main(
                     rc += '}'
                     print(rc)
             
+
             try:
                 literal_results = literal_eval(rc)
 
@@ -173,6 +182,10 @@ def main(
                     f"> Hyp relations: {literal_results['relations']}"
                 )
 
+                print(
+                    f"> Hyp answers: {literal_results['answers']}"
+                )
+
 
                 hyp_sparql = literal_results['sparql_query']
                 hyp_relations = literal_results['relations']
@@ -186,8 +199,6 @@ def main(
                     thisDict = count_results_dict['constrained']
                 elif d['manipulated']==1 and d['include_amr']==True:
                     thisDict = count_results_dict['constrained_amr']
-                else:
-                    print("***error in retrieving error dictionary")
 
                 for hyp_rel, hyp_ver in zip(hyp_relations, hyp_verification):
                     if hyp_ver and hyp_rel not in valid_dbpedia_props:
@@ -198,7 +209,9 @@ def main(
                         thisDict['count_detected_hallucinations']+=1
                     else:
                         thisDict['count_error_verification']+=1
+                    thisDict['total'] += 1
 
+                thisDict['total_queries'] += 1
 
                 ref_sparql = d['gold_sparql']
 
