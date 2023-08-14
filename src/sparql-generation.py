@@ -73,6 +73,8 @@ def get_dbpedia_properties():
 
 def verify_exist_dbpedia_obj(page):
 
+    sparql.setReturnFormat(JSON)
+
     page_pa = page.split('/')
 
     tgt_name = page_pa[-1]
@@ -277,6 +279,7 @@ def main(
                 total_literal_eval_errors+=1
 
             try:
+                sparql.setReturnFormat(XML)
                 sparql.setQuery(hyp_sparql)
                 sparql_results = sparql.query().convert()
                 pattern = r'<results distinct="false" ordered="true">\s*</results>'
