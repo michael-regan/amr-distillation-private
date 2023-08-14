@@ -139,7 +139,8 @@ def main(
                           'count_error_verification': 0,
                           'total_chances': 0,
                           'total_queries': 0,
-                          'total_answers_correct': 0,
+                          'total_answers_existing': 0,
+                          'total_answers_verified': 0,
                           'total_answers': 0,
                           'non_dbpedia_answer': 0},
         "unconstrained_amr": {'count_hallucinations': 0, 
@@ -148,7 +149,8 @@ def main(
                           'count_error_verification': 0,
                           'total_chances': 0,
                           'total_queries': 0,
-                          'total_answers_correct': 0,
+                          'total_answers_existing': 0,
+                          'total_answers_verified': 0,
                           'total_answers': 0,
                           'non_dbpedia_answer': 0},
         "constrained": {'count_hallucinations': 0, 
@@ -157,7 +159,8 @@ def main(
                           'count_error_verification': 0,
                           'total_chances': 0,
                           'total_queries': 0,
-                          'total_answers_correct': 0,
+                          'total_answers_existing': 0,
+                          'total_answers_verified': 0,
                           'total_answers': 0,
                           'non_dbpedia_answer': 0},
         "constrained_amr":{'count_hallucinations': 0, 
@@ -166,7 +169,8 @@ def main(
                           'count_error_verification': 0,
                           'total_chances': 0,
                           'total_queries': 0,
-                          'total_answers_correct': 0,
+                          'total_answers_existing': 0,
+                          'total_answers_verified': 0,
                           'total_answers': 0,
                           'non_dbpedia_answer': 0}
     }
@@ -264,7 +268,7 @@ def main(
                     if 'dbpedia.org' in hyp_ans:
                         if verify_exist_dbpedia_obj(hyp_ans):
                             thisDict['total_answers_correct'] += 1
-                        thisDict['total_answers'] += 1
+                        thisDict['total_answers_existing'] += 1
                     else:
                         thisDict['non_dbpedia_answer']
 
@@ -288,6 +292,12 @@ def main(
                 if not match:
                     print("GOT RESULT")
                     total_results += 1
+
+                    # verify correctness
+                    for hyp_ans in literal_results['answers']:
+                        if 'dbpedia.org' in hyp_ans:
+                            if hyp_ans in sparql_results.toxml():
+                                thisDict['total_answers_verified'] += 1
 
             except Exception as e:
                 print(f"Malformed query: {e}")
