@@ -43,7 +43,6 @@ from typing import Optional
 
 # Setting DBPedia endpoint
 sparql = SPARQLWrapper("http://dbpedia.org/sparql")
-sparql.setReturnFormat(JSON)
 
 
 def chunks(lst, n):
@@ -55,6 +54,7 @@ def get_dbpedia_properties():
 
     # Setting DBPedia endpoint
     print("getting valid dbpedia props")
+    sparql.setReturnFormat(JSON)
     
     rel_query = """SELECT DISTINCT ?pred WHERE {
     ?pred a rdf:Property
@@ -172,6 +172,8 @@ def main(
     total_results, total_malformed, total_literal_eval_errors = 0,0,0
 
     valid_dbpedia_props = get_dbpedia_properties()
+
+    sparql.setReturnFormat('rdf')
 
     for messageInstanceChunk, messageChunk in zip(theseMessageInstanceChunks, theseMessageChunks):
 
