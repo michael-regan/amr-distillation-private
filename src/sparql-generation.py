@@ -15,7 +15,7 @@ Four formats of input:
 torchrun --nproc_per_node 2 sparql-generation.py \
     --ckpt_dir ../../../models/llama/llama-2-13b-chat \
     --tokenizer_path ../../../models/llama/tokenizer.model \
-    --max_seq_len 1024 \
+    --max_seq_len 2048 \
     --max_batch_size 4 \
     --num_chunks 2 \
     --temperature 0.9 \
@@ -138,8 +138,7 @@ def main(
 
             if len(d['rels_to_include'])>0:
                 valid_dbpedia_props = d['rels_to_include']
-         
-
+        
             print(f"Question: {d['question']}")
             print(f"EN Question: {d['en_question']}")
 
@@ -222,6 +221,13 @@ def main(
             d['temperature'] = temperature
             theseResults.append(d)
 
+            if len(theseResults)%50==0:
+                print("ongoing results")
+                print(count_results_dict)
+                print()
+                print("\n==================================\n")
+
+    print()
     print(f"Total matched results: {total_results}")
     print(f"Total malformed queries: {total_malformed}")
     print(f"Total literal_eval errors: {total_literal_eval_errors}")
