@@ -114,7 +114,6 @@ def main(
                     print(rc)
             
             try:
-                print(rc)
                 literal_results = literal_eval(rc)
 
                 print(
@@ -139,7 +138,7 @@ def main(
                 sparql.setQuery(hyp_sparql)
                 sparql_results = sparql.query().convert()
                 pattern = r'<results distinct="false" ordered="true">\s*</results>'
-                match = re.search(pattern, results.toxml())
+                match = re.search(pattern, sparql_results.toxml())
 
                 if not match:
                     print("GOT RESULT")
