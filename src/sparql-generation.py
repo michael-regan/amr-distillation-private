@@ -37,7 +37,7 @@ from ast import literal_eval
 
 from llama import Llama
 
-from SPARQLWrapper import SPARQLWrapper, JSON
+from SPARQLWrapper import SPARQLWrapper, CSV, JSON
 from typing import Optional
 
 
@@ -173,7 +173,7 @@ def main(
 
     valid_dbpedia_props = get_dbpedia_properties()
 
-    sparql.setReturnFormat('rdf')
+    sparql.setReturnFormat(CSV)
 
     for messageInstanceChunk, messageChunk in zip(theseMessageInstanceChunks, theseMessageChunks):
 
