@@ -52,7 +52,6 @@ def main(
     tokenizer_path: str,
     data_path: str,
     report_path: str,
-    compiled_results_path: str,
     temperature: float = 0.6,
     top_p: float = 0.9,
     max_seq_len: int = 4096,
