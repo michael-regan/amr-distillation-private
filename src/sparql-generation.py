@@ -100,7 +100,24 @@ def main(
 
     theseResults = list()
 
-    count_hallucinations, count_valid_rels, count_detected_hallucinations, count_error_verification = 0,0,0,0
+    count_results_dict = {
+        "unconstrained": {'count_hallucinations': 0, 
+                          'count_valid_rels':0, 
+                          'count_detected_hallucinations':0,
+                          'count_error_verification': 0},
+        "unconstrained_amr": {'count_hallucinations': 0, 
+                          'count_valid_rels':0, 
+                          'count_detected_hallucinations':0,
+                          'count_error_verification': 0},,
+        "constrained": {'count_hallucinations': 0, 
+                          'count_valid_rels':0, 
+                          'count_detected_hallucinations':0,
+                          'count_error_verification': 0},,
+        "constrained_amr":{'count_hallucinations': 0, 
+                          'count_valid_rels':0, 
+                          'count_detected_hallucinations':0,
+                          'count_error_verification': 0},
+    }
     
     total_results, total_malformed = 0,0
 
@@ -153,15 +170,26 @@ def main(
                 hyp_relations = literal_results['relations']
                 hyp_verification = literal_results['verification']
 
+                if d['manipulated']==0 and d['include_amr']==False:
+                    thisDict = count_results_dict['unconstrained']
+                elif d['manipulated']==0 and d['include_amr']==True:
+                    thisDict = count_results_dict['unconstrained_amr']
+                elif d['manipulated']==1 and d['include_amr']==False:
+                    thisDict = count_results_dict['constrained']
+                elif d['manipulated']==1 and d['include_amr']==True:
+                    thisDict = count_results_dict['constrained_amr']
+                else:
+                    print("***error in retrieving error dictionary")
+
                 for hyp_rel, hyp_ver in zip(hyp_relations, hyp_verification):
                     if hyp_ver and hyp_rel not in valid_dbpedia_props:
-                        count_hallucinations+=1
+                        thisDict['count_hallucinations']+=1
                     elif hyp_ver and hyp_rel in valid_dbpedia_props:
-                        count_valid_rels+=1
+                        thisDict['count_valid_rels']+=1
                     elif not hyp_ver and hyp_rel not in valid_dbpedia_props:
-                        count_detected_hallucinations+=1
+                        thisDict['count_detected_hallucinations']+=1
                     else:
-                        count_error_verification+=1
+                        thisDict['count_error_verification']+=1
 
 
                 ref_sparql = d['gold_sparql']
@@ -196,11 +224,18 @@ def main(
     print(f"Total matched results: {total_results}")
     print(f"Total malformed queries: {total_malformed}")
     print()
-    print(f"Count hallucinations: {count_hallucinations}")
-    print(f"Count detected hallus: {count_detected_hallucinations}")
-    print(f"Count valid predicted rels: {count_valid_rels}")
-    print(f"Count errors in verification: {count_error_verification}")
+    print("\n==================================\n")
     print()
+    for k, v in count_results_dict.items():
+        print(k)
+        print(v)
+        print()
+    # print("Unconstrained")
+    # print(f"Count hallucinations: {count_results_dict['unconstrained']['count_hallucinations']}")
+    # print(f"Count detected hallus: {['count_detected_hallucinations']}")
+    # print(f"Count valid predicted rels: {['count_valid_rels']}")
+    # print(f"Count errors in verification: {['count_error_verification']}")
+    # print()
 
     # print(f"Write report to: {report_path}")
     # with open(report_path, 'w') as fout:
