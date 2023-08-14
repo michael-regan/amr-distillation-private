@@ -165,6 +165,15 @@ def main(
                     f"> Hypothesis: {literal_results}"
                 )
 
+                print(
+                    f"> Hyp query: {literal_results['sparql_query']}"
+                )
+
+                print(
+                    f"> Hyp relations: {literal_results['relations']}"
+                )
+
+
                 hyp_sparql = literal_results['sparql_query']
                 hyp_relations = literal_results['relations']
                 hyp_verification = literal_results['verification']
