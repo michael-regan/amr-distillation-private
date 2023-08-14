@@ -108,15 +108,15 @@ def main(
         "unconstrained_amr": {'count_hallucinations': 0, 
                           'count_valid_rels':0, 
                           'count_detected_hallucinations':0,
-                          'count_error_verification': 0},,
+                          'count_error_verification': 0},
         "constrained": {'count_hallucinations': 0, 
                           'count_valid_rels':0, 
                           'count_detected_hallucinations':0,
-                          'count_error_verification': 0},,
+                          'count_error_verification': 0},
         "constrained_amr":{'count_hallucinations': 0, 
                           'count_valid_rels':0, 
                           'count_detected_hallucinations':0,
-                          'count_error_verification': 0},
+                          'count_error_verification': 0}
     }
     
     total_results, total_malformed = 0,0
