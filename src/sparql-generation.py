@@ -119,7 +119,7 @@ def main(
                           'count_error_verification': 0}
     }
     
-    total_results, total_malformed = 0,0
+    total_results, total_malformed, total_literal_eval_errors = 0,0,0
 
     valid_dbpedia_props = get_dbpedia_properties()
 
@@ -200,6 +200,7 @@ def main(
             except Exception as e:
                 print(f"Error in literal_eval: {e}")
                 error_note = 'Error in literal_eval'
+                total_literal_eval_errors+=1
 
             try:
                 sparql.setQuery(hyp_sparql)
@@ -223,6 +224,7 @@ def main(
 
     print(f"Total matched results: {total_results}")
     print(f"Total malformed queries: {total_malformed}")
+    print(f"Total literal_eval errors: {total_literal_eval_errors}")
     print()
     print("\n==================================\n")
     print()
