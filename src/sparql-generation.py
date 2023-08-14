@@ -92,7 +92,7 @@ def main(
 
         for d, result in zip(messageInstanceChunk, results):
 
-            message = d['message']
+            message = d['messages']
 
             print(f"Question: {d['question']}")
             print(f"EN Question: {d['en_question']}")
