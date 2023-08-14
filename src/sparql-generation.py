@@ -267,8 +267,8 @@ def main(
                 for hyp_ans in literal_results['answers']:
                     if 'dbpedia.org' in hyp_ans:
                         if verify_exist_dbpedia_obj(hyp_ans):
-                            thisDict['total_answers_correct'] += 1
-                        thisDict['total_answers_existing'] += 1
+                            thisDict['total_answers_existing'] += 1
+                        thisDict['total_answers'] += 1
                     else:
                         thisDict['non_dbpedia_answer']
 
