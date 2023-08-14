@@ -41,6 +41,11 @@ from SPARQLWrapper import SPARQLWrapper, JSON
 from typing import Optional
 
 
+# Setting DBPedia endpoint
+sparql = SPARQLWrapper("http://dbpedia.org/sparql")
+sparql.setReturnFormat(JSON)
+
+
 def chunks(lst, n):
     """Yield successive n-sized chunks from lst."""
     for i in range(0, len(lst), n):
@@ -50,9 +55,7 @@ def get_dbpedia_properties():
 
     # Setting DBPedia endpoint
     print("getting valid dbpedia props")
-    sparql = SPARQLWrapper("http://dbpedia.org/sparql")
-    sparql.setReturnFormat(JSON)
-
+    
     rel_query = """SELECT DISTINCT ?pred WHERE {
     ?pred a rdf:Property
     }
@@ -67,6 +70,36 @@ def get_dbpedia_properties():
 
     return set(all_dbpedia_props)
 
+
+def verify_exist_dbpedia_obj(page):
+
+    page_pa = page.split('/')
+
+    tgt_name = page_pa[-1]
+    tgt_onto = page_pa[-2]
+
+    if tgt_onto == 'page':
+        tgt_onto = 'dbp'
+    elif tgt_onto == 'resource':
+        tgt_onto = 'dbr'
+        
+    else:
+        print("Unknown ontology")
+        
+    q = f"""ASK {{
+        VALUES (?r) {{ ({tgt_onto}:{tgt_name}) }}
+            {{ ?r ?p ?o }}
+            UNION
+            {{ ?s ?r ?o }}
+            UNION
+            {{ ?s ?p ?r }}
+        }}"""
+        
+    sparql.setQuery(q)
+    results = sparql.query().convert()
+
+    return results['boolean']
+    
 
 def main(
     ckpt_dir: str,
@@ -87,9 +120,6 @@ def main(
         max_batch_size=max_batch_size    
     )
 
-    # Setting DBPedia endpoint
-    sparql = SPARQLWrapper("http://dbpedia.org/sparql")
-
     with open(data_path, 'r') as fin:
         messages = json.load(fin)
 
@@ -105,26 +135,38 @@ def main(
                           'count_valid_rels':0, 
                           'count_detected_hallucinations':0,
                           'count_error_verification': 0,
-                          'total': 0,
-                          'total_queries': 0},
+                          'total_chances': 0,
+                          'total_queries': 0,
+                          'total_answers_correct': 0,
+                          'total_answers': 0,
+                          'non_dbpedia_answer': 0},
         "unconstrained_amr": {'count_hallucinations': 0, 
                           'count_valid_rels':0, 
                           'count_detected_hallucinations':0,
                           'count_error_verification': 0,
-                          'total': 0,
-                          'total_queries': 0},
+                          'total_chances': 0,
+                          'total_queries': 0,
+                          'total_answers_correct': 0,
+                          'total_answers': 0,
+                          'non_dbpedia_answer': 0},
         "constrained": {'count_hallucinations': 0, 
                           'count_valid_rels':0, 
                           'count_detected_hallucinations':0,
                           'count_error_verification': 0,
-                          'total': 0,
-                          'total_queries': 0},
+                          'total_chances': 0,
+                          'total_queries': 0,
+                          'total_answers_correct': 0,
+                          'total_answers': 0,
+                          'non_dbpedia_answer': 0},
         "constrained_amr":{'count_hallucinations': 0, 
                           'count_valid_rels':0, 
                           'count_detected_hallucinations':0,
                           'count_error_verification': 0,
-                          'total': 0,
-                          'total_queries': 0}
+                          'total_chances': 0,
+                          'total_queries': 0,
+                          'total_answers_correct': 0,
+                          'total_answers': 0,
+                          'non_dbpedia_answer': 0}
     }
     
     total_results, total_malformed, total_literal_eval_errors = 0,0,0
@@ -209,9 +251,18 @@ def main(
                         thisDict['count_detected_hallucinations']+=1
                     else:
                         thisDict['count_error_verification']+=1
-                    thisDict['total'] += 1
+                    thisDict['total_chances'] += 1
 
                 thisDict['total_queries'] += 1
+
+                # verify existence in DBPedia of answers
+                for hyp_ans in literal_results['answers']:
+                    if 'dbpedia.org' in hyp_ans:
+                        if verify_exist_dbpedia_obj(hyp_ans):
+                            thisDict['total_answers_correct'] += 1
+                        thisDict['total_answers'] += 1
+                    else:
+                        thisDict['non_dbpedia_answer']
 
                 ref_sparql = d['gold_sparql']
 
