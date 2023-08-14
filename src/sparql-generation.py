@@ -173,7 +173,7 @@ def main(
 
     valid_dbpedia_props = get_dbpedia_properties()
 
-    sparql.setReturnFormat(CSV)
+    sparql.setReturnFormat(RDF)
 
     for messageInstanceChunk, messageChunk in zip(theseMessageInstanceChunks, theseMessageChunks):
 
