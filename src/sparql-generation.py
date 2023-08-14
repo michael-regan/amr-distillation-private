@@ -114,6 +114,7 @@ def main(
                     print(rc)
             
             try:
+                print(rc)
                 literal_results = literal_eval(rc)
 
                 print(
