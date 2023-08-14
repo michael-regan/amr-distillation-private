@@ -298,6 +298,7 @@ def main(
                         if 'dbpedia.org' in hyp_ans:
                             if hyp_ans in sparql_results.toxml():
                                 thisDict['total_answers_verified'] += 1
+                                print(f"ANSWER predicted matches that returned by SPARQL: {hyp_ans}")
 
             except Exception as e:
                 print(f"Malformed query: {e}")
