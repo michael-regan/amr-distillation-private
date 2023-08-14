@@ -116,15 +116,17 @@ def main(
             try:
                 literal_results = literal_eval(rc)
 
+                print(
+                    f"> Hypothesis: {literal_results}"
+                )
+
                 hyp_sparql = literal_results['sparql_query']
                 hyp_relations = literal_results['relations']
                 hyp_verification = literal_results['verification']
 
                 ref_sparql = d['gold_sparql']
     
-                print(
-                    f"> Hypothesis: {hyp_sparql}"
-                )
+
                 print(
                     f"> Reference: {ref_sparql}"
                 )
