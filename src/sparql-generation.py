@@ -38,6 +38,7 @@ from ast import literal_eval
 from llama import Llama
 
 from SPARQLWrapper import SPARQLWrapper, JSON
+from typing import Optional
 
 
 def chunks(lst, n):
