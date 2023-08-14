@@ -46,6 +46,27 @@ def chunks(lst, n):
     for i in range(0, len(lst), n):
         yield lst[i:i + n]
 
+def get_dbpedia_properties():
+
+    # Setting DBPedia endpoint
+    print("getting valid dbpedia props")
+    sparql = SPARQLWrapper("http://dbpedia.org/sparql")
+    sparql.setReturnFormat(JSON)
+
+    rel_query = """SELECT DISTINCT ?pred WHERE {
+    ?pred a rdf:Property
+    }
+    ORDER BY ?pred"""
+
+    sparql.setQuery(rel_query)
+    rel_results = sparql.queryAndConvert()
+
+    all_dbpedia_props = [p['pred']['value'].replace('http://dbpedia.org/ontology/','') for p in rel_results['results']['bindings']]
+
+    print(f"# of valid dbpedia props: {len(all_dbpedia_props)}")
+
+    return set(all_dbpedia_props)
+
 
 def main(
     ckpt_dir: str,
@@ -79,7 +100,11 @@ def main(
 
     theseResults = list()
 
+    count_hallucinations, count_valid_rels, count_detected_hallucinations, count_error_verification = 0,0,0,0
+    
     total_results, total_malformed = 0,0
+
+    valid_dbpedia_props = get_dbpedia_properties()
 
     for messageInstanceChunk, messageChunk in zip(theseMessageInstanceChunks, theseMessageChunks):
 
@@ -93,6 +118,10 @@ def main(
         for d, result in zip(messageInstanceChunk, results):
 
             message = d['messages']
+
+            if len(d['rels_to_include'])>0:
+                valid_dbpedia_props = d['rels_to_include']
+         
 
             print(f"Question: {d['question']}")
             print(f"EN Question: {d['en_question']}")
@@ -124,8 +153,18 @@ def main(
                 hyp_relations = literal_results['relations']
                 hyp_verification = literal_results['verification']
 
+                for hyp_rel, hyp_ver in zip(hyp_relations, hyp_verification):
+                    if hyp_ver and hyp_rel not in valid_dbpedia_props:
+                        count_hallucinations+=1
+                    elif hyp_ver and hyp_rel in valid_dbpedia_props:
+                        count_valid_rels+=1
+                    elif not hyp_ver and hyp_rel not in valid_dbpedia_props:
+                        count_detected_hallucinations+=1
+                    else:
+                        count_error_verification+=1
+
+
                 ref_sparql = d['gold_sparql']
-    
 
                 print(
                     f"> Reference: {ref_sparql}"
@@ -156,6 +195,11 @@ def main(
 
     print(f"Total matched results: {total_results}")
     print(f"Total malformed queries: {total_malformed}")
+    print()
+    print(f"Count hallucinations: {count_hallucinations}")
+    print(f"Count detected hallus: {count_detected_hallucinations}")
+    print(f"Count valid predicted rels: {count_valid_rels}")
+    print(f"Count errors in verification: {count_error_verification}")
     print()
 
     # print(f"Write report to: {report_path}")
