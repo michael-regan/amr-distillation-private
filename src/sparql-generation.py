@@ -66,6 +66,7 @@ def get_dbpedia_properties():
 
     all_dbpedia_props = [p['pred']['value'].replace('http://dbpedia.org/ontology/','') for p in rel_results['results']['bindings']]
 
+    #all_dbpedia_props = [p.lower() for p in all_dbpedia_props]
     print(f"# of valid dbpedia props: {len(all_dbpedia_props)}")
 
     return set(all_dbpedia_props)
@@ -270,6 +271,7 @@ def main(
                     if 'dbpedia.org' in hyp_ans:
                         if verify_exist_dbpedia_obj(hyp_ans):
                             thisDict['total_answers_existing'] += 1
+                            print(f"Verified to exist in DBPedia: {hyp_ans}")
                         thisDict['total_answers'] += 1
                     else:
                         thisDict['non_dbpedia_answer']
@@ -285,6 +287,8 @@ def main(
                 total_literal_eval_errors+=1
 
             try:
+                literal_results = literal_eval(rc)
+                hyp_sparql = literal_results['sparql_query']
                 sparql.setReturnFormat(XML)
                 sparql.setQuery(hyp_sparql)
                 sparql_results = sparql.query().convert()
@@ -293,6 +297,7 @@ def main(
 
                 if not match:
                     print("GOT RESULT")
+                    print(sparql_results.toxml())
                     total_results += 1
 
                     # verify correctness
