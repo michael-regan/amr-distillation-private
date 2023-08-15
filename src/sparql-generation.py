@@ -337,6 +337,7 @@ def main(
                 thisDict = get_results_dict(d)
                 for hyp_ans in literal_results['answers']:
                     if hyp_ans in qald9_answers:
+                        print(f"Predicted answer matchd with QALD-9: {hyp_ans}")
                         thisDict['total_answers_pred_same_as_known'] += 1
 
             except Exception as e:
