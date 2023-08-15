@@ -15,7 +15,7 @@ Four formats of input:
 torchrun --nproc_per_node 2 sparql-generation.py \
     --ckpt_dir ../../../models/llama/llama-2-13b-chat \
     --tokenizer_path ../../../models/llama/tokenizer.model \
-    --max_seq_len 2048 \
+    --max_seq_len 4096 \
     --max_batch_size 4 \
     --num_chunks 2 \
     --temperature 0.9 \
@@ -60,6 +60,15 @@ def get_dbpedia_properties():
     ?pred a rdf:Property
     }
     ORDER BY ?pred"""
+
+    # rel_query = """SELECT ?pred (COUNT(?pred) as ?pCount)
+    # WHERE
+    # {
+    # ?s ?pred ?o .
+    # }
+    # GROUP BY ?pred
+    # HAVING (COUNT(?pred)>3)
+    # """
 
     sparql.setQuery(rel_query)
     rel_results = sparql.queryAndConvert()
