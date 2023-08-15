@@ -141,7 +141,8 @@ def main(
                           'total_hypotheses': 0,
                           'total_queries': 0,
                           'total_answers_existing': 0,
-                          'total_answers_verified': 0,
+                          'total_answers_pred_same_as_returned': 0,
+                          'total_answers_pred_same_as_known': 0,
                           'total_answers': 0,
                           'non_dbpedia_answer': 0},
         "unconstrained_amr": {'count_hallucinations': 0, 
@@ -151,7 +152,8 @@ def main(
                           'total_hypotheses': 0,
                           'total_queries': 0,
                           'total_answers_existing': 0,
-                          'total_answers_verified': 0,
+                          'total_answers_pred_same_as_returned': 0,
+                          'total_answers_pred_same_as_known': 0,
                           'total_answers': 0,
                           'non_dbpedia_answer': 0},
         "constrained": {'count_hallucinations': 0, 
@@ -161,7 +163,8 @@ def main(
                           'total_hypotheses': 0,
                           'total_queries': 0,
                           'total_answers_existing': 0,
-                          'total_answers_verified': 0,
+                          'total_answers_pred_same_as_returned': 0,
+                          'total_answers_pred_same_as_known': 0,
                           'total_answers': 0,
                           'non_dbpedia_answer': 0},
         "constrained_amr":{'count_hallucinations': 0, 
@@ -171,10 +174,25 @@ def main(
                           'total_hypotheses': 0,
                           'total_queries': 0,
                           'total_answers_existing': 0,
-                          'total_answers_verified': 0,
+                          'total_answers_pred_same_as_returned': 0,
+                          'total_answers_pred_same_as_known': 0,
                           'total_answers': 0,
                           'non_dbpedia_answer': 0}
     }
+
+    def get_results_dict(d):
+
+        if d['manipulated']==0 and d['include_amr']==False:
+            thisDict = count_results_dict['unconstrained']
+        elif d['manipulated']==0 and d['include_amr']==True:
+            thisDict = count_results_dict['unconstrained_amr']
+        elif d['manipulated']==1 and d['include_amr']==False:
+            thisDict = count_results_dict['constrained']
+        elif d['manipulated']==1 and d['include_amr']==True:
+            thisDict = count_results_dict['constrained_amr']
+
+        return thisDict
+        
     
     total_results, total_malformed, total_literal_eval_errors = 0,0,0
 
@@ -194,6 +212,8 @@ def main(
         for d, result in zip(messageInstanceChunk, results):
 
             message = d['messages']
+
+            qald9_answers = d['qald9_answers']
 
             if len(d['rels_to_include'])>0:
                 valid_dbpedia_props = d['rels_to_include']
@@ -224,15 +244,15 @@ def main(
                 print(
                     f"> Hypothesis: {literal_results}"
                 )
-
+                print()
                 print(
                     f"> Hyp query: {literal_results['sparql_query']}"
                 )
-
+                print()
                 print(
                     f"> Hyp relations: {literal_results['relations']}"
                 )
-
+                print()
                 print(
                     f"> Hyp answers: {literal_results['answers']}"
                 )
@@ -242,14 +262,7 @@ def main(
                 hyp_relations = literal_results['relations']
                 hyp_verification = literal_results['verification']
 
-                if d['manipulated']==0 and d['include_amr']==False:
-                    thisDict = count_results_dict['unconstrained']
-                elif d['manipulated']==0 and d['include_amr']==True:
-                    thisDict = count_results_dict['unconstrained_amr']
-                elif d['manipulated']==1 and d['include_amr']==False:
-                    thisDict = count_results_dict['constrained']
-                elif d['manipulated']==1 and d['include_amr']==True:
-                    thisDict = count_results_dict['constrained_amr']
+                thisDict = get_results_dict(d)
 
                 for hyp_rel, hyp_ver in zip(hyp_relations, hyp_verification):
                     if hyp_ver and hyp_rel not in valid_dbpedia_props:
@@ -268,13 +281,16 @@ def main(
 
                 # verify existence in DBPedia of answers
                 for hyp_ans in literal_results['answers']:
-                    if 'dbpedia.org' in hyp_ans:
-                        if verify_exist_dbpedia_obj(hyp_ans):
-                            thisDict['total_answers_existing'] += 1
-                            print(f"Verified to exist in DBPedia: {hyp_ans}")
-                        thisDict['total_answers'] += 1
+                    if type(hyp_ans)==str:
+                        if 'dbpedia.org' in hyp_ans:
+                            if verify_exist_dbpedia_obj(hyp_ans):
+                                thisDict['total_answers_existing'] += 1
+                                print(f"Verified to exist in DBPedia: {hyp_ans}")
+                            thisDict['total_answers'] += 1
+                        else:
+                            thisDict['non_dbpedia_answer']
                     else:
-                        thisDict['non_dbpedia_answer']
+                        pass
 
                 ref_sparql = d['gold_sparql']
 
@@ -295,6 +311,8 @@ def main(
                 pattern = r'<results distinct="false" ordered="true">\s*</results>'
                 match = re.search(pattern, sparql_results.toxml())
 
+                thisDict = get_results_dict(d)
+
                 if not match:
                     print("GOT RESULT")
                     print(sparql_results.toxml())
@@ -302,14 +320,27 @@ def main(
 
                     # verify correctness
                     for hyp_ans in literal_results['answers']:
-                        if 'dbpedia.org' in hyp_ans:
-                            if hyp_ans in sparql_results.toxml():
-                                thisDict['total_answers_verified'] += 1
-                                print(f"ANSWER predicted matches that returned by SPARQL: {hyp_ans}")
+                        if type(hyp_ans)==str:
+                            if 'dbpedia.org' in hyp_ans:
+                                if hyp_ans in sparql_results.toxml():
+                                    thisDict['total_answers_pred_same_as_returned'] += 1
+                                    print(f"ANSWER predicted matches that returned by SPARQL: {hyp_ans}")
 
             except Exception as e:
                 print(f"Malformed query: {e}")
                 total_malformed += 1
+
+
+            try:
+                # check if answers match qald9 answers
+                literal_results = literal_eval(rc)
+                thisDict = get_results_dict(d)
+                for hyp_ans in literal_results['answers']:
+                    if hyp_ans in qald9_answers:
+                        thisDict['total_answers_pred_same_as_known'] += 1
+
+            except Exception as e:
+                print(f"Error matching answers to qald9: {e}")
 
             print("\n==================================\n")
 
