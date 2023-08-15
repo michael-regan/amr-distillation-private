@@ -12,15 +12,15 @@ Four formats of input:
 """
 
 """
-torchrun --nproc_per_node 2 sparql-generation.py \
-    --ckpt_dir ../../../models/llama/llama-2-13b-chat \
+torchrun --nproc_per_node 1 sparql-generation.py \
+    --ckpt_dir ../../../models/llama/llama-2-7b-chat \
     --tokenizer_path ../../../models/llama/tokenizer.model \
     --max_seq_len 4096 \
     --max_batch_size 4 \
     --num_chunks 2 \
     --temperature 0.9 \
     --data_path ~/portfolio/amr-distillation-private/data/llama-sparql-prompts-2023-08-15.json \
-    --report_path ~/reports/sparql-qald9-13b-chat_2023-08-15.json
+    --report_path ~/reports/sparql-qald9-7b-chat_8exs_2023-08-15.json
 """
 
 import sys
@@ -250,6 +250,7 @@ def main(
                     print(rc)
 
             try:
+                rc.replace('[[', '[').replace(']]', ']')
                 literal_results = literal_eval(rc)
 
             except Exception as e:
@@ -368,7 +369,13 @@ def main(
                 # check if answers match qald9 answers
                 #thisDict = get_results_dict(d)
                 for ha in literal_results['answers']:
-                    if ha in qald9_answers or ha.replace('page/', 'resource/') in qald9_answers or ha.replace('resource/', 'page/') in qald9_answers or ha.replace('https', 'http') in qald9_answers:
+
+                    if type(ha)==bool and ha in qald9_answers:
+                        print(f"Predicted bool answer matchd with QALD-9: {ha}")
+                        results_summary += f"Predicted bool answer matchd with QALD-9: {ha}\n"
+                        thisDict['total_answers_pred_same_as_known'] += 1
+
+                    elif ha in qald9_answers or ha.replace('page/', 'resource/') in qald9_answers or ha.replace('resource/', 'page/') in qald9_answers or ha.replace('https', 'http') in qald9_answers:
                         print(f"Predicted answer matchd with QALD-9: {ha}")
                         results_summary += f"Predicted answer matchd with QALD-9: {ha}\n"
                         thisDict['total_answers_pred_same_as_known'] += 1
