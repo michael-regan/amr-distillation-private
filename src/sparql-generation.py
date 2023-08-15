@@ -250,7 +250,7 @@ def main(
                     print(rc)
 
             try:
-                rc.replace('[[', '[').replace(']]', ']')
+                rc = rc.replace('[[', '[').replace(']]', ']')
                 literal_results = literal_eval(rc)
 
             except Exception as e:
