@@ -304,14 +304,22 @@ def main(
 
             thisDict['total_queries'] += 1
 
-            # verify existence in DBPedia of answers
+                # verify existence in DBPedia of answers
             for hyp_ans in literal_results['answers']:
                 if type(hyp_ans)==str:
                     if 'dbpedia.org' in hyp_ans:
-                        if verify_exist_dbpedia_obj(hyp_ans):
-                            thisDict['total_answers_existing'] += 1
-                            print(f"Verified to exist in DBPedia: {hyp_ans}")
-                            results_summary += f"Verified to exist in DBPedia: {hyp_ans}\n"
+
+                        try:
+                            if verify_exist_dbpedia_obj(hyp_ans):
+                                thisDict['total_answers_existing'] += 1
+                                print(f"Verified to exist in DBPedia: {hyp_ans}")
+                                results_summary += f"Verified to exist in DBPedia: {hyp_ans}\n"
+
+                        except Exception as e:
+                            print(f"Malformed DBPedia verification: {e}")
+                            results_summary += f"Malformed DBPedia verification: {e}"
+                            total_malformed += 1
+
                         thisDict['total_answers'] += 1
                     else:
                         thisDict['non_dbpedia_answer']
