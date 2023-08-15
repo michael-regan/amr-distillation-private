@@ -336,7 +336,7 @@ def main(
                 literal_results = literal_eval(rc)
                 thisDict = get_results_dict(d)
                 for hyp_ans in literal_results['answers']:
-                    if hyp_ans in qald9_answers:
+                    if hyp_ans in qald9_answers or hyp_ans.replace('page/', 'resource/') in qald9_answers or hyp_ans.replace('resource/', 'page/') in qald9_answers:
                         print(f"Predicted answer matchd with QALD-9: {hyp_ans}")
                         thisDict['total_answers_pred_same_as_known'] += 1
 
