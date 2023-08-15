@@ -19,8 +19,8 @@ torchrun --nproc_per_node 2 sparql-generation.py \
     --max_batch_size 4 \
     --num_chunks 2 \
     --temperature 0.9 \
-    --data_path ~/portfolio/amr-distillation-private/data/llama-sparql-prompts-2023-08-14.json \
-    --report_path ~/reports/sparql-qald9-13b-chat_2023-08-14.json
+    --data_path ~/portfolio/amr-distillation-private/data/llama-sparql-prompts-2023-08-15.json \
+    --report_path ~/reports/sparql-qald9-13b-chat_2023-08-15.json
 """
 
 import sys
@@ -211,6 +211,8 @@ def main(
 
         for d, result in zip(messageInstanceChunk, results):
 
+            results_summary = ''
+
             message = d['messages']
 
             qald9_answers = d['qald9_answers']
@@ -219,7 +221,7 @@ def main(
                 valid_dbpedia_props = d['rels_to_include']
         
             print(f"Question: {d['question']}")
-            print(f"EN Question: {d['en_question']}")
+            #print(f"EN Question: {d['en_question']}")
 
             rc = result['generation']['content'].strip()
 
@@ -233,77 +235,88 @@ def main(
                     theseResults.append(d)
                     continue
                 else:
-                    rc, sep, tail = rc.partition('}')
-                    rc += '}'
+                    #rc, sep, tail = rc.partition('}')
+
+                    rc = '}'.join(rc.split('}')[:-1]) + '}'
                     print(rc)
-            
 
             try:
                 literal_results = literal_eval(rc)
 
-                print(
-                    f"> Hypothesis: {literal_results}"
-                )
-                print()
-                print(
-                    f"> Hyp query: {literal_results['sparql_query']}"
-                )
-                print()
-                print(
-                    f"> Hyp relations: {literal_results['relations']}"
-                )
-                print()
-                print(
-                    f"> Hyp answers: {literal_results['answers']}"
-                )
-
-
-                hyp_sparql = literal_results['sparql_query']
-                hyp_relations = literal_results['relations']
-                hyp_verification = literal_results['verification']
-
-                thisDict = get_results_dict(d)
-
-                for hyp_rel, hyp_ver in zip(hyp_relations, hyp_verification):
-                    if hyp_ver and hyp_rel not in valid_dbpedia_props:
-                        thisDict['count_hallucinations']+=1
-                        print(f"Hallucination: {hyp_rel}")
-                    elif hyp_ver and hyp_rel in valid_dbpedia_props:
-                        thisDict['count_valid_rels']+=1
-                    elif not hyp_ver and hyp_rel not in valid_dbpedia_props:
-                        thisDict['count_detected_hallucinations']+=1
-                    elif not hyp_ver and hyp_rel in valid_dbpedia_props:
-                        thisDict['count_rels_false_positives']+=1
-
-                thisDict['total_hypotheses'] += len(hyp_relations)
-
-                thisDict['total_queries'] += 1
-
-                # verify existence in DBPedia of answers
-                for hyp_ans in literal_results['answers']:
-                    if type(hyp_ans)==str:
-                        if 'dbpedia.org' in hyp_ans:
-                            if verify_exist_dbpedia_obj(hyp_ans):
-                                thisDict['total_answers_existing'] += 1
-                                print(f"Verified to exist in DBPedia: {hyp_ans}")
-                            thisDict['total_answers'] += 1
-                        else:
-                            thisDict['non_dbpedia_answer']
-                    else:
-                        pass
-
-                ref_sparql = d['gold_sparql']
-
-                print(
-                    f"> Reference: {ref_sparql}"
-                )
             except Exception as e:
                 print(f"Error in literal_eval: {e}")
-                error_note = 'Error in literal_eval'
+                summary_results += 'Error in literal_eval'
                 total_literal_eval_errors+=1
+                d['content'] = result['generation']['content']
+                d['temperature'] = temperature
+                d['results_summary'] = results_summary
+                theseResults.append(d)
+                continue
+
+            print(
+                f"> Hypothesis: {literal_results}"
+            )
+            print()
+            print(
+                f"> Hyp query: {literal_results['sparql_query']}"
+            )
+            print()
+            print(
+                f"> Hyp relations: {literal_results['relations']}"
+            )
+            print()
+            print(
+                f"> Hyp answers: {literal_results['answers']}"
+            )
+
+
+            hyp_sparql = literal_results['sparql_query']
+            hyp_relations = literal_results['relations']
+            hyp_verification = literal_results['verification']
+
+            thisDict = get_results_dict(d)
+
+            for hyp_rel, hyp_ver in zip(hyp_relations, hyp_verification):
+                if hyp_ver and hyp_rel not in valid_dbpedia_props:
+                    thisDict['count_hallucinations']+=1
+                    print(f"Hallucination: {hyp_rel}")
+                    results_summary += f"Hallucination: {hyp_rel}\n"
+                elif hyp_ver and hyp_rel in valid_dbpedia_props:
+                    thisDict['count_valid_rels']+=1
+                    results_summary += f"Valid relation: {hyp_rel}\n"
+                elif not hyp_ver and hyp_rel not in valid_dbpedia_props:
+                    thisDict['count_detected_hallucinations']+=1
+                    results_summary += f"Detected hallucination: {hyp_rel}\n"
+                elif not hyp_ver and hyp_rel in valid_dbpedia_props:
+                    thisDict['count_rels_false_positives']+=1
+                    results_summary += f"False positive: {hyp_rel}\n"
+
+            thisDict['total_hypotheses'] += len(hyp_relations)
+
+            thisDict['total_queries'] += 1
+
+            # verify existence in DBPedia of answers
+            for hyp_ans in literal_results['answers']:
+                if type(hyp_ans)==str:
+                    if 'dbpedia.org' in hyp_ans:
+                        if verify_exist_dbpedia_obj(hyp_ans):
+                            thisDict['total_answers_existing'] += 1
+                            print(f"Verified to exist in DBPedia: {hyp_ans}")
+                            results_summary += f"Verified to exist in DBPedia: {hyp_ans}\n"
+                        thisDict['total_answers'] += 1
+                    else:
+                        thisDict['non_dbpedia_answer']
+                else:
+                    pass
+
+            ref_sparql = d['gold_sparql']
+
+            print(
+                f"> Reference: {ref_sparql}"
+            )
+
 
             try:
-                literal_results = literal_eval(rc)
                 hyp_sparql = literal_results['sparql_query']
                 sparql.setReturnFormat(XML)
                 sparql.setQuery(hyp_sparql)
@@ -311,7 +324,7 @@ def main(
                 pattern = r'<results distinct="false" ordered="true">\s*</results>'
                 match = re.search(pattern, sparql_results.toxml())
 
-                thisDict = get_results_dict(d)
+                #thisDict = get_results_dict(d)
 
                 if not match:
                     print("GOT RESULT")
@@ -325,32 +338,38 @@ def main(
                                 if hyp_ans in sparql_results.toxml():
                                     thisDict['total_answers_pred_same_as_returned'] += 1
                                     print(f"ANSWER predicted matches that returned by SPARQL: {hyp_ans}")
+                                    results_summary += f"ANSWER predicted matches that returned by SPARQL: {hyp_ans}\n"
+                                    
 
             except Exception as e:
                 print(f"Malformed query: {e}")
+                summary_results += f"Malformed query: {e}"
                 total_malformed += 1
 
 
             try:
                 # check if answers match qald9 answers
-                literal_results = literal_eval(rc)
-                thisDict = get_results_dict(d)
+                #thisDict = get_results_dict(d)
                 for ha in literal_results['answers']:
                     if ha in qald9_answers or ha.replace('page/', 'resource/') in qald9_answers or ha.replace('resource/', 'page/') in qald9_answers or ha.replace('https', 'http') in qald9_answers:
                         print(f"Predicted answer matchd with QALD-9: {ha}")
+                        results_summary += f"Predicted answer matchd with QALD-9: {ha}\n"
                         thisDict['total_answers_pred_same_as_known'] += 1
 
                     elif ha.replace('page/', 'resource/').replace('https', 'http') in qald9_answers:
                         print(f"Predicted answer matchd with QALD-9: {ha}")
+                        results_summary += f"Predicted answer matchd with QALD-9: {ha}\n"
                         thisDict['total_answers_pred_same_as_known'] += 1
 
             except Exception as e:
                 print(f"Error matching answers to qald9: {e}")
+                results_summary += f"Error matching answers to qald9: {e}"
 
             print("\n==================================\n")
 
             d['content'] = result['generation']['content']
             d['temperature'] = temperature
+            d['results_summary'] = results_summary
             theseResults.append(d)
 
             if len(theseResults)%50==0:
@@ -370,6 +389,9 @@ def main(
         print(k)
         print(v)
         print()
+
+    theseResultsDict = {'results': theseResults, 'count_results': count_results_dict}
+
     # print("Unconstrained")
     # print(f"Count hallucinations: {count_results_dict['unconstrained']['count_hallucinations']}")
     # print(f"Count detected hallus: {['count_detected_hallucinations']}")
@@ -377,9 +399,9 @@ def main(
     # print(f"Count errors in verification: {['count_error_verification']}")
     # print()
 
-    # print(f"Write report to: {report_path}")
-    # with open(report_path, 'w') as fout:
-    #     json.dump(theseResults, fout, indent=4)
+    print(f"Write report to: {report_path}")
+    with open(report_path, 'w', encoding='utf8') as fout:
+        json.dump(theseResultsDict, fout, ensure_ascii=False, indent=4)
 
     # # quick view of results
 
