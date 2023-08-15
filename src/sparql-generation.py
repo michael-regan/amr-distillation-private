@@ -340,6 +340,10 @@ def main(
                         print(f"Predicted answer matchd with QALD-9: {ha}")
                         thisDict['total_answers_pred_same_as_known'] += 1
 
+                    elif ha.replace('page/', 'resource/').replace('https', 'http') in qald9_answers:
+                        print(f"Predicted answer matchd with QALD-9: {ha}")
+                        thisDict['total_answers_pred_same_as_known'] += 1
+
             except Exception as e:
                 print(f"Error matching answers to qald9: {e}")
 
