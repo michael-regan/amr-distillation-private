@@ -254,7 +254,7 @@ def main(
 
             except Exception as e:
                 print(f"Error in literal_eval: {e}")
-                summary_results += 'Error in literal_eval'
+                results_summary += 'Error in literal_eval'
                 total_literal_eval_errors+=1
                 d['content'] = result['generation']['content']
                 d['temperature'] = temperature
@@ -352,7 +352,7 @@ def main(
 
             except Exception as e:
                 print(f"Malformed query: {e}")
-                summary_results += f"Malformed query: {e}"
+                results_summary += f"Malformed query: {e}"
                 total_malformed += 1
 
 
