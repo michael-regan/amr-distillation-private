@@ -45,9 +45,6 @@ def chunks(lst, n):
     for i in range(0, len(lst), n):
         yield lst[i:i + n]
 
-def clean_up_output(output_str):
-    clean_str = ''
-    return clean_str
 
 def convert_to_ngram(obj):
 
@@ -78,105 +75,119 @@ def convert_to_ngram(obj):
 
 def analyze_results(results_list, language, model_name):
 
-    errors, targets, max_ngrams, converted_scores, scores, notes = [],[],[],[],[],[]
+    all_final_results_dicts = []
 
-    for item in results_list:
+    # bc the qald9 data is all mixed together while the massive data is not
+    if language == 'all':
+        languages = ['en', 'ru', 'de', 'es', 'fr', 'lt']
+    else:
+        languages = [language]
 
-        targets.append(item['target'])
-        max_ngrams.append(item['max_ngrams'])
+    for lang in languages:
 
-        score = item['score']
+        errors, targets, max_ngrams, converted_scores, scores, notes = [],[],[],[],[],[]
+
+        for item in results_list:
+
+            if item['language'] == lang:
+
+                targets.append(item['target'])
+                max_ngrams.append(item['max_ngrams'])
+
+                score = item['score']
+                
+                if 'converted_score' in item:
+                    converted_score = item['converted_score']
+
+                    if type(converted_score)==float:
+                        converted_scores.append(converted_score)
+
+                if 'error' in str(score).lower():
+                    errors.append(1)
+                    notes.append(score)
+                    scores.append(0)
+
+                else:
+                    errors.append(0)
+                    notes.append(None)
+                    scores.append(score)
+
+        df = pd.DataFrame(
+                {'error': errors,
+                'target': targets,
+                'max_ngram': max_ngrams,
+                'score': scores,
+                'note': notes
+                })
+
+        print("-----------------------")
+        print("Results")
+        now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
+        print(f"{now}")
         
-        if 'converted_score' in item:
-            converted_score = item['converted_score']
+        print(f"Model: {model_name}\tTemperature: {results_list[0]['temperature']}")
+        print()
 
-            if type(converted_score)==float:
-                converted_scores.append(converted_score)
+        print(f"# errors: {df['error'].sum()}")
+        print(f"% errors: {df['error'].sum()/len(df):.2f}")
+        print(df['note'].value_counts())
+        print()
 
-        if 'error' in str(score).lower():
-            errors.append(1)
-            notes.append(score)
-            scores.append(0)
+        df_amr = df[df.target=='raw_amr']
+        #df_amr_scores = df[df.target=='raw_amr' & df.error==0]
+        print("Smatch scores, w/o errors")
 
-        else:
-            errors.append(0)
-            notes.append(None)
-            scores.append(score)
+        precision, recall, f1 = [],[],[]
+        cnt_smatch_errors = 0
+        for idx, row in df_amr.iterrows():
+            if row.error==0 and type(row.score)==dict:
+                obj = row.score
+                precision.append(obj['precision'])
+                recall.append(obj['recall'])
+                f1.append(obj['f1'])
+            else:
+                cnt_smatch_errors+=1
 
-    df = pd.DataFrame(
-            {'error': errors,
-            'target': targets,
-            'max_ngram': max_ngrams,
-            'score': scores,
-            'note': notes
-            })
+        smatch_precision = np.mean(precision)
+        smatch_recall = np.mean(recall)
+        smatch_f1 = np.mean(f1)
+        print(f"Mean precision:\t{smatch_precision:.2f}")
+        print(f"Mean recall:\t{smatch_recall:.2f}")
+        print(f"Mean f1-score:\t{smatch_f1:.2f}")
+        print(f"Count smatch errors:\t{cnt_smatch_errors}")
+        print()
+        print(f"# successfully converted to ngrams: {len(converted_scores)}")
+        print(f"Mean converted sembleu scores: {np.mean(converted_scores):.2f}")
+        print()
 
-    print("-----------------------")
-    print("Results")
-    now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
-    print(f"{now}")
+        df_ngram_1_scores = df[(df.target=='amr_ngrams') & (df.max_ngram==1) & (df.error==0)]
+        sembleu_ngram_1 = df_ngram_1_scores.score.mean()
+        print(f"Mean sembleu, max_ngram==1, w/o errors:\t{sembleu_ngram_1:.2f}")
+
+        df_ngram_2_scores = df[(df.target=='amr_ngrams') & (df.max_ngram==2) & (df.error==0)]
+        sembleu_ngram_2 = df_ngram_2_scores.score.mean()
+        print(f"Mean sembleu, max_ngram==2, w/o errors:\t{sembleu_ngram_2:.2f}")
+        print()
+        print("-----------------------")
+
+        final_results_dict = {
+                            'timestamp': now,
+                            'model': model_name,
+                            'lang': lang,
+                            'temperature': results_list[0]['temperature'],
+                            'num_samples_in_prompt': results_list[0]['num_samples_in_prompt'],
+                            'num_errors': int(df['error'].sum()), 
+                            'num_total': len(df), 
+                            'smatch_precision': smatch_precision,
+                            'smatch_recall': smatch_recall,
+                            'smatch_f1': smatch_f1,
+                            'sembleu_ngram1': sembleu_ngram_1,
+                            'sembleu_ngram2': sembleu_ngram_2
+                            }
+        
+        all_final_results_dicts.append(final_results_dict)
     
-    print(f"Model: {model_name}\tTemperature: {results_list[0]['temperature']}")
-    print()
-
-    print(f"# errors: {df['error'].sum()}")
-    print(f"% errors: {df['error'].sum()/len(df):.2f}")
-    print(df['note'].value_counts())
-    print()
-
-    df_amr = df[df.target=='raw_amr']
-    #df_amr_scores = df[df.target=='raw_amr' & df.error==0]
-    print("Smatch scores, w/o errors")
-
-    precision, recall, f1 = [],[],[]
-    cnt_smatch_errors = 0
-    for idx, row in df_amr.iterrows():
-        if row.error==0 and type(row.score)==dict:
-            obj = row.score
-            precision.append(obj['precision'])
-            recall.append(obj['recall'])
-            f1.append(obj['f1'])
-        else:
-            cnt_smatch_errors+=1
-
-    smatch_precision = np.mean(precision)
-    smatch_recall = np.mean(recall)
-    smatch_f1 = np.mean(f1)
-    print(f"Mean precision:\t{smatch_precision:.2f}")
-    print(f"Mean recall:\t{smatch_recall:.2f}")
-    print(f"Mean f1-score:\t{smatch_f1:.2f}")
-    print(f"Count smatch errors:\t{cnt_smatch_errors}")
-    print()
-    print(f"# successfully converted to ngrams: {len(converted_scores)}")
-    print(f"Mean converted sembleu scores: {np.mean(converted_scores):.2f}")
-
-    df_ngram_1_scores = df[(df.target=='amr_ngrams') & (df.max_ngram==1) & (df.error==0)]
-    sembleu_ngram_1 = df_ngram_1_scores.score.mean()
-    print(f"Mean sembleu, max_ngram==1, w/o errors:\t{sembleu_ngram_1:.2f}")
-    print()
-
-    df_ngram_2_scores = df[(df.target=='amr_ngrams') & (df.max_ngram==2) & (df.error==0)]
-    sembleu_ngram_2 = df_ngram_2_scores.score.mean()
-    print(f"Mean sembleu, max_ngram==2, w/o errors:\t{sembleu_ngram_2:.2f}")
-    print()
-    print("-----------------------")
-
-    final_results_dict = {
-                          'timestamp': now,
-                          'model': model_name,
-                          'lang': language,
-                          'temperature': results_list[0]['temperature'],
-                          'num_samples_in_prompt': results_list[0]['num_samples_in_prompt'],
-                          'num_errors': int(df['error'].sum()), 
-                          'num_total': len(df), 
-                          'smatch_precision': smatch_precision,
-                          'smatch_recall': smatch_recall,
-                          'smatch_f1': smatch_f1,
-                          'sembleu_ngram1': sembleu_ngram_1,
-                          'sembleu_ngram2': sembleu_ngram_2
-                          }
-    
-    return final_results_dict
+    return all_final_results_dicts
 
 
 
@@ -344,14 +355,16 @@ def main(
 
     # quick view of results
 
-    language = '-'.join(theseResults[0]['id'].split('-')[1:])
+    if 'massive' in data_path:
+        language = '-'.join(theseResults[0]['id'].split('-')[1:])
+    else:
+        language = 'all'
 
     ckpt_name = ckpt_dir.split('/')[-1]
     final_results_dict = analyze_results(theseResults, language, ckpt_name)
 
     print(f"Adding compiled results to: {compiled_results_path}")
 
-    write_jsonlines = False
     with jsonlines.open(compiled_results_path, 'a') as writer:
         writer.write(final_results_dict)
 
