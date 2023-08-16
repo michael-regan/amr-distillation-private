@@ -263,50 +263,84 @@ def main(
                 theseResults.append(d)
                 continue
 
-            print(
-                f"> Hypothesis: {literal_results}"
-            )
-            print()
-            print(
-                f"> Hyp query: {literal_results['sparql_query']}"
-            )
-            print()
-            print(
-                f"> Hyp relations: {literal_results['relations']}"
-            )
-            print()
-            print(
-                f"> Hyp answers: {literal_results['answers']}"
-            )
+            hyp_sparql = ''
+            try:
+                hyp_sparql = literal_results['sparql_query']
+                print(
+                f"> Hyp sparql: {hyp_sparql}"
+                 )
+                print()
+            except Exception as e:
+                print(f"Error in literal_eval of sparql query: {e}")
+                results_summary += 'Error in literal_eval of sparql query'
+                total_literal_eval_errors+=1
+
+            hyp_relations = ''
+            try:
+                hyp_relations = literal_results['relations']
+                print(
+                f"> Hyp relations: {hyp_relations}"
+                 )
+                print()
+            except Exception as e:
+                print(f"Error in literal_eval of relations: {e}")
+                results_summary += 'Error in literal_eval of relations'
+                total_literal_eval_errors+=1
+
+            hyp_answers = ''
+            try:
+                hyp_answers = literal_results['answers']
+                print(
+                f"> Hyp answers: {hyp_answers}"
+                 )
+                print()
+            except Exception as e:
+                print(f"Error in literal_eval of answers: {e}")
+                results_summary += 'Error in literal_eval of answers'
+                total_literal_eval_errors+=1
 
 
-            hyp_sparql = literal_results['sparql_query']
-            hyp_relations = literal_results['relations']
-            hyp_verification = literal_results['verification']
+            hyp_verification = ''
+            try:
+                hyp_verification = literal_results['verification']
+                print(
+                f"> Hyp verification: {hyp_verification}"
+                 )
+                print()
+            except Exception as e:
+                print(f"Error in literal_eval of verification: {e}")
+                results_summary += 'Error in literal_eval of verification'
+                total_literal_eval_errors+=1
+
+            #hyp_sparql = literal_results['sparql_query']
+            #hyp_relations = literal_results['relations']
+            #hyp_verification = literal_results['verification']
 
             thisDict = get_results_dict(d)
 
-            for hyp_rel, hyp_ver in zip(hyp_relations, hyp_verification):
-                if hyp_ver and hyp_rel not in valid_dbpedia_props:
-                    thisDict['count_hallucinations']+=1
-                    print(f"Hallucination: {hyp_rel}")
-                    results_summary += f"Hallucination: {hyp_rel}\n"
-                elif hyp_ver and hyp_rel in valid_dbpedia_props:
-                    thisDict['count_valid_rels']+=1
-                    results_summary += f"Valid relation: {hyp_rel}\n"
-                elif not hyp_ver and hyp_rel not in valid_dbpedia_props:
-                    thisDict['count_detected_hallucinations']+=1
-                    results_summary += f"Detected hallucination: {hyp_rel}\n"
-                elif not hyp_ver and hyp_rel in valid_dbpedia_props:
-                    thisDict['count_rels_false_positives']+=1
-                    results_summary += f"False positive: {hyp_rel}\n"
+            if len(hyp_relations)>0 and len(hyp_verification)>0 and len(hyp_relations)==len(hyp_verification):
+
+                for hyp_rel, hyp_ver in zip(hyp_relations, hyp_verification):
+                    if hyp_ver and hyp_rel not in valid_dbpedia_props:
+                        thisDict['count_hallucinations']+=1
+                        print(f"Hallucination: {hyp_rel}")
+                        results_summary += f"Hallucination: {hyp_rel}\n"
+                    elif hyp_ver and hyp_rel in valid_dbpedia_props:
+                        thisDict['count_valid_rels']+=1
+                        results_summary += f"Valid relation: {hyp_rel}\n"
+                    elif not hyp_ver and hyp_rel not in valid_dbpedia_props:
+                        thisDict['count_detected_hallucinations']+=1
+                        results_summary += f"Detected hallucination: {hyp_rel}\n"
+                    elif not hyp_ver and hyp_rel in valid_dbpedia_props:
+                        thisDict['count_rels_false_positives']+=1
+                        results_summary += f"False positive: {hyp_rel}\n"
 
             thisDict['total_hypotheses'] += len(hyp_relations)
 
             thisDict['total_queries'] += 1
 
-                # verify existence in DBPedia of answers
-            for hyp_ans in literal_results['answers']:
+            # verify existence in DBPedia of answers
+            for hyp_ans in hyp_answers:
                 if type(hyp_ans)==str:
                     if 'dbpedia.org' in hyp_ans:
 
@@ -333,47 +367,52 @@ def main(
                 f"> Reference: {ref_sparql}"
             )
 
+            if len(hyp_sparql)>0:
+                try:
+                    sparql.setReturnFormat(XML)
+                    sparql.setQuery(hyp_sparql)
+                    sparql_results = sparql.query().convert()
+                    pattern = r'<results distinct="false" ordered="true">\s*</results>'
+                    match = re.search(pattern, sparql_results.toxml())
 
-            try:
-                hyp_sparql = literal_results['sparql_query']
-                sparql.setReturnFormat(XML)
-                sparql.setQuery(hyp_sparql)
-                sparql_results = sparql.query().convert()
-                pattern = r'<results distinct="false" ordered="true">\s*</results>'
-                match = re.search(pattern, sparql_results.toxml())
+                    #thisDict = get_results_dict(d)
 
-                #thisDict = get_results_dict(d)
+                    if not match:
+                        print("GOT RESULT")
+                        print(sparql_results.toxml())
+                        total_results += 1
 
-                if not match:
-                    print("GOT RESULT")
-                    print(sparql_results.toxml())
-                    total_results += 1
-
-                    # verify correctness
-                    for hyp_ans in literal_results['answers']:
-                        if type(hyp_ans)==str:
-                            if 'dbpedia.org' in hyp_ans:
-                                if hyp_ans in sparql_results.toxml():
-                                    thisDict['total_answers_pred_same_as_returned'] += 1
-                                    print(f"ANSWER predicted matches that returned by SPARQL: {hyp_ans}")
-                                    results_summary += f"ANSWER predicted matches that returned by SPARQL: {hyp_ans}\n"
-                                    
-
-            except Exception as e:
-                print(f"Malformed query: {e}")
-                results_summary += f"Malformed query: {e}"
-                total_malformed += 1
+                        # verify correctness
+                        for hyp_ans in hyp_answers:
+                            if type(hyp_ans)==str:
+                                if 'dbpedia.org' in hyp_ans:
+                                    if hyp_ans in sparql_results.toxml():
+                                        thisDict['total_answers_pred_same_as_returned'] += 1
+                                        print(f"ANSWER predicted matches that returned by SPARQL: {hyp_ans}")
+                                        results_summary += f"ANSWER predicted matches that returned by SPARQL: {hyp_ans}\n"
+                                        
+                except Exception as e:
+                    print(f"Malformed query: {e}")
+                    results_summary += f"Malformed query: {e}"
+                    total_malformed += 1
 
 
             try:
                 # check if answers match qald9 answers
                 #thisDict = get_results_dict(d)
-                for ha in literal_results['answers']:
+                for ha in hyp_answers:
 
-                    if type(ha)==bool and ha in qald9_answers:
-                        print(f"Predicted bool answer matchd with QALD-9: {ha}")
-                        results_summary += f"Predicted bool answer matchd with QALD-9: {ha}\n"
-                        thisDict['total_answers_pred_same_as_known'] += 1
+                    if type(ha)==bool:
+                        if ha in qald9_answers:
+                            print(f"Predicted bool answer matchd with QALD-9: {ha}")
+                            results_summary += f"Predicted bool answer matchd with QALD-9: {ha}\n"
+                            thisDict['total_answers_pred_same_as_known'] += 1
+
+                    elif type(ha)==int:
+                        if ha in qald9_answers:
+                            print(f"Predicted int answer matchd with QALD-9: {ha}")
+                            results_summary += f"Predicted int answer matchd with QALD-9: {ha}\n"
+                            thisDict['total_answers_pred_same_as_known'] += 1
 
                     elif ha in qald9_answers or ha.replace('page/', 'resource/') in qald9_answers or ha.replace('resource/', 'page/') in qald9_answers or ha.replace('https', 'http') in qald9_answers:
                         print(f"Predicted answer matchd with QALD-9: {ha}")
