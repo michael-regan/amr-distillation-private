@@ -1,12 +1,22 @@
 import fire
 import llama
+import scipy
 import torch
 from transformers import LlamaForCausalLM, LlamaTokenizer
 from typing import Optional
 
 
 """
-c
+python train-llama-amr-generation.py \
+    --ckpt_dir ../../../models/llama/llama-2-7b \
+    --tokenizer_path ../../../models/llama/tokenizer.model \
+    --max_seq_len 2048 \
+    --max_batch_size 4 \
+    --num_chunks 2 \
+    --temperature 0.9 \
+    --data_path ~/portfolio/amr-distillation-private/data/llama-massive-prompts-12_exs_test_2023-08-08.json \
+    --report_path ~/reports/llama-massive-13b-chat_12_exs_test_2023-08-07.json \
+    --compiled_results_path ~/reports/llama-massive-compiled-results_2023-08-08.jsonl
 
 
 """
