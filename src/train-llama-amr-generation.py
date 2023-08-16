@@ -1,10 +1,12 @@
+import fire
+import llama
 import torch
 from transformers import LlamaForCausalLM, LlamaTokenizer
 from typing import Optional
 
 
 """
-torchrun --nproc_per_node 1 train-llama-amr-generation.py \
+python train-llama-amr-generation.py \
     --ckpt_dir ../../../models/llama/llama-2-7b \
     --tokenizer_path ../../../models/llama/tokenizer.model \
     --max_seq_len 2048 \
@@ -40,4 +42,4 @@ def main(
 
 
 if __name__ == "__main__":
-    main()
+    fire.Fire(main)
