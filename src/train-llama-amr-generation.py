@@ -4,7 +4,7 @@ from typing import Optional
 
 
 """
-torchrun --nproc_per_node 2 do-inference-llama.py \
+torchrun --nproc_per_node 1 train-llama-amr-generation.py \
     --ckpt_dir ../../../models/llama/llama-2-7b \
     --tokenizer_path ../../../models/llama/tokenizer.model \
     --max_seq_len 2048 \
@@ -30,13 +30,13 @@ def main(
     max_batch_size: int = 4,
     num_chunks: int = 4,
     max_gen_len: Optional[int] = None
-)
+):
 
     #model_id="./models_hf/7B"
 
     tokenizer = LlamaTokenizer.from_pretrained(ckpt_dir)
 
-    model =LlamaForCausalLM.from_pretrained(ckpt_dir, load_in_8bit=True, device_map='auto', torch_dtype=torch.float16)
+    model = LlamaForCausalLM.from_pretrained(ckpt_dir, load_in_8bit=True, device_map='auto', torch_dtype=torch.float16)
 
 
 if __name__ == "__main__":
