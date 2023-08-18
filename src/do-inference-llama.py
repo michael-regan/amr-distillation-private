@@ -202,13 +202,15 @@ def main(
     max_seq_len: int = 4096,
     max_batch_size: int = 4,
     num_chunks: int = 4,
-    max_gen_len: Optional[int] = None
+    max_gen_len: Optional[int] = None,
+    model_parallel_size: Optional[int] = None
 ):
     generator = Llama.build(
         ckpt_dir=ckpt_dir,
         tokenizer_path=tokenizer_path,
         max_seq_len=max_seq_len,
-        max_batch_size=max_batch_size    
+        max_batch_size=max_batch_size,
+        model_parallel_size=model_parallel_size    
     )
 
     with open(data_path, 'r') as fin:
