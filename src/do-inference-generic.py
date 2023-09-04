@@ -24,8 +24,8 @@ from llama import Llama
 
 
 """
-torchrun --nproc_per_node 2 do-inference-llama.py \
-    --ckpt_dir ../../../models/llama/llama-2-13b-chat \
+torchrun --nproc_per_node 1 do-inference-generic.py \
+    --ckpt_dir ../../../models/llama/llama-2-7b-chat \
     --tokenizer_path ../../../models/llama/tokenizer.model \
     --max_seq_len 2048 \
     --max_batch_size 4 \
@@ -67,10 +67,11 @@ def main(
     with open(data_path, 'r') as fin:
         dialogs = json.load(fin)
 
-    theseDialogs = [i['dialog'] for i in dialogs]
+    #theseDialogs = [i['dialog'] for i in dialogs]
+
 
     theseDialogInstanceChunks = chunks(dialogs, num_chunks)
-    theseDialogChunks = chunks(theseDialogs, num_chunks)
+    theseDialogChunks = chunks(dialogs, num_chunks)
 
     theseResults = list()
 
