@@ -59,6 +59,15 @@ def main(
     
 ):
 
+
+    generator = Llama.build(
+            ckpt_dir=ckpt_dir,
+            tokenizer_path=tokenizer_path,
+            max_seq_len=max_seq_len,
+            max_batch_size=max_batch_size,
+            model_parallel_size=model_parallel_size
+    )
+
     with open(data_path, 'r') as fin:
         dialogs = json.load(fin)
 
@@ -72,18 +81,9 @@ def main(
 
     for dialogInstanceChunk, dialogChunk in zip(theseDialogInstanceChunks, theseDialogChunks):
 
-        manual_seed = random.randint(0, 1024)
+        temperature = random.random()
 
-        print(f"Random seed: {manual_seed}")
-
-        generator = Llama.build(
-            ckpt_dir=ckpt_dir,
-            tokenizer_path=tokenizer_path,
-            max_seq_len=max_seq_len,
-            max_batch_size=max_batch_size,
-            model_parallel_size=model_parallel_size,
-            manual_seed=manual_seed    
-    )
+        print(f"Random temperature: {temperature}")
 
         results = generator.chat_completion(
             dialogChunk,  # type: ignore
