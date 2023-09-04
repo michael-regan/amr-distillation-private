@@ -14,6 +14,7 @@ import jsonlines
 import math
 import numpy as np
 import pandas as pd
+import random
 
 from ast import literal_eval
 
@@ -24,13 +25,13 @@ from llama import Llama
 
 
 """
-torchrun --nproc_per_node 1 do-inference-generic.py \
-    --ckpt_dir ../../../models/llama/llama-2-7b-chat \
-    --tokenizer_path ../../../models/llama/tokenizer.model \
+torchrun --nproc_per_node 1 src/do-inference-generic.py \
+    --ckpt_dir ~/models/llama/llama-2-7b-chat \
+    --tokenizer_path ~/models/llama/tokenizer.model \
     --max_seq_len 2048 \
     --max_batch_size 4 \
     --num_chunks 2 \
-    --temperature 0.9 \
+    --temperature 0.7 \
     --data_path ~/portfolio/amr-distillation-private/data/forestry-chat-messages-2023-09-04.json \
     --report_path ~/reports/llama-13b-forestry-chat-messages-2023-09-04.json
 
@@ -54,15 +55,9 @@ def main(
     max_batch_size: int = 4,
     num_chunks: int = 4,
     max_gen_len: Optional[int] = None,
-    model_parallel_size: Optional[int] = None
+    model_parallel_size: Optional[int] = None,
+    
 ):
-    generator = Llama.build(
-        ckpt_dir=ckpt_dir,
-        tokenizer_path=tokenizer_path,
-        max_seq_len=max_seq_len,
-        max_batch_size=max_batch_size,
-        model_parallel_size=model_parallel_size    
-    )
 
     with open(data_path, 'r') as fin:
         dialogs = json.load(fin)
@@ -76,6 +71,19 @@ def main(
     theseResults = list()
 
     for dialogInstanceChunk, dialogChunk in zip(theseDialogInstanceChunks, theseDialogChunks):
+
+        manual_seed = random.randint(0, 1024)
+
+        print(f"Random seed: {manual_seed}")
+
+        generator = Llama.build(
+            ckpt_dir=ckpt_dir,
+            tokenizer_path=tokenizer_path,
+            max_seq_len=max_seq_len,
+            max_batch_size=max_batch_size,
+            model_parallel_size=model_parallel_size,
+            manual_seed=manual_seed    
+    )
 
         results = generator.chat_completion(
             dialogChunk,  # type: ignore
