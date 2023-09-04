@@ -85,9 +85,10 @@ def main(
         )
 
         for d, result in zip(dialogInstanceChunk, results):
-
-            dialog = d['dialog']
-
+            print('-----------'*4)
+            print()
+            print(d)
+            print()
             print(result)
             print()
 
