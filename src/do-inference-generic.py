@@ -50,29 +50,26 @@ def add_helpful_harmful(initial_generations):
 
     for gen in initial_generations:
 
-        print('XXX')
-
-
         new_instruction_help = 'Using evidence from the report, make a structured list of factors helping the forest, like in the examples.'
         new_instruction_harm= 'Using evidence from the report, make a structured list of factors harming the forest, like in the examples.'
 
         new_system_help = {'role': 'system', 'content': new_instruction_help}
         new_system_harm = {'role': 'system', 'content': new_instruction_harm}
 
-        user_example_help_1 = {'role': 'user', 'content': 'Example 1\nThe forest gets a lot of sunshine and rain. Invasive species have been harming the forest.\nHelpful factors\n'}
-        user_example_harm_1 = {'role': 'user', 'content': 'Example 1\nThe forest gets a lot of sunshine and rain. Invasive species have been harming the forest.\nHarmful factors\n'}
+        user_example_help_1 = {'role': 'user', 'content': 'Example 1\nThe forest gets a lot of sunshine and rain. Invasive species have been harming the forest.\nList of helpful factors\n'}
+        user_example_harm_1 = {'role': 'user', 'content': 'Example 1\nThe forest gets a lot of sunshine and rain. Invasive species have been harming the forest.\nList of harmful factors\n'}
 
         assistant_example_help_1 = {'role': 'assistant', 'content': "[sunshine, rain]"}
         assistant_example_harm_1 = {'role': 'assistant', 'content': "[invasive species]"}
 
-        user_example_help_2 = {'role': 'user', 'content': 'Example 2\nIncreased wildfire activity has intensified disturbance across wide areas of the forest and has raised concern among scientists and land managers about the resilience of disturbed landscapes.\nHelpful factors\n'}
-        user_example_harm_2 = {'role': 'user', 'content': 'Example 2\nIncreased wildfire activity has intensified disturbance across wide areas of the forest and has raised concern among scientists and land managers about the resilience of disturbed landscapes.\nHarmful factors\n'}
+        user_example_help_2 = {'role': 'user', 'content': 'Example 2\nIncreased wildfire activity has intensified disturbance across wide areas of the forest and has raised concern among scientists and land managers about the resilience of disturbed landscapes.\nList of helpful factors\n'}
+        user_example_harm_2 = {'role': 'user', 'content': 'Example 2\nIncreased wildfire activity has intensified disturbance across wide areas of the forest and has raised concern among scientists and land managers about the resilience of disturbed landscapes.\nList of harmful factors\n'}
 
         assistant_example_help_2 = {'role': 'assistant', 'content': "[None]"}
         assistant_example_harm_2 = {'role': 'assistant', 'content': "[increased wildfire activity]"}
 
-        user_example_help_3 = {'role': 'user', 'content': 'Example 3\nHigh-elevation forests are regenerating following fires under recent climatic trends, but regeneration is affected by post-fire climatic conditions. Importantly, forest patchiness may be increasing in a way that affects future ecological dynamics and may compromise the resilience of these systems.\nHelpful factors\n'}
-        user_example_harm_3 = {'role': 'user', 'content': 'Example 3\nHigh-elevation forests are regenerating following fires under recent climatic trends, but regeneration is affected by post-fire climatic conditions. Importantly, forest patchiness may be increasing in a way that affects future ecological dynamics and may compromise the resilience of these systems.\nHarmful factors\n'}
+        user_example_help_3 = {'role': 'user', 'content': 'Example 3\nHigh-elevation forests are regenerating following fires under recent climatic trends, but regeneration is affected by post-fire climatic conditions. Importantly, forest patchiness may be increasing in a way that affects future ecological dynamics and may compromise the resilience of these systems.\nList of helpful factors\n'}
+        user_example_harm_3 = {'role': 'user', 'content': 'Example 3\nHigh-elevation forests are regenerating following fires under recent climatic trends, but regeneration is affected by post-fire climatic conditions. Importantly, forest patchiness may be increasing in a way that affects future ecological dynamics and may compromise the resilience of these systems.\nList of harmful factors\n'}
 
         assistant_example_help_3= {'role': 'assistant', 'content': "[recent climatic trends]"}
         assistant_example_harm_3 = {'role': 'assistant', 'content': "[wildfires, forest patchiness]"}
@@ -144,7 +141,7 @@ def main(
 
     def inference(dialogChunk, generator, max_gen_len, temperature, top_p):
 
-        compiled_results = list()
+        compiled_inputs, compiled_results = [],[]
 
         #for chatInstance in dialogChunk:
         results = generator.chat_completion(
@@ -162,8 +159,9 @@ def main(
             print(result)
             print()
             compiled_results.append(result)
+            compiled_inputs.append(d)
 
-        return compiled_results
+        return compiled_inputs, compiled_results
     
     # initial generation of reports
     print("Initial generation of forestry reports")
@@ -178,19 +176,22 @@ def main(
         print(f"Random temperature | top_p: {temperature} | {random_top_p}")
         print()
 
-        initial_generations = inference(dialogChunk, generator, max_gen_len, temperature, random_top_p)
+        _, initial_generations = inference(dialogChunk, generator, max_gen_len, temperature, random_top_p)
 
         content_for_next_iteration = add_helpful_harmful(initial_generations)
 
         temperature = 0.95
-        max_gen_len = 256
+        max_gen_len = 512
         top_p = 0.95
 
         print("****Helpful and harmful****")
         print()
-        final_results = inference(content_for_next_iteration, generator, max_gen_len, temperature, top_p)
 
-        final_generations.extend(final_results)
+        secondary_inputs, final_results = inference(content_for_next_iteration, generator, max_gen_len, temperature, top_p)
+
+        for thisInput, thisContent in zip(secondary_inputs. final_results):
+
+            final_generations.append({'input': thisInput, 'content': thisContent})
 
     print(f"Writing report to: {report_path}")
     with open(report_path, 'w') as fout:
