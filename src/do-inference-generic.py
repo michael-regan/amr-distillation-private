@@ -51,7 +51,7 @@ def add_helpful_harmful(initial_generations):
     for gen in initial_generations:
 
         print('XXX')
-        print(gen)
+        print(gen['generation']['content'])
         print()
 
         new_instruction_help = 'Based on the report, answer in the form of a comma-separated list: What factors are helping the forest?'
