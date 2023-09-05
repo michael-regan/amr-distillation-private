@@ -189,7 +189,7 @@ def main(
 
         secondary_inputs, final_results = inference(content_for_next_iteration, generator, max_gen_len, temperature, top_p)
 
-        for thisInput, thisContent in zip(secondary_inputs. final_results):
+        for thisInput, thisContent in zip(secondary_inputs, final_results):
 
             final_generations.append({'input': thisInput, 'content': thisContent})
 
