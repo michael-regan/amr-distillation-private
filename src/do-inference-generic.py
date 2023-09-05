@@ -44,6 +44,27 @@ def chunks(lst, n):
         yield lst[i:i + n]
 
 
+def add_helpful_harmful(initial_generations):
+
+    content_for_next_iteration = list()
+
+    for gen in initial_generations:
+
+        new_instruction_help = 'Based on the report, answer in the form of a comma-separated list: What factors are helping the forest?'
+
+        new_instruction_harm= 'Based on the report, answer in the form of a comma-separated list: What factors are harming the forest?'
+
+        new_content_help = f"Report\n{gen['content'].strip()}\n{new_instruction_help}\nFactors helping the forest\n"
+
+        new_content_harm = f"Report\n{gen['content'].strip()}\n{new_instruction_harm}\nFactors harming the forest\n"
+
+        content_for_next_iteration.append(new_content_help)
+        content_for_next_iteration.append(new_content_harm)
+
+    return content_for_next_iteration
+
+
+
 def main(
     ckpt_dir: str,
     tokenizer_path: str,
@@ -68,25 +89,27 @@ def main(
             model_parallel_size=model_parallel_size
     )
 
+    final_generations = list()
+
     with open(data_path, 'r') as fin:
         dialogs = json.load(fin)
 
     #$theseDialogInstanceChunks = chunks(dialogs, num_chunks)
     theseDialogChunks = chunks(dialogs, num_chunks)
 
-    def inference(theseDialogChunks, generator, max_gen_len, temperature, top_p):
+    def inference(dialogChunk, generator, max_gen_len, temperature, top_p):
 
         compiled_results = list()
 
-        for dialogChunk in theseDialogChunks:
+        for chatInstance in dialogChunk:
             results = generator.chat_completion(
-                dialogChunk,  # type: ignore
+                chatInstance,  # type: ignore
                 max_gen_len=max_gen_len,
                 temperature=temperature,
                 top_p=top_p,
             )
 
-            for d, result in zip(dialogChunk, results):
+            for d, result in zip(chatInstance, results):
                 print('-----------'*4)
                 print()
                 print(d)
@@ -96,40 +119,36 @@ def main(
                 compiled_results.append(result)
 
         return compiled_results
-
+    
     # initial generation of reports
     print("Initial generation of forestry reports")
-    temperature = random.random()
-    print(f"Random temperature: {temperature}")
-    print()
+    
+    for dialogChunk in theseDialogChunks:
 
-    compiled_results = inference(theseDialogChunks, generator, max_gen_len, temperature, top_p)
+        temperature = random.random()
+        top_ps = [0.85,0.86,0.87,0.88,0.89.0.9,0.91,0.92,0.93,0.94,0.95]
+        random_top_p = random.sample(top_ps, 1)[0]
 
-    content_for_next_iteration = list()
+        print(f"Random temperature / top_p: {temperature} | {random_top_p}")
+        print()
 
-    for thisResult in compiled_results:
+        initial_generations = inference(dialogChunk, generator, max_gen_len, temperature, random_top_p)
 
-        new_instruction_help = 'Based on the report, answer in the form of a comma-separated list: What factors are helping the forest?'
+        content_for_next_iteration = add_helpful_harmful(initial_generations)
 
-        new_instruction_harm= 'Based on the report, answer in the form of a comma-separated list: What factors are harming the forest?'
+        temperature = 0.9
+        max_gen_len = 256
+        top_p = 0.95
 
-        new_content_help = f"Report\n{thisResult['content'].strip()}\n{new_instruction_help}\nFactors helping the forest\n"
+        print("****Helpful and harmful****")
+        print()
+        final_results = inference(content_for_next_iteration, generator, max_gen_len, temperature, top_p)
 
-        new_content_harm = f"Report\n{thisResult['content'].strip()}\n{new_instruction_harm}\nFactors harming the forest\n"
-
-        content_for_next_iteration.append(new_content_help)
-        content_for_next_iteration.append(new_content_harm)
-
-    theseHelpfulHarmfulDialogChunks = chunks(content_for_next_iteration, num_chunks)
-
-    temperature = 0.9
-    max_gen_len = 256
-
-    final_results = inference(theseHelpfulHarmfulDialogChunks, generator, max_gen_len, temperature, top_p)
+        final_generations.extend(final_results)
 
     print(f"Writing report to: {report_path}")
     with open(report_path, 'w') as fout:
-        json.dump(final_results, fout, indent=4)
+        json.dump(final_generations, fout, indent=4)
 
 
 if __name__ == "__main__":
