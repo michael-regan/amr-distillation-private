@@ -71,8 +71,14 @@ def add_helpful_harmful(initial_generations):
         user_example_help_3 = {'role': 'user', 'content': 'Example 3\nHigh-elevation forests are regenerating following fires under recent climatic trends, but regeneration is affected by post-fire climatic conditions. Importantly, forest patchiness may be increasing in a way that affects future ecological dynamics and may compromise the resilience of these systems.\nList of helpful factors\n'}
         user_example_harm_3 = {'role': 'user', 'content': 'Example 3\nHigh-elevation forests are regenerating following fires under recent climatic trends, but regeneration is affected by post-fire climatic conditions. Importantly, forest patchiness may be increasing in a way that affects future ecological dynamics and may compromise the resilience of these systems.\nList of harmful factors\n'}
 
-        assistant_example_help_3= {'role': 'assistant', 'content': "[recent climatic trends]"}
+        assistant_example_help_3 = {'role': 'assistant', 'content': "[recent climatic trends]"}
         assistant_example_harm_3 = {'role': 'assistant', 'content': "[wildfires, forest patchiness]"}
+
+        user_example_help_4 = {'role': 'user', 'content': "Example 4\nInvasive species, such as the hemlock woolly adelgid, are threatening the health and diversity of the park's forests.\nList of helpful factors\n"}
+        user_example_harm_4 = {'role': 'user', 'content': "Example 4\nInvasive species, such as the hemlock woolly adelgid, are threatening the health and diversity of the park's forests.\nList of harmful factors\n"}
+
+        assistant_example_help_4 = {'role': 'assistant', 'content': "[None]"}
+        assistant_example_harm_4 = {'role': 'assistant', 'content': "[invasive species, hemlock woolly adelgid]"}
 
         gen_content = gen['generation']['content'].strip()
 
@@ -89,6 +95,8 @@ def add_helpful_harmful(initial_generations):
                        assistant_example_help_2, 
                        user_example_help_3,
                        assistant_example_help_3,
+                       user_example_help_4,
+                       assistant_example_help_4,
                        new_user_help]
         
         prompt_harm = [new_system_harm, 
@@ -98,7 +106,10 @@ def add_helpful_harmful(initial_generations):
                        assistant_example_harm_2, 
                        user_example_harm_3,
                        assistant_example_harm_3,
+                       user_example_harm_4,
+                       assistant_example_harm_4,
                        new_user_harm]
+        
 
         content_for_next_iteration.append(prompt_help)
         content_for_next_iteration.append(prompt_harm)
