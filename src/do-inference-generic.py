@@ -29,11 +29,11 @@ torchrun --nproc_per_node 1 src/do-inference-generic.py \
     --ckpt_dir ~/models/llama/llama-2-7b-chat \
     --tokenizer_path ~/models/llama/tokenizer.model \
     --max_seq_len 2048 \
-    --max_batch_size 4 \
-    --num_chunks 2 \
+    --max_batch_size 2 \
+    --num_chunks 1 \
     --temperature 0.7 \
     --data_path ~/portfolio/amr-distillation-private/data/forestry-chat-messages-2023-09-04.json \
-    --report_path ~/reports/llama-13b-forestry-chat-messages-2023-09-04.json
+    --report_path ~/reports/llama-7b-forestry-chat-messages-2023-09-05.json
 
     
 """
@@ -71,38 +71,65 @@ def main(
     with open(data_path, 'r') as fin:
         dialogs = json.load(fin)
 
-    #theseDialogs = [i['dialog'] for i in dialogs]
-
-
-    theseDialogInstanceChunks = chunks(dialogs, num_chunks)
+    #$theseDialogInstanceChunks = chunks(dialogs, num_chunks)
     theseDialogChunks = chunks(dialogs, num_chunks)
 
-    theseResults = list()
+    def inference(theseDialogChunks, generator, max_gen_len, temperature, top_p):
 
-    for dialogInstanceChunk, dialogChunk in zip(theseDialogInstanceChunks, theseDialogChunks):
+        compiled_results = list()
 
-        temperature = random.random()
+        for dialogChunk in theseDialogChunks:
+            results = generator.chat_completion(
+                dialogChunk,  # type: ignore
+                max_gen_len=max_gen_len,
+                temperature=temperature,
+                top_p=top_p,
+            )
 
-        print(f"Random temperature: {temperature}")
+            for d, result in zip(dialogChunk, results):
+                print('-----------'*4)
+                print()
+                print(d)
+                print()
+                print(result)
+                print()
+                compiled_results.append(result)
 
-        results = generator.chat_completion(
-            dialogChunk,  # type: ignore
-            max_gen_len=max_gen_len,
-            temperature=temperature,
-            top_p=top_p,
-        )
+        return compiled_results
 
-        for d, result in zip(dialogInstanceChunk, results):
-            print('-----------'*4)
-            print()
-            print(d)
-            print()
-            print(result)
-            print()
+    # initial generation of reports
+    print("Initial generation of forestry reports")
+    temperature = random.random()
+    print(f"Random temperature: {temperature}")
+    print()
 
-    # print(f"Write report to: {report_path}")
-    # with open(report_path, 'w') as fout:
-    #     json.dump(theseResults, fout, indent=4)
+    compiled_results = inference(theseDialogChunks, generator, max_gen_len, temperature, top_p)
+
+    content_for_next_iteration = list()
+
+    for thisResult in compiled_results:
+
+        new_instruction_help = 'Based on the report, answer in the form of a comma-separated list: What factors are helping the forest?'
+
+        new_instruction_harm= 'Based on the report, answer in the form of a comma-separated list: What factors are harming the forest?'
+
+        new_content_help = f"Report\n{thisResult['content']}\n{new_instruction_help}\nFactors helping the forest\n"
+
+        new_content_harm = f"Report\n{thisResult['content']}\n{new_instruction_harm}\nFactors harming the forest\n"
+
+        content_for_next_iteration.append(new_content_help)
+        content_for_next_iteration.append(new_content_harm)
+
+    theseHelpfulHarmfulDialogChunks = chunks(content_for_next_iteration, num_chunks)
+
+    temperature = 0.9
+    max_gen_len = 256
+
+    final_results = inference(theseHelpfulHarmfulDialogChunks, generator, max_gen_len, temperature, top_p)
+
+    print(f"Writing report to: {report_path}")
+    with open(report_path, 'w') as fout:
+        json.dump(final_results, fout, indent=4)
 
 
 if __name__ == "__main__":
