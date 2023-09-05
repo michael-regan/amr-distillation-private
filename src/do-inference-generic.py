@@ -53,8 +53,8 @@ def add_helpful_harmful(initial_generations):
         print('XXX')
 
 
-        new_instruction_help = 'Based on the report, answer in the form of a comma-separated list: What factors are helping the forest?'
-        new_instruction_harm= 'Based on the report, answer in the form of a comma-separated list: What factors are harming the forest?'
+        new_instruction_help = 'Using evidence from the report, list the factors that are helping the forest, like in the example.'
+        new_instruction_harm= 'Using evidence from the report, list the factors that are harming the forest, like in the example.'
 
         new_system_help = {'role': 'system', 'content': new_instruction_help}
         new_system_harm = {'role': 'system', 'content': new_instruction_harm}
@@ -62,13 +62,13 @@ def add_helpful_harmful(initial_generations):
         user_example_help = {'role': 'user', 'content': 'Example report\nThe forest gets a lot of sunshine and rain. Invasive species have been harming the forest.\nFactors helping the forest\n'}
         user_example_harm = {'role': 'user', 'content': 'Example report\nThe forest gets a lot of sunshine and rain. Invasive species have been harming the forest.\nFactors harming the forest\n'}
 
-        assistant_example_help = {'role': 'assistant', 'content': "['sunshine', 'rain']"}
-        assitant_example_harm = {'role': 'assistant', 'content': "['invasive species']"}
+        assistant_example_help = {'role': 'assistant', 'content': "Helpful factors\n['sunshine', 'rain']"}
+        assitant_example_harm = {'role': 'assistant', 'content': "Harmful factors\n['invasive species']"}
 
         gen_content = gen['generation']['content'].strip()
 
-        new_content_help = f"Report\n{gen_content}\nFactors helping the forest\n"
-        new_content_harm = f"Report\n{gen_content}\nFactors harming the forest\n"
+        new_content_help = f"Report\n{gen_content}\nHelpful factors\n"
+        new_content_harm = f"Report\n{gen_content}\nHarmful factors\n"
 
         new_user_help = {'role': 'user', 'content': new_content_help}
         new_user_harm = {'role': 'user', 'content': new_content_harm}
