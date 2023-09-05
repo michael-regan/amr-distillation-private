@@ -192,20 +192,22 @@ def main(
 
         _, initial_generations = inference(dialogChunk, generator, max_gen_len, temperature, random_top_p)
 
-        content_for_next_iteration = add_helpful_harmful(initial_generations)
+        final_generations.append(initial_generations)
 
-        temperature = 0.95
-        max_gen_len = 512
-        top_p = 0.95
+        # content_for_next_iteration = add_helpful_harmful(initial_generations)
 
-        print("****Helpful and harmful****")
-        print()
+        # temperature = 0.95
+        # max_gen_len = 512
+        # top_p = 0.95
 
-        secondary_inputs, final_results = inference(content_for_next_iteration, generator, max_gen_len, temperature, top_p)
+        # print("****Helpful and harmful****")
+        # print()
 
-        for thisInput, thisContent in zip(secondary_inputs, final_results):
+        # secondary_inputs, final_results = inference(content_for_next_iteration, generator, max_gen_len, temperature, top_p)
 
-            final_generations.append({'input': thisInput, 'content': thisContent})
+        # for thisInput, thisContent in zip(secondary_inputs, final_results):
+
+        #     final_generations.append({'input': thisInput, 'content': thisContent})
 
     print(f"Writing report to: {report_path}")
     with open(report_path, 'w') as fout:
