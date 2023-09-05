@@ -36,6 +36,18 @@ torchrun --nproc_per_node 1 src/do-inference-generic.py \
     --report_path ~/reports/llama-7b-forestry-chat-messages-2023-09-05.json
 
     
+
+torchrun --nproc_per_node 1 src/do-inference-generic.py \
+    --ckpt_dir ~/models/llama/llama-2-7b-chat \
+    --tokenizer_path ~/models/llama/tokenizer.model \
+    --max_seq_len 2048 \
+    --max_batch_size 2 \
+    --num_chunks 1 \
+    --temperature 0.7 \
+    --data_path ~/portfolio/amr-distillation-private/data/hcv3-stories-messages-2023-09-05.json \
+    --report_path ~/reports/llama-7b-hcv3-stories-messages-2023-09-05.json
+
+    
 """
 
 def chunks(lst, n):
@@ -148,7 +160,7 @@ def main(
         dialogs = json.load(fin)
 
     # for demo
-    dialogs = dialogs[:10]
+    dialogs = dialogs[:30]
 
     #$theseDialogInstanceChunks = chunks(dialogs, num_chunks)
     theseDialogChunks = chunks(dialogs, num_chunks)
