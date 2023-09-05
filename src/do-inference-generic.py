@@ -126,7 +126,7 @@ def main(
     for dialogChunk in theseDialogChunks:
 
         temperature = random.random()
-        top_ps = [0.85,0.86,0.87,0.88,0.89.0.9,0.91,0.92,0.93,0.94,0.95]
+        top_ps = [0.85,0.86,0.87,0.88,0.89,0.9,0.91,0.92,0.93,0.94,0.95]
         random_top_p = random.sample(top_ps, 1)[0]
 
         print(f"Random temperature / top_p: {temperature} | {random_top_p}")
