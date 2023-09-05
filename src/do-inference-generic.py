@@ -51,8 +51,7 @@ def add_helpful_harmful(initial_generations):
     for gen in initial_generations:
 
         print('XXX')
-        print(gen['generation']['content'])
-        print()
+
 
         new_instruction_help = 'Based on the report, answer in the form of a comma-separated list: What factors are helping the forest?'
         new_instruction_harm= 'Based on the report, answer in the form of a comma-separated list: What factors are harming the forest?'
@@ -63,11 +62,13 @@ def add_helpful_harmful(initial_generations):
         user_example_help = {'role': 'user', 'content': 'Example report\nThe forest gets a lot of sunshine and rain. Invasive species have been harming the forest.\nFactors helping the forest\n'}
         user_example_harm = {'role': 'user', 'content': 'Example report\nThe forest gets a lot of sunshine and rain. Invasive species have been harming the forest.\nFactors harming the forest\n'}
 
-        assistant_example_help = {'role': 'assistant', 'content': ['sunshine', 'rain']}
-        assitant_example_harm = {'role': 'assistant', 'content': ['invasive species']}
+        assistant_example_help = {'role': 'assistant', 'content': "['sunshine', 'rain']"}
+        assitant_example_harm = {'role': 'assistant', 'content': "['invasive species']"}
 
-        new_content_help = f"Report\n{gen['generation']['content'].strip()}\nFactors helping the forest\n"
-        new_content_harm = f"Report\n{gen['generation']['content'].strip()}\nFactors harming the forest\n"
+        gen_content = gen['generation']['content'].strip()
+
+        new_content_help = f"Report\n{gen_content}\nFactors helping the forest\n"
+        new_content_harm = f"Report\n{gen_content}\nFactors harming the forest\n"
 
         new_user_help = {'role': 'user', 'content': new_content_help}
         new_user_harm = {'role': 'user', 'content': new_content_harm}
