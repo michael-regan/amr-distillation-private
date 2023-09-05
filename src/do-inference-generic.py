@@ -59,11 +59,17 @@ def add_helpful_harmful(initial_generations):
         new_system_help = {'role': 'system', 'content': new_instruction_help}
         new_system_harm = {'role': 'system', 'content': new_instruction_harm}
 
-        user_example_help = {'role': 'user', 'content': 'Example report\nThe forest gets a lot of sunshine and rain. Invasive species have been harming the forest.\nFactors helping the forest\n'}
-        user_example_harm = {'role': 'user', 'content': 'Example report\nThe forest gets a lot of sunshine and rain. Invasive species have been harming the forest.\nFactors harming the forest\n'}
+        user_example_help_1 = {'role': 'user', 'content': 'Example 1\nThe forest gets a lot of sunshine and rain. Invasive species have been harming the forest.\nHelpful factors\n'}
+        user_example_harm_1 = {'role': 'user', 'content': 'Example 1\nThe forest gets a lot of sunshine and rain. Invasive species have been harming the forest.\nHarmful factors\n'}
 
-        assistant_example_help = {'role': 'assistant', 'content': "Helpful factors\n['sunshine', 'rain']"}
-        assitant_example_harm = {'role': 'assistant', 'content': "Harmful factors\n['invasive species']"}
+        assistant_example_help_1 = {'role': 'assistant', 'content': "['sunshine', 'rain']"}
+        assistant_example_harm_1 = {'role': 'assistant', 'content': "['invasive species']"}
+
+        user_example_help_2 = {'role': 'user', 'content': 'Example report\nIncreased wildfire activity has intensified disturbance across wide areas of the forest and has raised concern among scientists and land managers about the resilience of disturbed landscapes.\nHelpful factors\n'}
+        user_example_harm_2 = {'role': 'user', 'content': 'Example report\nIncreased wildfire activity has intensified disturbance across wide areas of the forest and has raised concern among scientists and land managers about the resilience of disturbed landscapes.\nHarmful factors\n'}
+
+        assistant_example_help_2 = {'role': 'assistant', 'content': "[None]"}
+        assistant_example_harm_2 = {'role': 'assistant', 'content': "['increased wildfire activity']"}
 
         gen_content = gen['generation']['content'].strip()
 
@@ -73,8 +79,8 @@ def add_helpful_harmful(initial_generations):
         new_user_help = {'role': 'user', 'content': new_content_help}
         new_user_harm = {'role': 'user', 'content': new_content_harm}
 
-        prompt_help = [new_system_help, user_example_help, assistant_example_help, new_user_help]
-        prompt_harm = [new_system_harm, user_example_harm, assitant_example_harm, new_user_harm]
+        prompt_help = [new_system_help, user_example_help_1, assistant_example_help_1, user_example_help_2, assistant_example_help_2, new_user_help]
+        prompt_harm = [new_system_harm, user_example_harm_1, assistant_example_harm_1, user_example_harm_2, assistant_example_harm_2, new_user_harm]
 
         content_for_next_iteration.append(prompt_help)
         content_for_next_iteration.append(prompt_harm)
@@ -146,6 +152,7 @@ def main(
         temperature = random.random()
         top_ps = [0.85,0.86,0.87,0.88,0.89,0.9,0.91,0.92,0.93,0.94,0.95]
         random_top_p = random.sample(top_ps, 1)[0]
+        max_gen_len = 1024
 
         print(f"Random temperature | top_p: {temperature} | {random_top_p}")
         print()
@@ -154,8 +161,8 @@ def main(
 
         content_for_next_iteration = add_helpful_harmful(initial_generations)
 
-        temperature = 0.9
-        max_gen_len = 256
+        temperature = 0.95
+        max_gen_len = 128
         top_p = 0.95
 
         print("****Helpful and harmful****")
