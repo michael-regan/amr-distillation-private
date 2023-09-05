@@ -113,9 +113,9 @@ def main(
 
         new_instruction_harm= 'Based on the report, answer in the form of a comma-separated list: What factors are harming the forest?'
 
-        new_content_help = f"Report\n{thisResult['content']}\n{new_instruction_help}\nFactors helping the forest\n"
+        new_content_help = f"Report\n{thisResult['content'].strip()}\n{new_instruction_help}\nFactors helping the forest\n"
 
-        new_content_harm = f"Report\n{thisResult['content']}\n{new_instruction_harm}\nFactors harming the forest\n"
+        new_content_harm = f"Report\n{thisResult['content'].strip()}\n{new_instruction_harm}\nFactors harming the forest\n"
 
         content_for_next_iteration.append(new_content_help)
         content_for_next_iteration.append(new_content_harm)
