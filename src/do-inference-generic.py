@@ -50,8 +50,8 @@ def add_helpful_harmful(initial_generations):
 
     for gen in initial_generations:
 
-        new_instruction_help = 'Using evidence from the report, make a structured list of factors helping the forest, like in the examples.'
-        new_instruction_harm= 'Using evidence from the report, make a structured list of factors harming the forest, like in the examples.'
+        new_instruction_help = 'Using evidence from the report, make a short list of factors helping the forest without explanations, like in the examples.'
+        new_instruction_harm= 'Using evidence from the report, make a short list of factors harming the forest without explanations, like in the examples.'
 
         new_system_help = {'role': 'system', 'content': new_instruction_help}
         new_system_harm = {'role': 'system', 'content': new_instruction_harm}
