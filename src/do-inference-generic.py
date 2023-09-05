@@ -56,14 +56,20 @@ def add_helpful_harmful(initial_generations):
         new_system_help = {'role': 'system', 'content': new_instruction_help}
         new_system_harm = {'role': 'system', 'content': new_instruction_harm}
 
-        new_content_help = f"Report\n{gen['generation']['content'].strip()}\n{new_instruction_help}\nFactors helping the forest\n"
-        new_content_harm = f"Report\n{gen['generation']['content'].strip()}\n{new_instruction_harm}\nFactors harming the forest\n"
+        user_example_help = {'role': 'user', 'content': 'Example report\nThe forest gets a lot of sunshine and rain. Invasive species have been harming the forest.\nFactors helping the forest\n'}
+        user_example_harm = {'role': 'user', 'content': 'Example report\nThe forest gets a lot of sunshine and rain. Invasive species have been harming the forest.\nFactors harming the forest\n'}
+
+        assistant_example_help = {'role': 'assistant', 'content': ['sunshine', 'rain']}
+        assitant_example_harm = {'role': 'assistant', 'content': ['invasive species']}
+
+        new_content_help = f"Report\n{gen['generation']['content'].strip()}\nFactors helping the forest\n"
+        new_content_harm = f"Report\n{gen['generation']['content'].strip()}\nFactors harming the forest\n"
 
         new_user_help = {'role': 'user', 'content': new_content_help}
         new_user_harm = {'role': 'user', 'content': new_content_harm}
 
-        prompt_help = [new_system_help, new_user_help]
-        prompt_harm = [new_system_harm, new_user_harm]
+        prompt_help = [new_system_help, user_example_help, assistant_example_help, new_user_help]
+        prompt_harm = [new_system_harm, user_example_harm, assitant_example_harm, new_user_harm]
 
         content_for_next_iteration.append(prompt_help)
         content_for_next_iteration.append(prompt_harm)
@@ -136,7 +142,7 @@ def main(
         top_ps = [0.85,0.86,0.87,0.88,0.89,0.9,0.91,0.92,0.93,0.94,0.95]
         random_top_p = random.sample(top_ps, 1)[0]
 
-        print(f"Random temperature / top_p: {temperature} | {random_top_p}")
+        print(f"Random temperature | top_p: {temperature} | {random_top_p}")
         print()
 
         initial_generations = inference(dialogChunk, generator, max_gen_len, temperature, random_top_p)
