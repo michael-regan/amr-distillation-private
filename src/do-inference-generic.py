@@ -54,6 +54,10 @@ def add_helpful_harmful(initial_generations):
 
         new_instruction_harm= 'Based on the report, answer in the form of a comma-separated list: What factors are harming the forest?'
 
+
+        new_content_help = {'role': 'system', 'content': new_instruction_help}
+        new_content_harm = {'role': 'system', 'content': new_instruction_harm}
+
         new_content_help = f"Report\n{gen['content'].strip()}\n{new_instruction_help}\nFactors helping the forest\n"
 
         new_content_harm = f"Report\n{gen['content'].strip()}\n{new_instruction_harm}\nFactors harming the forest\n"
@@ -101,22 +105,22 @@ def main(
 
         compiled_results = list()
 
-        for chatInstance in dialogChunk:
-            results = generator.chat_completion(
-                chatInstance,  # type: ignore
-                max_gen_len=max_gen_len,
-                temperature=temperature,
-                top_p=top_p,
-            )
+        #for chatInstance in dialogChunk:
+        results = generator.chat_completion(
+            dialogChunk,  # type: ignore
+            max_gen_len=max_gen_len,
+            temperature=temperature,
+            top_p=top_p,
+        )
 
-            for d, result in zip(chatInstance, results):
-                print('-----------'*4)
-                print()
-                print(d)
-                print()
-                print(result)
-                print()
-                compiled_results.append(result)
+        for d, result in zip(dialogChunk, results):
+            print('-----------'*4)
+            print()
+            print(d)
+            print()
+            print(result)
+            print()
+            compiled_results.append(result)
 
         return compiled_results
     
