@@ -51,19 +51,22 @@ def add_helpful_harmful(initial_generations):
     for gen in initial_generations:
 
         new_instruction_help = 'Based on the report, answer in the form of a comma-separated list: What factors are helping the forest?'
-
         new_instruction_harm= 'Based on the report, answer in the form of a comma-separated list: What factors are harming the forest?'
 
+        new_system_help = {'role': 'system', 'content': new_instruction_help}
+        new_system_harm = {'role': 'system', 'content': new_instruction_harm}
 
-        new_content_help = {'role': 'system', 'content': new_instruction_help}
-        new_content_harm = {'role': 'system', 'content': new_instruction_harm}
+        new_content_help = f"Report\n{gen['generation']['content'].strip()}\n{new_instruction_help}\nFactors helping the forest\n"
+        new_content_harm = f"Report\n{gen['generation']['content'].strip()}\n{new_instruction_harm}\nFactors harming the forest\n"
 
-        new_content_help = f"Report\n{gen['content'].strip()}\n{new_instruction_help}\nFactors helping the forest\n"
+        new_user_help = {'role': 'user', 'content': new_content_help}
+        new_user_harm = {'role': 'user', 'content': new_content_harm}
 
-        new_content_harm = f"Report\n{gen['content'].strip()}\n{new_instruction_harm}\nFactors harming the forest\n"
+        prompt_help = [new_system_help, new_user_help]
+        prompt_harm = [new_system_harm, new_user_harm]
 
-        content_for_next_iteration.append(new_content_help)
-        content_for_next_iteration.append(new_content_harm)
+        content_for_next_iteration.append(prompt_help)
+        content_for_next_iteration.append(prompt_harm)
 
     return content_for_next_iteration
 
