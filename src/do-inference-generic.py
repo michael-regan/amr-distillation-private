@@ -147,6 +147,9 @@ def main(
     with open(data_path, 'r') as fin:
         dialogs = json.load(fin)
 
+    # for demo
+    dialogs = dialogs[:10]
+
     #$theseDialogInstanceChunks = chunks(dialogs, num_chunks)
     theseDialogChunks = chunks(dialogs, num_chunks)
 
